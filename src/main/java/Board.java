@@ -1,4 +1,10 @@
+import piece.Position;
+import piece.Move;
 import piece.Piece;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Board {
   private Piece[][] pieces;
@@ -10,10 +16,11 @@ public class Board {
 
   /**
    * Places a piece on the board.
-   * @param piece The piece
+   *
+   * @param piece    The piece
    * @param position Where to place
    */
-  public void place(Piece piece, BoardPosition position) {
+  public void place(Piece piece, Position position) {
     assert (piece != null);
 
     this.setPiece(piece, position);
@@ -21,11 +28,12 @@ public class Board {
 
   /**
    * Moves a piece on the board.
+   *
    * @param piecePosition The position of the piece to move.
-   * @param newPosition The position to move the piece to.
+   * @param newPosition   The position to move the piece to.
    * @return true if the move is valid, false otherwise.
    */
-  public boolean move(BoardPosition piecePosition, BoardPosition newPosition) {
+  public boolean move(Position piecePosition, Position newPosition) {
     if (isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
@@ -61,36 +69,52 @@ public class Board {
     return builder.toString();
   }
 
-  private boolean onBoard(BoardPosition position) {
-    int row = position.getRow();
-    int column = position.getColumn();
-
-    return 0 <= row && row < 8
-        && 0 <= column && column < 8;
+  private boolean onBoard(Position position) {
+    return position.inBound(0, 0, 8, 8);
   }
 
-  private void setPiece(Piece piece, BoardPosition position) {
+  private void setPiece(Piece piece, Position position) {
     assert (onBoard(position));
 
     this.pieces[position.getRow()][position.getColumn()] = piece;
   }
 
 
-  private Piece getPiece(BoardPosition position) {
+  private Piece getPiece(Position position) {
     assert (onBoard(position));
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
 
-  private boolean isValidMove(BoardPosition piecePosition, BoardPosition newPosition) {
+  private boolean isValidMove(Position piecePosition, Position newPosition) {
     if (onBoard(piecePosition) && onBoard(newPosition)) {
       Piece piece = this.getPiece(piecePosition);
 
       if (piece != null) {
-        return true;
+        Set<Move> moves = piece.getMoveSet();
+
+        Set<Position> availablePositions = resultingPositions(piecePosition, moves);
+
+        if (availablePositions.contains(newPosition)) {
+          return true;
+        }
       }
     }
 
     return false;
+  }
+
+  private Set<Position> resultingPositions(Position piecePosition, Set<Move> moves) {
+    Set<Position> positions = new HashSet<>();
+
+    for (Move move : moves) {
+      List<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
+                                                               this::getPiece);
+      for (Position position : availablePositions) {
+        positions.add(position);
+      }
+    }
+
+    return positions;
   }
 }

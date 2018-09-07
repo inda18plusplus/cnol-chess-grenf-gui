@@ -1,5 +1,8 @@
 package piece;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Pawn extends Piece {
   public Pawn(Color color) {
     super(color);
@@ -12,8 +15,19 @@ public class Pawn extends Piece {
         return 'p';
       case WHITE:
         return 'P';
-        default:
-          return '?';
+      default:
+        return '?';
     }
+  }
+
+  @Override
+  public Set<Move> getMoveSet() {
+    HashSet<Move> moves = new HashSet<>();
+
+    int deltaRow = super.color == Color.BLACK ? 1 : -1;
+
+    moves.add(new RelativeMove(0, deltaRow));
+
+    return moves;
   }
 }

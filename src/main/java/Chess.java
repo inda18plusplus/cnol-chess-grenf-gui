@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import piece.Position;
 import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
@@ -60,7 +62,7 @@ public class Chess {
       case "a":
         if (words.length == 3) {
           Piece piece = parsePiece(words[1]);
-          BoardPosition position = parsePosition(words[2]);
+          Position position = parsePosition(words[2]);
 
           this.board.place(piece, position);
         }
@@ -84,10 +86,10 @@ public class Chess {
     System.out.println(this.board);
   }
 
-  private BoardPosition parsePosition(String word) {
+  private Position parsePosition(String word) {
     int x = Integer.parseInt(word.substring(0, 1));
     int y = Integer.parseInt(word.substring(1, 2));
 
-    return new BoardPosition(x, y);
+    return new Position(x, y);
   }
 }

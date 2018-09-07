@@ -1,4 +1,5 @@
 import org.junit.Test;
+import piece.Position;
 import piece.Pawn;
 import piece.Piece;
 
@@ -17,17 +18,58 @@ public class BoardTest {
     moveBlackPawn();
     moveWhitePawn();
 
-    moveWhitePawnInvalidDirection();
+    moveWhitePawnInvalidDirectionSide();
+    moveWhitePawnInvalidDirectionBack();
+
+    moveBlackPawnInvalidDirectionSide();
+    moveBlackPawnInvalidDirectionBack();
   }
 
-  private void moveWhitePawnInvalidDirection() {
+  private void moveBlackPawnInvalidDirectionBack() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new BoardPosition(6, 6));
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    board.move(new BoardPosition(6, 6), new BoardPosition(5, 6));
+    board.move(new Position(3, 2), new Position(3, 1));
 
     assertEquals(
-        board.toString(),
+        "........\n" +
+            "........\n" +
+            "...p....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void moveBlackPawnInvalidDirectionSide() {
+    Board board = new Board();
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+
+    board.move(new Position(3, 2), new Position(4, 2));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "...p....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void moveWhitePawnInvalidDirectionBack() {
+    Board board = new Board();
+    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+
+    board.move(new Position(6, 6), new Position(6, 7));
+
+    assertEquals(
         "........\n" +
             "........\n" +
             "........\n" +
@@ -35,18 +77,37 @@ public class BoardTest {
             "........\n" +
             "........\n" +
             "......P.\n" +
-            "........\n"
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void moveWhitePawnInvalidDirectionSide() {
+    Board board = new Board();
+    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+
+    board.move(new Position(6, 6), new Position(5, 6));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "......P.\n" +
+            "........\n",
+        board.toString()
     );
   }
 
   private void moveWhitePawn() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new BoardPosition(6, 6));
+    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
-    board.move(new BoardPosition(6, 6), new BoardPosition(6, 5));
+    board.move(new Position(6, 6), new Position(6, 5));
 
     assertEquals(
-        board.toString(),
         "........\n" +
             "........\n" +
             "........\n" +
@@ -54,18 +115,18 @@ public class BoardTest {
             "........\n" +
             "......P.\n" +
             "........\n" +
-            "........\n"
+            "........\n",
+        board.toString()
     );
   }
 
   private void moveBlackPawn() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.BLACK), new BoardPosition(3, 2));
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    board.move(new BoardPosition(3, 2), new BoardPosition(3, 3));
+    board.move(new Position(3, 2), new Position(3, 3));
 
     assertEquals(
-        board.toString(),
         "........\n" +
             "........\n" +
             "........\n" +
@@ -73,7 +134,8 @@ public class BoardTest {
             "........\n" +
             "........\n" +
             "........\n" +
-            "........\n"
+            "........\n",
+        board.toString()
     );
   }
 
@@ -81,10 +143,9 @@ public class BoardTest {
   private void placeBlackPawn() {
     Board board = new Board();
 
-    board.place(new Pawn(Piece.Color.BLACK), new BoardPosition(3, 2));
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
     assertEquals(
-        board.toString(),
         "........\n" +
             "........\n" +
             "...p....\n" +
@@ -92,7 +153,8 @@ public class BoardTest {
             "........\n" +
             "........\n" +
             "........\n" +
-            "........\n"
+            "........\n",
+        board.toString()
     );
   }
 
@@ -100,10 +162,9 @@ public class BoardTest {
   private void placeWhitePawn() {
     Board board = new Board();
 
-    board.place(new Pawn(Piece.Color.WHITE), new BoardPosition(5, 6));
+    board.place(new Pawn(Piece.Color.WHITE), new Position(5, 6));
 
     assertEquals(
-        board.toString(),
         "........\n" +
             "........\n" +
             "........\n" +
@@ -111,7 +172,8 @@ public class BoardTest {
             "........\n" +
             "........\n" +
             ".....P..\n" +
-            "........\n"
+            "........\n",
+        board.toString()
     );
   }
 }
