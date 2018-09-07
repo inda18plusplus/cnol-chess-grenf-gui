@@ -11,10 +11,21 @@ public class RelativeMove extends Move {
   private int deltaColumn;
   private int deltaRow;
 
-  public RelativeMove(int deltaColumn, int deltaRow) {
+  public RelativeMove(int deltaColumn, int deltaRow, CaptureRule captureRule) {
+    super.captureRule = captureRule;
+
     this.deltaColumn = deltaColumn;
     this.deltaRow = deltaRow;
   }
+
+  public RelativeMove(int deltaColumn, int deltaRow) {
+    super.captureRule = CaptureRule.CAN_CAPTURE;
+
+    this.deltaColumn = deltaColumn;
+    this.deltaRow = deltaRow;
+  }
+
+
 
   @Override
   public List<Position> expandPositions(Position origin, int boundWidth, int boundHeight,
@@ -29,8 +40,10 @@ public class RelativeMove extends Move {
       Piece sourcePiece = getPiece.apply(origin);
       Piece targetPiece = getPiece.apply(resultingPos);
 
-      if (sourcePiece != null && !sourcePiece.isObstructedBy(targetPiece)) {
-        positions.add(resultingPos);
+      if (sourcePiece != null) {
+        if (sourcePiece.canCapture(targetPiece, captureRule)) {
+          positions.add(resultingPos);
+        }
       }
     }
 

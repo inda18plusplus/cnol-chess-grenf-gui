@@ -13,14 +13,33 @@ public class RelativeMoveTest {
   public void expandPositions() {
     noCollision();
 
-    hostileCollision();
+    hostileCapture();
     friendlyCollision();
+
+    hostileNoCapture();
 
     outOfBoundsUpperColumn();
     outOfBoundsLowerColumn();
 
     outOfBoundsUpperRow();
     outOfBoundsLowerRow();
+  }
+
+  private void hostileNoCapture() {
+    Move move = new RelativeMove(1, 2, Move.CaptureRule.NO_CAPTURE);
+
+    List<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {
+      if (position.equals(new Position(2, 2))) {
+        return new Pawn(Piece.Color.BLACK);
+      } else {
+        return new Pawn(Piece.Color.WHITE);
+      }
+    });
+
+    assertEquals(
+        Arrays.asList(),
+        positions
+    );
   }
 
   private void friendlyCollision() {
@@ -40,7 +59,7 @@ public class RelativeMoveTest {
     );
   }
 
-  private void hostileCollision() {
+  private void hostileCapture() {
     Move move = new RelativeMove(1, 2);
 
     List<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {

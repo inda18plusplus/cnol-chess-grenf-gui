@@ -4,6 +4,14 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class Move {
+  enum CaptureRule {
+    MUST_CAPTURE,
+    CAN_CAPTURE,
+    NO_CAPTURE
+  }
+
+  protected CaptureRule captureRule;
+
   /**
    * @param origin Where to move from
    * @param boundWidth The width of the board
