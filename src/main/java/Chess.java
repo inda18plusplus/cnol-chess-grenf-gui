@@ -1,8 +1,7 @@
+import java.util.Scanner;
 import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
-
-import java.util.Scanner;
 
 
 /**
@@ -12,6 +11,10 @@ public class Chess {
 
   private Board board = new Board();
 
+  /**
+   * Starts a game of chess.
+   * @param args Commandline arguments
+   */
   public static void main(String[] args) {
     System.out.println("Hello, chess!");
 
@@ -21,13 +24,13 @@ public class Chess {
 
     chess.interpretCommand("d");
 
-    System.out.println("> ");
+    System.out.print("> ");
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
 
       chess.interpretCommand(line);
 
-      System.out.println("> ");
+      System.out.print("> ");
     }
   }
 
@@ -42,7 +45,9 @@ public class Chess {
     String command = words[0];
 
     switch (command) {
-      case "d": this.displayBoard(); break;
+      case "d":
+        this.displayBoard();
+        break;
 
       case "m":
         if (words.length == 3) {
@@ -59,6 +64,9 @@ public class Chess {
 
           this.board.place(piece, position);
         }
+        break;
+
+      default:
         break;
     }
   }

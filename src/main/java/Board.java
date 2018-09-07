@@ -8,12 +8,35 @@ public class Board {
   }
 
 
+  /**
+   * Places a piece on the board.
+   * @param piece The piece
+   * @param position Where to place
+   */
   public void place(Piece piece, BoardPosition position) {
     assert (piece != null);
 
     this.setPiece(piece, position);
   }
 
+  /**
+   * Moves a piece on the board.
+   * @param piecePosition The position of the piece to move.
+   * @param newPosition The position to move the piece to.
+   * @return true if the move is valid, false otherwise.
+   */
+  public boolean move(BoardPosition piecePosition, BoardPosition newPosition) {
+    if (isValidMove(piecePosition, newPosition)) {
+      Piece sourcePiece = this.getPiece(piecePosition);
+
+      this.setPiece(sourcePiece, newPosition);
+      this.setPiece(null, piecePosition);
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @Override
   public String toString() {
@@ -42,8 +65,8 @@ public class Board {
     int row = position.getRow();
     int column = position.getColumn();
 
-    return 0 <= row && row < 8 &&
-      0 <= column && column < 8;
+    return 0 <= row && row < 8
+        && 0 <= column && column < 8;
   }
 
   private void setPiece(Piece piece, BoardPosition position) {
@@ -52,27 +75,9 @@ public class Board {
     this.pieces[position.getRow()][position.getColumn()] = piece;
   }
 
-  /**
-   * Moves a piece on the board.
-   * @param piecePosition The position of the piece to move.
-   * @param newPosition The position to move the piece to.
-   * @return true if the move is valid, false otherwise.
-   */
-  public boolean move(BoardPosition piecePosition, BoardPosition newPosition) {
-    if (isValidMove(piecePosition, newPosition)) {
-      Piece sourcePiece = this.getPiece(piecePosition);
-
-      this.setPiece(sourcePiece, newPosition);
-      this.setPiece(null, piecePosition);
-
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   private Piece getPiece(BoardPosition position) {
-    assert(onBoard(position));
+    assert (onBoard(position));
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
