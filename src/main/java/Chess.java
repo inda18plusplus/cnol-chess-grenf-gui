@@ -1,9 +1,8 @@
 import java.util.Scanner;
-
-import piece.Position;
 import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
+import piece.Position;
 
 
 /**

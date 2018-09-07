@@ -5,7 +5,6 @@ import java.util.Set;
 public abstract class Piece {
 
 
-
   public enum Color {
     BLACK, WHITE
   }
@@ -18,7 +17,9 @@ public abstract class Piece {
 
 
   /**
-   * @param other Another piece
+   * Determines if this piece can capture another.
+   *
+   * @param other       Another piece
    * @param captureRule How this piece can capture the other piece
    * @return true if this piece can move onto the other piece
    */

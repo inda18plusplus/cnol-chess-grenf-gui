@@ -1,10 +1,9 @@
-import piece.Position;
-import piece.Move;
-import piece.Piece;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import piece.Move;
+import piece.Piece;
+import piece.Position;
 
 public class Board {
   private Piece[][] pieces;

@@ -13,6 +13,7 @@ public abstract class Move {
   protected CaptureRule captureRule;
 
   /**
+   * Get all possible moves.
    * @param origin Where to move from
    * @param boundWidth The width of the board
    * @param boundHeight The height of the board
