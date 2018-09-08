@@ -7,22 +7,30 @@ import piece.Position;
 
 public class Board {
   private Piece[][] pieces;
+  private Piece.Color currentPlayingColor;
 
   Board() {
     this.pieces = new Piece[8][8];
+    this.currentPlayingColor = Piece.Color.WHITE;
   }
 
 
   /**
-   * Places a piece on the board.
+   * Places an additional piece on the board.
    *
    * @param piece    The piece
    * @param position Where to place
+   * @return true if the placement was successful
    */
-  public void place(Piece piece, Position position) {
-    assert (piece != null);
+  public boolean place(Piece piece, Position position) {
+    Piece targetPiece = this.getPiece(position);
 
-    this.setPiece(piece, position);
+    if (piece != null && targetPiece == null) {
+      this.setPiece(piece, position);
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -36,12 +44,24 @@ public class Board {
     if (isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
-      this.setPiece(sourcePiece, newPosition);
-      this.setPiece(null, piecePosition);
+      if (sourcePiece.isOfColor(this.currentPlayingColor)) {
+        this.setPiece(sourcePiece, newPosition);
+        this.setPiece(null, piecePosition);
+        
+        this.nextPlayerTurn();
+        
+        return true;
+      }
+    }
 
-      return true;
+    return false;
+  }
+
+  private void nextPlayerTurn() {
+    if (this.currentPlayingColor == Piece.Color.BLACK) {
+      this.currentPlayingColor = Piece.Color.WHITE;
     } else {
-      return false;
+      this.currentPlayingColor = Piece.Color.BLACK;
     }
   }
 

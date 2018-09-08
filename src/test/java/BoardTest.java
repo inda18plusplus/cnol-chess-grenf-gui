@@ -18,6 +18,7 @@ public class BoardTest {
     movePawn();
     movePawnInvalidOrder();
 
+
     moveWhitePawnInvalidDirectionSide();
     moveWhitePawnInvalidDirectionBack();
 
@@ -27,11 +28,11 @@ public class BoardTest {
 
   private void movePawnInvalidOrder() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
 
-    board.move(new Position(3, 1), new Position(6, 2));
-    board.move(new Position(6, 6), new Position(6, 5));
+    assert !board.move(new Position(3, 1), new Position(6, 2));
+    assert board.move(new Position(6, 6), new Position(6, 5));
 
     assertEquals(
         "........\n" +
@@ -48,9 +49,9 @@ public class BoardTest {
 
   private void moveBlackPawnInvalidDirectionBack() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    board.move(new Position(3, 2), new Position(3, 1));
+    assert !board.move(new Position(3, 2), new Position(3, 1));
 
     assertEquals(
         "........\n" +
@@ -67,9 +68,9 @@ public class BoardTest {
 
   private void moveBlackPawnInvalidDirectionSide() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    board.move(new Position(3, 2), new Position(4, 2));
+    assert !board.move(new Position(3, 2), new Position(4, 2));
 
     assertEquals(
         "........\n" +
@@ -86,9 +87,9 @@ public class BoardTest {
 
   private void moveWhitePawnInvalidDirectionBack() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
-    board.move(new Position(6, 6), new Position(6, 7));
+    assert !board.move(new Position(6, 6), new Position(6, 7));
 
     assertEquals(
         "........\n" +
@@ -105,9 +106,9 @@ public class BoardTest {
 
   private void moveWhitePawnInvalidDirectionSide() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
-    board.move(new Position(6, 6), new Position(5, 6));
+    assert !board.move(new Position(6, 6), new Position(5, 6));
 
     assertEquals(
         "........\n" +
@@ -124,11 +125,11 @@ public class BoardTest {
 
   private void movePawn() {
     Board board = new Board();
-    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
 
-    board.move(new Position(6, 6), new Position(6, 5));
-    board.move(new Position(3, 1), new Position(6, 2));
+    assert board.move(new Position(6, 6), new Position(6, 5));
+    assert board.move(new Position(3, 1), new Position(3, 2));
 
     assertEquals(
         "........\n" +
@@ -147,7 +148,7 @@ public class BoardTest {
   private void placeBlackPawn() {
     Board board = new Board();
 
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
     assertEquals(
         "........\n" +
@@ -166,7 +167,7 @@ public class BoardTest {
   private void placeWhitePawn() {
     Board board = new Board();
 
-    board.place(new Pawn(Piece.Color.WHITE), new Position(5, 6));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(5, 6));
 
     assertEquals(
         "........\n" +

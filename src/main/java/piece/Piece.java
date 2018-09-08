@@ -4,7 +4,6 @@ import java.util.Set;
 
 public abstract class Piece {
 
-
   public enum Color {
     BLACK, WHITE
   }
@@ -33,6 +32,10 @@ public abstract class Piece {
     }
 
     return false;
+  }
+
+  public boolean isOfColor(Color color) {
+    return this.color == color;
   }
 
   public abstract char toChar();
