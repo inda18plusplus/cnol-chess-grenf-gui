@@ -1,4 +1,8 @@
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.concurrent.ArrayBlockingQueue;
 import org.junit.Test;
+import piece.Knight;
 import piece.Position;
 import piece.Pawn;
 import piece.Piece;
@@ -31,6 +35,47 @@ public class BoardTest {
 
     moveBlackPawnInvalidDirectionSide();
     moveBlackPawnInvalidDirectionBack();
+  }
+
+  @Test
+  public void availableDestinations() {
+    availableDestinationsKnight();
+    availableDestinationsKnightOutOfBounds();
+  }
+
+  private void availableDestinationsKnightOutOfBounds() {
+    Board board = new Board();
+
+    assert board.place(new Knight(Piece.Color.WHITE), new Position(7, 6));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(6, 4),
+            new Position(5, 5),
+            new Position(5, 7)
+        )),
+        board.availableDestinations(new Position(7, 6))
+    );
+  }
+
+  private void availableDestinationsKnight() {
+    Board board = new Board();
+
+    assert board.place(new Knight(Piece.Color.WHITE), new Position(4, 4));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(3, 2),
+            new Position(5, 2),
+            new Position(2, 3),
+            new Position(6, 3),
+            new Position(2, 5),
+            new Position(6, 5),
+            new Position(3, 6),
+            new Position(5, 6)
+        )),
+        board.availableDestinations(new Position(4, 4))
+    );
   }
 
   private void movePawnAttackingFriendlyToLeftSide() {
@@ -231,7 +276,6 @@ public class BoardTest {
     );
   }
 
-
   private void placeBlackPawn() {
     Board board = new Board();
 
@@ -249,7 +293,6 @@ public class BoardTest {
         board.toString()
     );
   }
-
 
   private void placeWhitePawn() {
     Board board = new Board();
