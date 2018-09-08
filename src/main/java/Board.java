@@ -87,7 +87,11 @@ public class Board {
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
+
+    builder.append(" 01234567\n");
+
     for (int row = 0; row < 8; row++) {
+      builder.append(row);
       for (int col = 0; col < 8; col++) {
         Piece piece = this.pieces[row][col];
 

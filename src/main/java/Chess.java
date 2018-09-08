@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Set;
+import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
@@ -46,10 +48,12 @@ public class Chess {
     String command = words[0];
 
     switch (command) {
+        // Display the board
       case "d":
         this.displayBoard();
         break;
 
+        // Move a piece
       case "m":
         if (words.length == 3) {
           board.move(parsePosition(words[1]), parsePosition(words[2]));
@@ -58,12 +62,32 @@ public class Chess {
         }
         break;
 
+        // Add a piece
       case "a":
         if (words.length == 3) {
           Piece piece = parsePiece(words[1]);
           Position position = parsePosition(words[2]);
 
           this.board.place(piece, position);
+        }
+        break;
+
+        // Show possible moves
+      case "p":
+        if (words.length == 2) {
+          Position position = parsePosition(words[1]);
+
+          Set<Position> possible = board.availableDestinations(position);
+
+          StringBuffer buffer = new StringBuffer(board.toString());
+
+          for (Position pos : possible) {
+            int index = (pos.getRow() + 1) * 9 + pos.getColumn() + 1;
+
+            buffer.setCharAt(index, 'X');
+          }
+
+          System.out.println(buffer);
         }
         break;
 
@@ -76,6 +100,9 @@ public class Chess {
     switch (word) {
       case "p": return new Pawn(Color.BLACK);
       case "P": return new Pawn(Color.WHITE);
+
+      case "n": return new Knight(Color.BLACK);
+      case "N": return new Knight(Color.WHITE);
 
       default: return null;
     }
