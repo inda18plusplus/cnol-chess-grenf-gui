@@ -55,6 +55,21 @@ public class BoardTest {
     availableDestinationsKing();
   }
 
+  @Test
+  public void isColorInCheck() {
+    pawnCheckKing();
+  }
+
+  private void pawnCheckKing() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(2, 3));
+    assert board.place(new King(Piece.Color.WHITE), new Position(3, 4));
+
+    assert board.isColorInCheck(Piece.Color.WHITE);
+    assert !board.isColorInCheck(Piece.Color.BLACK);
+  }
+
   private void availableDestinationsPawnSecondMove() {
     Board board = new Board();
 

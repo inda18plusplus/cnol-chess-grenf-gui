@@ -95,6 +95,12 @@ public class Chess {
         }
         break;
 
+        // Determine if check
+      case "c":
+        System.out.println("White in check: " + board.isColorInCheck(Color.WHITE));
+        System.out.println("Black in check: " + board.isColorInCheck(Color.BLACK));
+        break;
+
       default:
         break;
     }

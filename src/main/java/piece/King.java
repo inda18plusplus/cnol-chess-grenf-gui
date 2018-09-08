@@ -35,4 +35,8 @@ public class King extends Piece {
 
     return moves;
   }
+
+  @Override public boolean isExpendable() {
+    return false;
+  }
 }

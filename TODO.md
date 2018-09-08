@@ -1,6 +1,5 @@
 # TODO
 
-- Default positions
 - Promotion
 - Castling
 - En Passant

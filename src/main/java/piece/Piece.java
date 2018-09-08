@@ -4,16 +4,19 @@ import java.util.Set;
 
 public abstract class Piece {
 
-  public enum Color {
-    BLACK, WHITE
-  }
-
   protected Color color;
 
   Piece(Color color) {
     this.color = color;
   }
 
+  /**
+   * Returns the color of the piece.
+   * @return the color
+   */
+  public Color getColor() {
+    return this.color;
+  }
 
   /**
    * Determines if this piece can capture another.
@@ -44,6 +47,30 @@ public abstract class Piece {
   // The set of moves of a piece can perform
   public abstract Set<Move> getMoveSet();
 
+  // Determines if a piece can die and still keep the game going.
+  public boolean isExpendable() {
+    return true;
+  }
+
   // Called when a piece is moved
   public void onMove() {}
+
+  public enum Color {
+    BLACK, WHITE;
+
+    /**
+     * Returns the color that isn't this.
+     * @return The color
+     */
+    public Color opposite() {
+      switch (this) {
+        case BLACK:
+          return WHITE;
+        case WHITE:
+          return BLACK;
+        default:
+          throw new RuntimeException("UNKNOWN COLOR");
+      }
+    }
+  }
 }

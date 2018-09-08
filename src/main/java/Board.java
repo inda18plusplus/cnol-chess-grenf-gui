@@ -1,7 +1,7 @@
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import piece.Bishop;
 import piece.King;
 import piece.Knight;
@@ -115,6 +115,7 @@ public class Board {
     return this.currentPlayingColor;
   }
 
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -139,6 +140,7 @@ public class Board {
     return builder.toString();
   }
 
+
   private void applyLayout(Layout layout) {
     switch (layout) {
       case CLASSIC:
@@ -158,6 +160,7 @@ public class Board {
         break;
     }
   }
+
 
   private void layoutFromText(String text) {
     int column = 0;
@@ -181,6 +184,7 @@ public class Board {
     }
   }
 
+
   private Piece pieceFromCharacter(char character) {
     Piece.Color color;
     if (Character.isUpperCase(character)) {
@@ -190,19 +194,28 @@ public class Board {
     }
 
     switch (Character.toLowerCase(character)) {
-      case 'p': return new Pawn(color);
-      case 'n': return new Knight(color);
-      case 'r': return new Rook(color);
-      case 'b': return new Bishop(color);
-      case 'q': return new Queen(color);
-      case 'k': return new King(color);
-      default: return null;
+      case 'p':
+        return new Pawn(color);
+      case 'n':
+        return new Knight(color);
+      case 'r':
+        return new Rook(color);
+      case 'b':
+        return new Bishop(color);
+      case 'q':
+        return new Queen(color);
+      case 'k':
+        return new King(color);
+      default:
+        return null;
     }
   }
+
 
   private boolean onBoard(Position position) {
     return position.inBound(0, 0, 8, 8);
   }
+
 
   private void setPiece(Piece piece, Position position) {
     assert (onBoard(position));
@@ -210,25 +223,77 @@ public class Board {
     this.pieces[position.getRow()][position.getColumn()] = piece;
   }
 
+
   private Piece getPiece(Position position) {
     assert (onBoard(position));
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
 
+
   private void nextColor() {
-    if (this.currentPlayingColor == Piece.Color.BLACK) {
-      this.currentPlayingColor = Piece.Color.WHITE;
-    } else {
-      this.currentPlayingColor = Piece.Color.BLACK;
-    }
+    this.currentPlayingColor = this.currentPlayingColor.opposite();
   }
+
 
   private boolean isValidMove(Position piecePosition, Position newPosition) {
     Set<Position> availablePositions = availableDestinations(piecePosition);
 
     return availablePositions.contains(newPosition);
   }
+
+
+  /**
+   * Determines if a player of a specific color is in check.
+   *
+   * @param color The color of the player
+   * @return Check or not
+   */
+  public boolean isColorInCheck(Piece.Color color) {
+    return !this.getCheckedTiles(color).isEmpty();
+  }
+
+
+  private Set<Position> getCheckedTiles(Piece.Color color) {
+    Set<Position> attackedTiles = this.getControlledTiles(color.opposite());
+    Set<Position> nonExpendableTiles = this.getNonExpendableTiles(color);
+
+    attackedTiles.retainAll(nonExpendableTiles);
+
+    return attackedTiles;
+  }
+
+
+  private Set<Position> getTilesWhere(Function<Piece, Boolean> predicate) {
+    Set<Position> tiles = new HashSet<>();
+
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        Position tile = new Position(col, row);
+        Piece piece = this.getPiece(tile);
+
+        if (piece != null && predicate.apply(piece)) {
+          tiles.add(tile);
+        }
+      }
+    }
+
+    return tiles;
+  }
+
+
+  private Set<Position> getControlledTiles(Piece.Color color) {
+    return this.getTilesWhere(piece -> piece.isOfColor(color))
+        .stream()
+        .map(this::availableDestinations)
+        .flatMap(Set::stream)
+        .collect(Collectors.toSet());
+  }
+
+  private Set<Position> getNonExpendableTiles(Piece.Color color) {
+    return this.getTilesWhere(piece -> piece.isOfColor(color) && !piece.isExpendable());
+  }
+
 
   enum Layout {
     CLASSIC
