@@ -1,7 +1,7 @@
 package piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -28,9 +28,9 @@ public class RelativeMove extends Move {
 
 
   @Override
-  public List<Position> expandPositions(Position origin, int boundWidth, int boundHeight,
-                                        Function<Position, Piece> getPiece) {
-    List<Position> positions = new ArrayList<>();
+  public Set<Position> expandPositions(Position origin, int boundWidth, int boundHeight,
+                                       Function<Position, Piece> getPiece) {
+    Set<Position> positions = new HashSet<>();
 
     Position resultingPos = origin.add(new Position(deltaColumn, deltaRow));
 

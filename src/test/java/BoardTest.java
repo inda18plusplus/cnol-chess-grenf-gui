@@ -1,13 +1,11 @@
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.concurrent.ArrayBlockingQueue;
 import org.junit.Test;
 import piece.Knight;
-import piece.Position;
 import piece.Pawn;
 import piece.Piece;
-
-import static org.junit.Assert.*;
+import piece.Position;
+import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
 

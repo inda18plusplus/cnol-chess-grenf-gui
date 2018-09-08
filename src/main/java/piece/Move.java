@@ -1,6 +1,6 @@
 package piece;
 
-import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 public abstract class Move {
@@ -10,7 +10,7 @@ public abstract class Move {
     NO_CAPTURE
   }
 
-  protected CaptureRule captureRule;
+  protected CaptureRule captureRule = CaptureRule.CAN_CAPTURE;
 
   /**
    * Get all possible moves.
@@ -20,7 +20,7 @@ public abstract class Move {
    * @param getPiece The piece at a certain position
    * @return A list of positions this move allows a piece to move to
    */
-  public abstract List<Position> expandPositions(Position origin,
-                                                 int boundWidth, int boundHeight,
-                                                 Function<Position, Piece> getPiece);
+  public abstract Set<Position> expandPositions(Position origin,
+                                                int boundWidth, int boundHeight,
+                                                Function<Position, Piece> getPiece);
 }

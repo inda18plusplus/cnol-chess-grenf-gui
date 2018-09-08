@@ -39,7 +39,7 @@ public class Chess {
 
 
   private void interpretCommand(String line) {
-    String[] words = line.split(" ");
+    String[] words = line.trim().replaceAll(" +", " ").split(" ");
 
     if (words.length == 0) {
       return;
@@ -48,9 +48,9 @@ public class Chess {
     String command = words[0];
 
     switch (command) {
-        // Display the board
+      // Display the board
       case "d":
-        this.displayBoard();
+        System.out.println(this.formattedBoard());
         break;
 
         // Move a piece
@@ -79,10 +79,10 @@ public class Chess {
 
           Set<Position> possible = board.availableDestinations(position);
 
-          StringBuffer buffer = new StringBuffer(board.toString());
+          StringBuffer buffer = new StringBuffer(this.formattedBoard());
 
           for (Position pos : possible) {
-            int index = (pos.getRow() + 1) * 9 + pos.getColumn() + 1;
+            int index = (pos.getRow() + 1) * 10 + pos.getColumn() + 1;
 
             buffer.setCharAt(index, 'X');
           }
@@ -108,8 +108,18 @@ public class Chess {
     }
   }
 
-  private void displayBoard() {
-    System.out.println(this.board);
+  private String formattedBoard() {
+    StringBuffer buffer = new StringBuffer(board.toString());
+
+    for (int row = 7; row >= 0; row--) {
+      buffer.insert(row * 9, Integer.toString(row));
+    }
+
+    buffer.insert(0, " 01234567\n");
+
+    buffer.append("Current turn: " + board.getCurrentColor().toString());
+
+    return buffer.toString();
   }
 
   private Position parsePosition(String word) {

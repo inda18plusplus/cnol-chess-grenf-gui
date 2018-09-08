@@ -73,7 +73,7 @@ public class Board {
         Set<Move> moves = piece.getMoveSet();
 
         for (Move move : moves) {
-          List<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
+          Set<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
                                                                    this::getPiece);
           destinations.addAll(availablePositions);
         }
@@ -84,14 +84,20 @@ public class Board {
   }
 
 
+  /**
+   * Get the color of the current player.
+   * @return the color
+   */
+  public Piece.Color getCurrentColor() {
+    return this.currentPlayingColor;
+  }
+
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
 
-    builder.append(" 01234567\n");
-
     for (int row = 0; row < 8; row++) {
-      builder.append(row);
       for (int col = 0; col < 8; col++) {
         Piece piece = this.pieces[row][col];
 
