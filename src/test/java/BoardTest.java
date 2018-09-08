@@ -19,11 +19,98 @@ public class BoardTest {
     movePawnInvalidOrder();
 
 
+    movePawnAttackingHostileToRightSide();
+    movePawnAttackingFriendlyToRightSide();
+
+    movePawnAttackingHostileToLeftSide();
+    movePawnAttackingFriendlyToLeftSide();
+
+
     moveWhitePawnInvalidDirectionSide();
     moveWhitePawnInvalidDirectionBack();
 
     moveBlackPawnInvalidDirectionSide();
     moveBlackPawnInvalidDirectionBack();
+  }
+
+  private void movePawnAttackingFriendlyToLeftSide() {
+    Board board = new Board();
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
+
+    assert !board.move(new Position(4, 3), new Position(3, 2));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "...P....\n" +
+            "....P...\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void movePawnAttackingHostileToLeftSide() {
+    Board board = new Board();
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+
+    assert board.move(new Position(4, 3), new Position(3, 2));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "...P....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void movePawnAttackingFriendlyToRightSide() {
+    Board board = new Board();
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
+
+    assert !board.move(new Position(2, 3), new Position(3, 2));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "...P....\n" +
+            "..P.....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
+  }
+
+  private void movePawnAttackingHostileToRightSide() {
+    Board board = new Board();
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
+
+    assert board.move(new Position(2, 3), new Position(3, 2));
+
+    assertEquals(
+        "........\n" +
+            "........\n" +
+            "...P....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
   }
 
   private void movePawnInvalidOrder() {

@@ -48,7 +48,7 @@ public class Board {
         this.setPiece(sourcePiece, newPosition);
         this.setPiece(null, piecePosition);
         
-        this.nextPlayerTurn();
+        this.nextColor();
         
         return true;
       }
@@ -57,7 +57,7 @@ public class Board {
     return false;
   }
 
-  private void nextPlayerTurn() {
+  private void nextColor() {
     if (this.currentPlayingColor == Piece.Color.BLACK) {
       this.currentPlayingColor = Piece.Color.WHITE;
     } else {

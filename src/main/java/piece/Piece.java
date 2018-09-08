@@ -25,7 +25,7 @@ public abstract class Piece {
   public boolean canCapture(Piece other, Move.CaptureRule captureRule) {
     if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
       return true;
-    } else if (other.color != this.color
+    } else if (other != null && other.color != this.color
         && (captureRule == Move.CaptureRule.CAN_CAPTURE
         || captureRule == Move.CaptureRule.MUST_CAPTURE)) {
       return true;

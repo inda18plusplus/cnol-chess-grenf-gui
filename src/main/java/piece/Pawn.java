@@ -27,6 +27,8 @@ public class Pawn extends Piece {
     int deltaRow = super.color == Color.BLACK ? 1 : -1;
 
     moves.add(new RelativeMove(0, deltaRow, Move.CaptureRule.NO_CAPTURE));
+    moves.add(new RelativeMove(-1, deltaRow, Move.CaptureRule.MUST_CAPTURE));
+    moves.add(new RelativeMove(1, deltaRow, Move.CaptureRule.MUST_CAPTURE));
 
     return moves;
   }
