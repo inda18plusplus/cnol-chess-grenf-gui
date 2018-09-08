@@ -1,10 +1,12 @@
 import java.util.Scanner;
 import java.util.Set;
+import piece.Bishop;
 import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
 import piece.Position;
+import piece.Queen;
 import piece.Rook;
 
 
@@ -107,6 +109,12 @@ public class Chess {
 
       case "r": return new Rook(Color.BLACK);
       case "R": return new Rook(Color.WHITE);
+
+      case "b": return new Bishop(Color.BLACK);
+      case "B": return new Bishop(Color.WHITE);
+
+      case "q": return new Queen(Color.BLACK);
+      case "Q": return new Queen(Color.WHITE);
 
       default: return null;
     }
