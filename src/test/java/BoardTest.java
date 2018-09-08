@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import org.junit.Test;
 import piece.Bishop;
@@ -41,6 +42,9 @@ public class BoardTest {
 
   @Test
   public void availableDestinations() {
+    availableDestinationsPawnFirstMove();
+    availableDestinationsPawnSecondMove();
+
     availableDestinationsKnight();
     availableDestinationsKnightOutOfBounds();
 
@@ -49,6 +53,34 @@ public class BoardTest {
     availableDestinationsQueen();
 
     availableDestinationsKing();
+  }
+
+  private void availableDestinationsPawnSecondMove() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
+    assert board.move(new Position(4, 6), new Position(4, 5));
+
+    assertEquals(
+        new HashSet<>(Collections.singletonList(
+            new Position(4, 4)
+        )),
+        board.availableDestinations(new Position(4, 5))
+    );
+  }
+
+  private void availableDestinationsPawnFirstMove() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(4, 5),
+            new Position(4, 4)
+        )),
+        board.availableDestinations(new Position(4, 6))
+    );
   }
 
   private void availableDestinationsKing() {

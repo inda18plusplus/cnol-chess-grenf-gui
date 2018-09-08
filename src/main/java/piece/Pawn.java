@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends Piece {
+  private boolean hasMoved = false;
+
   public Pawn(Color color) {
     super(color);
   }
@@ -26,10 +28,14 @@ public class Pawn extends Piece {
 
     int deltaRow = super.color == Color.BLACK ? 1 : -1;
 
-    moves.add(new RelativeMove(0, deltaRow, Move.CaptureRule.NO_CAPTURE));
+    moves.add(new LinearMove(0, deltaRow, this.hasMoved ? 1 : 2, Move.CaptureRule.NO_CAPTURE));
     moves.add(new RelativeMove(-1, deltaRow, Move.CaptureRule.MUST_CAPTURE));
     moves.add(new RelativeMove(1, deltaRow, Move.CaptureRule.MUST_CAPTURE));
 
     return moves;
+  }
+
+  @Override public void onMove() {
+    this.hasMoved = true;
   }
 }

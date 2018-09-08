@@ -38,7 +38,12 @@ public abstract class Piece {
     return this.color == color;
   }
 
+  // The char representation of a piece
   public abstract char toChar();
 
+  // The set of moves of a piece can perform
   public abstract Set<Move> getMoveSet();
+
+  // Called when a piece is moved
+  public void onMove() {}
 }

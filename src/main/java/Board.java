@@ -1,19 +1,40 @@
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import piece.Bishop;
+import piece.King;
+import piece.Knight;
 import piece.Move;
+import piece.Pawn;
 import piece.Piece;
 import piece.Position;
+import piece.Queen;
+import piece.Rook;
 
 public class Board {
   private Piece[][] pieces;
   private Piece.Color currentPlayingColor;
 
-  Board() {
+  /**
+   * Creates an empty board.
+   */
+  public Board() {
     this.pieces = new Piece[8][8];
     this.currentPlayingColor = Piece.Color.WHITE;
   }
 
+
+  /**
+   * Creates a board with a predefined layout.
+   *
+   * @param layout The layout to use
+   */
+  public Board(Layout layout) {
+    this();
+
+    this.applyLayout(layout);
+  }
 
   /**
    * Places an additional piece on the board.
@@ -47,9 +68,11 @@ public class Board {
       if (sourcePiece.isOfColor(this.currentPlayingColor)) {
         this.setPiece(sourcePiece, newPosition);
         this.setPiece(null, piecePosition);
-        
+
+        sourcePiece.onMove();
+
         this.nextColor();
-        
+
         return true;
       }
     }
@@ -57,9 +80,9 @@ public class Board {
     return false;
   }
 
-
   /**
    * Compute the available legal destinations of a piece.
+   *
    * @param piecePosition The position of the piece
    * @return The destinations
    */
@@ -74,7 +97,7 @@ public class Board {
 
         for (Move move : moves) {
           Set<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
-                                                                   this::getPiece);
+                                                                  this::getPiece);
           destinations.addAll(availablePositions);
         }
       }
@@ -83,15 +106,14 @@ public class Board {
     return destinations;
   }
 
-
   /**
    * Get the color of the current player.
+   *
    * @return the color
    */
   public Piece.Color getCurrentColor() {
     return this.currentPlayingColor;
   }
-
 
   @Override
   public String toString() {
@@ -115,6 +137,67 @@ public class Board {
     }
 
     return builder.toString();
+  }
+
+  private void applyLayout(Layout layout) {
+    switch (layout) {
+      case CLASSIC:
+        this.layoutFromText(
+            "rnbqkbnr\n"
+                + "pppppppp\n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "PPPPPPPP\n"
+                + "RNBQKBNR\n"
+        );
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private void layoutFromText(String text) {
+    int column = 0;
+    int row = 0;
+
+    for (int i = 0; i < text.length(); i++) {
+      char character = text.charAt(i);
+
+      switch (character) {
+        case '\n':
+          row++;
+          column = 0;
+          break;
+        default:
+          Piece piece = this.pieceFromCharacter(character);
+          this.place(piece, new Position(column, row));
+
+          column++;
+          break;
+      }
+    }
+  }
+
+  private Piece pieceFromCharacter(char character) {
+    Piece.Color color;
+    if (Character.isUpperCase(character)) {
+      color = Piece.Color.WHITE;
+    } else {
+      color = Piece.Color.BLACK;
+    }
+
+    switch (Character.toLowerCase(character)) {
+      case 'p': return new Pawn(color);
+      case 'n': return new Knight(color);
+      case 'r': return new Rook(color);
+      case 'b': return new Bishop(color);
+      case 'q': return new Queen(color);
+      case 'k': return new King(color);
+      default: return null;
+    }
   }
 
   private boolean onBoard(Position position) {
@@ -145,5 +228,9 @@ public class Board {
     Set<Position> availablePositions = availableDestinations(piecePosition);
 
     return availablePositions.contains(newPosition);
+  }
+
+  enum Layout {
+    CLASSIC
   }
 }
