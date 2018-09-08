@@ -15,14 +15,35 @@ public class BoardTest {
 
   @Test
   public void move() {
-    moveBlackPawn();
-    moveWhitePawn();
+    movePawn();
+    movePawnInvalidOrder();
 
     moveWhitePawnInvalidDirectionSide();
     moveWhitePawnInvalidDirectionBack();
 
     moveBlackPawnInvalidDirectionSide();
     moveBlackPawnInvalidDirectionBack();
+  }
+
+  private void movePawnInvalidOrder() {
+    Board board = new Board();
+    board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
+
+    board.move(new Position(3, 1), new Position(6, 2));
+    board.move(new Position(6, 6), new Position(6, 5));
+
+    assertEquals(
+        "........\n" +
+            "...p....\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "......P.\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
   }
 
   private void moveBlackPawnInvalidDirectionBack() {
@@ -101,38 +122,21 @@ public class BoardTest {
     );
   }
 
-  private void moveWhitePawn() {
+  private void movePawn() {
     Board board = new Board();
     board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
+    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
 
     board.move(new Position(6, 6), new Position(6, 5));
+    board.move(new Position(3, 1), new Position(6, 2));
 
     assertEquals(
         "........\n" +
-            "........\n" +
-            "........\n" +
-            "........\n" +
-            "........\n" +
-            "......P.\n" +
-            "........\n" +
-            "........\n",
-        board.toString()
-    );
-  }
-
-  private void moveBlackPawn() {
-    Board board = new Board();
-    board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
-
-    board.move(new Position(3, 2), new Position(3, 3));
-
-    assertEquals(
-        "........\n" +
-            "........\n" +
             "........\n" +
             "...p....\n" +
             "........\n" +
             "........\n" +
+            "......P.\n" +
             "........\n" +
             "........\n",
         board.toString()
