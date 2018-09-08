@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.Test;
 import piece.Bishop;
+import piece.King;
 import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
@@ -46,6 +47,30 @@ public class BoardTest {
     availableDestinationsRook();
     availableDestinationsBishop();
     availableDestinationsQueen();
+
+    availableDestinationsKing();
+  }
+
+  private void availableDestinationsKing() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(4, 4));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(3, 3),
+            new Position(4, 3),
+            new Position(5, 3),
+
+            new Position(3, 4),
+            new Position(5, 4),
+
+            new Position(3, 5),
+            new Position(4, 5),
+            new Position(5, 5)
+        )),
+        board.availableDestinations(new Position(4, 4))
+    );
   }
 
   private void availableDestinationsQueen() {

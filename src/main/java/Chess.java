@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Set;
 import piece.Bishop;
+import piece.King;
 import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
@@ -115,6 +116,9 @@ public class Chess {
 
       case "q": return new Queen(Color.BLACK);
       case "Q": return new Queen(Color.WHITE);
+
+      case "k": return new King(Color.BLACK);
+      case "K": return new King(Color.WHITE);
 
       default: return null;
     }
