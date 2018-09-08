@@ -1,3 +1,5 @@
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,13 +59,32 @@ public class Board {
     return false;
   }
 
-  private void nextColor() {
-    if (this.currentPlayingColor == Piece.Color.BLACK) {
-      this.currentPlayingColor = Piece.Color.WHITE;
-    } else {
-      this.currentPlayingColor = Piece.Color.BLACK;
+
+  /**
+   * Compute the available legal destinations of a piece.
+   * @param piecePosition The position of the piece
+   * @return The destinations
+   */
+  public Set<Position> availableDestinations(Position piecePosition) {
+    Set<Position> destinations = new HashSet<>();
+
+    if (onBoard(piecePosition)) {
+      Piece piece = this.getPiece(piecePosition);
+
+      if (piece != null) {
+        Set<Move> moves = piece.getMoveSet();
+
+        for (Move move : moves) {
+          List<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
+                                                                   this::getPiece);
+          destinations.addAll(availablePositions);
+        }
+      }
     }
+
+    return destinations;
   }
+
 
   @Override
   public String toString() {
@@ -98,42 +119,23 @@ public class Board {
     this.pieces[position.getRow()][position.getColumn()] = piece;
   }
 
-
   private Piece getPiece(Position position) {
     assert (onBoard(position));
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
 
-  private boolean isValidMove(Position piecePosition, Position newPosition) {
-    if (onBoard(piecePosition) && onBoard(newPosition)) {
-      Piece piece = this.getPiece(piecePosition);
-
-      if (piece != null) {
-        Set<Move> moves = piece.getMoveSet();
-
-        Set<Position> availablePositions = resultingPositions(piecePosition, moves);
-
-        if (availablePositions.contains(newPosition)) {
-          return true;
-        }
-      }
+  private void nextColor() {
+    if (this.currentPlayingColor == Piece.Color.BLACK) {
+      this.currentPlayingColor = Piece.Color.WHITE;
+    } else {
+      this.currentPlayingColor = Piece.Color.BLACK;
     }
-
-    return false;
   }
 
-  private Set<Position> resultingPositions(Position piecePosition, Set<Move> moves) {
-    Set<Position> positions = new HashSet<>();
+  private boolean isValidMove(Position piecePosition, Position newPosition) {
+    Set<Position> availablePositions = availableDestinations(piecePosition);
 
-    for (Move move : moves) {
-      List<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
-                                                               this::getPiece);
-      for (Position position : availablePositions) {
-        positions.add(position);
-      }
-    }
-
-    return positions;
+    return availablePositions.contains(newPosition);
   }
 }
