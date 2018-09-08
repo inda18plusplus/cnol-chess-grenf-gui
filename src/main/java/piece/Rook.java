@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Rook extends Piece {
@@ -19,6 +20,13 @@ public class Rook extends Piece {
   }
 
   @Override public Set<Move> getMoveSet() {
-    return null;
+    Set<Move> moves = new HashSet<>();
+
+    moves.add(new LinearMove(1, 0));
+    moves.add(new LinearMove(-1, 0));
+    moves.add(new LinearMove(0, 1));
+    moves.add(new LinearMove(0, -1));
+
+    return moves;
   }
 }

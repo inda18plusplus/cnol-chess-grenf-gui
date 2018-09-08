@@ -5,6 +5,7 @@ import piece.Pawn;
 import piece.Piece;
 import piece.Piece.Color;
 import piece.Position;
+import piece.Rook;
 
 
 /**
@@ -103,6 +104,9 @@ public class Chess {
 
       case "n": return new Knight(Color.BLACK);
       case "N": return new Knight(Color.WHITE);
+
+      case "r": return new Rook(Color.BLACK);
+      case "R": return new Rook(Color.WHITE);
 
       default: return null;
     }
