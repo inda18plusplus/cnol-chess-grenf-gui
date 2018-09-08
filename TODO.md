@@ -1,13 +1,7 @@
 # TODO
 
-- Pieces
-  - Knight
-  - Bishop
-  - Rook
-  - King 
-  - Queen
-- Moves
-  - LinearMove (dx, dy)
+- Default positions
 - Promotion
 - Castling
 - En Passant
+- Checking for checks
