@@ -1,10 +1,12 @@
 import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.Test;
+import piece.Bishop;
 import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
 import piece.Position;
+import piece.Rook;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
@@ -39,6 +41,68 @@ public class BoardTest {
   public void availableDestinations() {
     availableDestinationsKnight();
     availableDestinationsKnightOutOfBounds();
+
+    availableDestinationsRook();
+    availableDestinationsBishop();
+  }
+
+  private void availableDestinationsBishop() {
+    Board board = new Board();
+
+    assert board.place(new Bishop(Piece.Color.WHITE), new Position(4, 4));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(0, 0),
+            new Position(1, 1),
+            new Position(2, 2),
+            new Position(3, 3),
+
+            new Position(5, 5),
+            new Position(6, 6),
+            new Position(7, 7),
+
+
+            new Position(7, 1),
+            new Position(6, 2),
+            new Position(5, 3),
+
+            new Position(3, 5),
+            new Position(2, 6),
+            new Position(1, 7)
+        )),
+        board.availableDestinations(new Position(4, 4))
+    );
+  }
+
+  private void availableDestinationsRook() {
+    Board board = new Board();
+
+    assert board.place(new Rook(Piece.Color.WHITE), new Position(4, 4));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(0, 4),
+            new Position(1, 4),
+            new Position(2, 4),
+            new Position(3, 4),
+
+            new Position(5, 4),
+            new Position(6, 4),
+            new Position(7, 4),
+
+
+            new Position(4, 0),
+            new Position(4, 1),
+            new Position(4, 2),
+            new Position(4, 3),
+
+            new Position(4, 5),
+            new Position(4, 6),
+            new Position(4, 7)
+        )),
+        board.availableDestinations(new Position(4, 4))
+    );
   }
 
   private void availableDestinationsKnightOutOfBounds() {
