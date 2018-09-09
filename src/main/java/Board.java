@@ -273,7 +273,6 @@ public class Board {
 
       if (piece != null) {
         Set<Move> moves = piece.getMoveSet();
-        Piece.Color color = piece.getColor();
 
         for (Move move : moves) {
           Set<Position> availablePositions =
@@ -455,27 +454,7 @@ public class Board {
     NONE,
     CHECK,
     CHECKMATE,
-    STALEMATE;
-
-    /**
-     * Determines if a check is currently happening.
-     *
-     * @return If a check is happening
-     */
-    public boolean inCheck() {
-      switch (this) {
-        case CHECK:
-        case CHECKMATE:
-          return true;
-        case NONE:
-        case STALEMATE:
-          return false;
-
-        // Stop java from complaining, even though every case is handled...
-        default:
-          return false;
-      }
-    }
+    STALEMATE
   }
 
   public enum PromotionOption {

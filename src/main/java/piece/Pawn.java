@@ -15,6 +15,7 @@ public class Pawn extends Piece {
   private Pawn(Pawn pawn) {
     super(pawn.color);
     this.hasMoved = pawn.hasMoved;
+    this.enPassantColumnDirection = pawn.enPassantColumnDirection;
   }
 
   @Override

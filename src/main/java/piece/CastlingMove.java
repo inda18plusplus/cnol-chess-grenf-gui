@@ -74,8 +74,4 @@ public class CastlingMove extends Move {
     sourcePiece.onMove(oldPosition, newPosition, getPiece);
     targetPiece.onMove(oldTargetPosition, newTargetPosition, getPiece);
   }
-
-  @Override public boolean blockedByCheck() {
-    return true;
-  }
 }

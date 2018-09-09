@@ -31,15 +31,6 @@ public abstract class Move {
       int boundWidth, int boundHeight,
       Function<Position, Piece> getPiece);
 
-
-  /**
-   * Determines if this move is considered illegal if there's a check.
-   * @return True if the move is blocked
-   */
-  public boolean blockedByCheck() {
-    return false;
-  }
-
   enum CaptureRule {
     MUST_CAPTURE,
     CAN_CAPTURE,
