@@ -81,7 +81,7 @@ public class Chess {
         if (words.length == 2) {
           Position position = parsePosition(words[1]);
 
-          Set<Position> possible = board.availableDestinations(position);
+          Set<Position> possible = board.legalDestinations(position);
 
           StringBuffer buffer = new StringBuffer(this.formattedBoard());
 
@@ -97,8 +97,8 @@ public class Chess {
 
         // Determine if check
       case "c":
-        System.out.println("White in check: " + board.isColorInCheck(Color.WHITE));
-        System.out.println("Black in check: " + board.isColorInCheck(Color.BLACK));
+        System.out.println("White in check: " + board.getColorCheckType(Color.WHITE));
+        System.out.println("Black in check: " + board.getColorCheckType(Color.BLACK));
         break;
 
       default:

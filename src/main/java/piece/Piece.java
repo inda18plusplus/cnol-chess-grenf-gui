@@ -28,7 +28,7 @@ public abstract class Piece {
   public boolean canCapture(Piece other, Move.CaptureRule captureRule) {
     if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
       return true;
-    } else if (other != null && other.color != this.color
+    } else if (other != null && !this.isOfColor(other.color)
         && (captureRule == Move.CaptureRule.CAN_CAPTURE
         || captureRule == Move.CaptureRule.MUST_CAPTURE)) {
       return true;
@@ -54,6 +54,9 @@ public abstract class Piece {
 
   // Called when a piece is moved
   public void onMove() {}
+
+  // Create a deep copy of this piece
+  public abstract Piece makeCopy();
 
   public enum Color {
     BLACK, WHITE;

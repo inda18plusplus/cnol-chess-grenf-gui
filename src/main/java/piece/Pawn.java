@@ -10,6 +10,11 @@ public class Pawn extends Piece {
     super(color);
   }
 
+  Pawn(Pawn pawn) {
+    super(pawn.color);
+    this.hasMoved = pawn.hasMoved;
+  }
+
   @Override
   public char toChar() {
     switch (super.color) {
@@ -37,5 +42,9 @@ public class Pawn extends Piece {
 
   @Override public void onMove() {
     this.hasMoved = true;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Pawn(this);
   }
 }

@@ -41,23 +41,71 @@ public class BoardTest {
   }
 
   @Test
-  public void availableDestinations() {
-    availableDestinationsPawnFirstMove();
-    availableDestinationsPawnSecondMove();
+  public void legalDestinations() {
+    legalDestinationsPawnFirstMove();
+    legalDestinationsPawnSecondMove();
 
-    availableDestinationsKnight();
-    availableDestinationsKnightOutOfBounds();
+    legalDestinationsKnight();
+    legalDestinationsKnightOutOfBounds();
 
-    availableDestinationsRook();
-    availableDestinationsBishop();
-    availableDestinationsQueen();
+    legalDestinationsRook();
+    legalDestinationsBishop();
+    legalDestinationsQueen();
 
-    availableDestinationsKing();
+    legalDestinationsKing();
   }
 
   @Test
-  public void isColorInCheck() {
+  public void getColorCheckType() {
     pawnCheckKing();
+
+    kingInStalemate();
+    kingInCheckmate();
+
+    kingInCheckAvertByCapture();
+  }
+
+  private void kingInCheckAvertByCapture() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 1));
+
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(2, 0));
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(2, 1));
+
+    assertEquals(
+        Board.CheckType.CHECK,
+        board.getColorCheckType(Piece.Color.WHITE)
+    );
+  }
+
+  private void kingInCheckmate() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
+
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(2, 0));
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(2, 1));
+
+    assertEquals(
+        Board.CheckType.CHECKMATE,
+        board.getColorCheckType(Piece.Color.WHITE)
+    );
+  }
+
+  private void kingInStalemate() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
+
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(2, 1));
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(1, 2));
+
+    assertEquals(
+        Board.CheckType.STALEMATE,
+        board.getColorCheckType(Piece.Color.WHITE)
+    );
   }
 
   private void pawnCheckKing() {
@@ -66,11 +114,18 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(2, 3));
     assert board.place(new King(Piece.Color.WHITE), new Position(3, 4));
 
-    assert board.isColorInCheck(Piece.Color.WHITE);
-    assert !board.isColorInCheck(Piece.Color.BLACK);
+    assertEquals(
+        Board.CheckType.CHECK,
+        board.getColorCheckType(Piece.Color.WHITE)
+    );
+
+    assertEquals(
+        Board.CheckType.NONE,
+      board.getColorCheckType(Piece.Color.BLACK)
+    );
   }
 
-  private void availableDestinationsPawnSecondMove() {
+  private void legalDestinationsPawnSecondMove() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
@@ -80,11 +135,11 @@ public class BoardTest {
         new HashSet<>(Collections.singletonList(
             new Position(4, 4)
         )),
-        board.availableDestinations(new Position(4, 5))
+        board.legalDestinations(new Position(4, 5))
     );
   }
 
-  private void availableDestinationsPawnFirstMove() {
+  private void legalDestinationsPawnFirstMove() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
@@ -94,33 +149,28 @@ public class BoardTest {
             new Position(4, 5),
             new Position(4, 4)
         )),
-        board.availableDestinations(new Position(4, 6))
+        board.legalDestinations(new Position(4, 6))
     );
   }
 
-  private void availableDestinationsKing() {
+  private void legalDestinationsKing() {
     Board board = new Board();
 
     assert board.place(new King(Piece.Color.WHITE), new Position(4, 4));
 
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(4, 3));
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(3, 3));
+
     assertEquals(
         new HashSet<>(Arrays.asList(
-            new Position(3, 3),
-            new Position(4, 3),
-            new Position(5, 3),
-
-            new Position(3, 4),
             new Position(5, 4),
-
-            new Position(3, 5),
-            new Position(4, 5),
             new Position(5, 5)
         )),
-        board.availableDestinations(new Position(4, 4))
+        board.legalDestinations(new Position(4, 4))
     );
   }
 
-  private void availableDestinationsQueen() {
+  private void legalDestinationsQueen() {
     Board board = new Board();
 
     assert board.place(new Queen(Piece.Color.WHITE), new Position(4, 4));
@@ -167,11 +217,11 @@ public class BoardTest {
             new Position(4, 6),
             new Position(4, 7)
         )),
-        board.availableDestinations(new Position(4, 4))
+        board.legalDestinations(new Position(4, 4))
     );
   }
 
-  private void availableDestinationsBishop() {
+  private void legalDestinationsBishop() {
     Board board = new Board();
 
     assert board.place(new Bishop(Piece.Color.WHITE), new Position(4, 4));
@@ -196,11 +246,11 @@ public class BoardTest {
             new Position(2, 6),
             new Position(1, 7)
         )),
-        board.availableDestinations(new Position(4, 4))
+        board.legalDestinations(new Position(4, 4))
     );
   }
 
-  private void availableDestinationsRook() {
+  private void legalDestinationsRook() {
     Board board = new Board();
 
     assert board.place(new Rook(Piece.Color.WHITE), new Position(4, 4));
@@ -226,11 +276,11 @@ public class BoardTest {
             new Position(4, 6),
             new Position(4, 7)
         )),
-        board.availableDestinations(new Position(4, 4))
+        board.legalDestinations(new Position(4, 4))
     );
   }
 
-  private void availableDestinationsKnightOutOfBounds() {
+  private void legalDestinationsKnightOutOfBounds() {
     Board board = new Board();
 
     assert board.place(new Knight(Piece.Color.WHITE), new Position(7, 6));
@@ -241,11 +291,11 @@ public class BoardTest {
             new Position(5, 5),
             new Position(5, 7)
         )),
-        board.availableDestinations(new Position(7, 6))
+        board.legalDestinations(new Position(7, 6))
     );
   }
 
-  private void availableDestinationsKnight() {
+  private void legalDestinationsKnight() {
     Board board = new Board();
 
     assert board.place(new Knight(Piece.Color.WHITE), new Position(4, 4));
@@ -261,7 +311,7 @@ public class BoardTest {
             new Position(3, 6),
             new Position(5, 6)
         )),
-        board.availableDestinations(new Position(4, 4))
+        board.legalDestinations(new Position(4, 4))
     );
   }
 

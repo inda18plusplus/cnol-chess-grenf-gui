@@ -8,6 +8,10 @@ public class Queen extends Piece {
     super(color);
   }
 
+  public Queen(Queen queen) {
+    super(queen.color);
+  }
+
   @Override public char toChar() {
     switch (super.color) {
       case BLACK:
@@ -33,5 +37,9 @@ public class Queen extends Piece {
     moves.add(new LinearMove(-1, -1));
 
     return moves;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Queen(this);
   }
 }

@@ -8,6 +8,10 @@ public class Knight extends Piece {
     super(color);
   }
 
+  public Knight(Knight knight) {
+    super(knight.color);
+  }
+
   @Override public char toChar() {
     switch (super.color) {
       case BLACK:
@@ -33,5 +37,9 @@ public class Knight extends Piece {
     moves.add(new RelativeMove(-2, -1));
 
     return moves;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Knight(this);
   }
 }

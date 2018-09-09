@@ -2,7 +2,6 @@ package piece;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +29,7 @@ public class RelativeMoveTest {
   private void hostileNoCapture() {
     Move move = new RelativeMove(1, 2, Move.CaptureRule.NO_CAPTURE);
 
-    Set<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(2, 2), 8, 8, position -> {
       if (position.equals(new Position(2, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -47,7 +46,7 @@ public class RelativeMoveTest {
   private void friendlyCollision() {
     Move move = new RelativeMove(1, 2);
 
-    Set<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(2, 2), 8, 8, position -> {
       if (position.equals(new Position(2, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -64,7 +63,7 @@ public class RelativeMoveTest {
   private void hostileCapture() {
     Move move = new RelativeMove(1, 2);
 
-    Set<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(2, 2), 8, 8, position -> {
       if (position.equals(new Position(2, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -81,7 +80,7 @@ public class RelativeMoveTest {
   private void outOfBoundsLowerRow() {
      Move move = new RelativeMove(0, -1);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 0), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 0), 8, 8, position -> {
       if (position.equals(new Position(4, 0))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -98,7 +97,7 @@ public class RelativeMoveTest {
   private void outOfBoundsUpperRow() {
     Move move = new RelativeMove(0, 1);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 7), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 7), 8, 8, position -> {
       if (position.equals(new Position(4, 7))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -115,7 +114,7 @@ public class RelativeMoveTest {
   private void outOfBoundsLowerColumn() {
     Move move = new RelativeMove(-1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(0, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(0, 2), 8, 8, position -> {
       if (position.equals(new Position(0, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -131,7 +130,7 @@ public class RelativeMoveTest {
   private void outOfBoundsUpperColumn() {
     Move move = new RelativeMove(1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(7, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(7, 2), 8, 8, position -> {
       if (position.equals(new Position(7, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -148,7 +147,7 @@ public class RelativeMoveTest {
   private void noCollision() {
     Move move = new RelativeMove(1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(2, 2), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(2, 2), 8, 8, position -> {
       if (position.equals(new Position(2, 2))) {
         return new Pawn(Piece.Color.BLACK);
       } else {

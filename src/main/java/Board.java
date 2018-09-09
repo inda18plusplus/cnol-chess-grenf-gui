@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,6 +37,27 @@ public class Board {
 
     this.applyLayout(layout);
   }
+
+  /**
+   * Creates a copy of a board.
+   * @param board The board to copy.
+   */
+  Board(Board board) {
+    this.pieces = new Piece[8][8];
+
+    this.currentPlayingColor = board.currentPlayingColor;
+
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        Piece piece = board.pieces[row][col];
+
+        if (piece != null) {
+          this.pieces[row][col] = piece.makeCopy();
+        }
+      }
+    }
+  }
+
 
   /**
    * Places an additional piece on the board.
@@ -86,24 +109,26 @@ public class Board {
    * @param piecePosition The position of the piece
    * @return The destinations
    */
-  public Set<Position> availableDestinations(Position piecePosition) {
-    Set<Position> destinations = new HashSet<>();
+  public Set<Position> legalDestinations(Position piecePosition) {
+    Set<Position> availablePositions = this.availableDestinations(piecePosition);
 
-    if (onBoard(piecePosition)) {
-      Piece piece = this.getPiece(piecePosition);
+    Piece piece = this.getPiece(piecePosition);
 
-      if (piece != null) {
-        Set<Move> moves = piece.getMoveSet();
+    Set<Position> positionsResultingInCheck = new HashSet<>();
 
-        for (Move move : moves) {
-          Set<Position> availablePositions = move.expandPositions(piecePosition, 8, 8,
-                                                                  this::getPiece);
-          destinations.addAll(availablePositions);
-        }
+    for (Position position : availablePositions) {
+      Board temporaryBoard = new Board(this);
+
+      temporaryBoard.move(piecePosition, position);
+
+      if (temporaryBoard.isColorInCheck(piece.getColor())) {
+        positionsResultingInCheck.add(position);
       }
     }
 
-    return destinations;
+    availablePositions.removeAll(positionsResultingInCheck);
+
+    return availablePositions;
   }
 
   /**
@@ -114,7 +139,6 @@ public class Board {
   public Piece.Color getCurrentColor() {
     return this.currentPlayingColor;
   }
-
 
   @Override
   public String toString() {
@@ -140,6 +164,76 @@ public class Board {
     return builder.toString();
   }
 
+  /**
+   * Determines the severity of a check.
+   *
+   * @param  color The color of the player to
+   * @return The type of check
+   */
+  public CheckType getColorCheckType(Piece.Color color) {
+    Map<Position, Set<Position>> possibleMoves = this.getAllPossibleMoves(color);
+
+    if (this.isColorInCheck(color)) {
+      if (possibleMoves.isEmpty()) {
+        return CheckType.CHECKMATE;
+      } else {
+        return CheckType.CHECK;
+      }
+    } else {
+      if (possibleMoves.isEmpty()) {
+        return CheckType.STALEMATE;
+      } else {
+        return CheckType.NONE;
+      }
+    }
+  }
+
+  /**
+   * For each of a color's pieces return a set of legal moves.
+   * @param color The color of the pieces
+   * @return The moves of the pieces
+   */
+  public Map<Position, Set<Position>> getAllPossibleMoves(Piece.Color color) {
+    Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
+
+    Map<Position, Set<Position>> possibleMoves = new HashMap<>();
+
+    for (Position tile : friendlyTiles) {
+      Set<Position> legalMoves = this.legalDestinations(tile);
+
+      if (!legalMoves.isEmpty()) {
+        possibleMoves.put(tile, legalMoves);
+      }
+    }
+
+    return possibleMoves;
+  }
+
+  private boolean isColorInCheck(Piece.Color color) {
+    return !this.getCheckedTiles(color).isEmpty();
+  }
+
+  private Set<Position> availableDestinations(Position piecePosition) {
+    Set<Position> destinations = new HashSet<>();
+
+    if (onBoard(piecePosition)) {
+      Piece piece = this.getPiece(piecePosition);
+
+      if (piece != null) {
+        Set<Move> moves = piece.getMoveSet();
+
+        for (Move move : moves) {
+          Set<Position> availablePositions = move.getDestinations(piecePosition, 8, 8,
+                                                                  this::getPiece);
+          destinations.addAll(availablePositions);
+        }
+
+        return destinations;
+      }
+    }
+
+    return destinations;
+  }
 
   private void applyLayout(Layout layout) {
     switch (layout) {
@@ -160,7 +254,6 @@ public class Board {
         break;
     }
   }
-
 
   private void layoutFromText(String text) {
     int column = 0;
@@ -183,7 +276,6 @@ public class Board {
       }
     }
   }
-
 
   private Piece pieceFromCharacter(char character) {
     Piece.Color color;
@@ -211,11 +303,9 @@ public class Board {
     }
   }
 
-
   private boolean onBoard(Position position) {
     return position.inBound(0, 0, 8, 8);
   }
-
 
   private void setPiece(Piece piece, Position position) {
     assert (onBoard(position));
@@ -223,36 +313,21 @@ public class Board {
     this.pieces[position.getRow()][position.getColumn()] = piece;
   }
 
-
   private Piece getPiece(Position position) {
     assert (onBoard(position));
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
 
-
   private void nextColor() {
     this.currentPlayingColor = this.currentPlayingColor.opposite();
   }
-
 
   private boolean isValidMove(Position piecePosition, Position newPosition) {
     Set<Position> availablePositions = availableDestinations(piecePosition);
 
     return availablePositions.contains(newPosition);
   }
-
-
-  /**
-   * Determines if a player of a specific color is in check.
-   *
-   * @param color The color of the player
-   * @return Check or not
-   */
-  public boolean isColorInCheck(Piece.Color color) {
-    return !this.getCheckedTiles(color).isEmpty();
-  }
-
 
   private Set<Position> getCheckedTiles(Piece.Color color) {
     Set<Position> attackedTiles = this.getControlledTiles(color.opposite());
@@ -263,8 +338,7 @@ public class Board {
     return attackedTiles;
   }
 
-
-  private Set<Position> getTilesWhere(Function<Piece, Boolean> predicate) {
+  private Set<Position> getTilesWherePiece(Function<Piece, Boolean> predicate) {
     Set<Position> tiles = new HashSet<>();
 
     for (int row = 0; row < 8; row++) {
@@ -281,9 +355,8 @@ public class Board {
     return tiles;
   }
 
-
   private Set<Position> getControlledTiles(Piece.Color color) {
-    return this.getTilesWhere(piece -> piece.isOfColor(color))
+    return this.getTilesWherePiece(piece -> piece.isOfColor(color))
         .stream()
         .map(this::availableDestinations)
         .flatMap(Set::stream)
@@ -291,11 +364,37 @@ public class Board {
   }
 
   private Set<Position> getNonExpendableTiles(Piece.Color color) {
-    return this.getTilesWhere(piece -> piece.isOfColor(color) && !piece.isExpendable());
+    return this.getTilesWherePiece(piece -> piece.isOfColor(color) && !piece.isExpendable());
   }
 
 
   enum Layout {
     CLASSIC
+  }
+
+  enum CheckType {
+    NONE,
+    CHECK,
+    CHECKMATE,
+    STALEMATE;
+
+    /**
+     * Determines if a check is currently happening.
+     *
+     * @return If a check is happening
+     */
+    public boolean inCheck() {
+      switch (this) {
+        case CHECK:
+        case CHECKMATE:
+          return true;
+        case NONE:
+        case STALEMATE:
+          return false;
+      }
+
+      // Stop java from complaining, even though every case is handled...
+      return false;
+    }
   }
 }

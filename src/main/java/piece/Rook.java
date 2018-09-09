@@ -8,6 +8,10 @@ public class Rook extends Piece {
     super(color);
   }
 
+  Rook(Rook rook) {
+    super(rook.color);
+  }
+
   @Override public char toChar() {
     switch (super.color) {
       case BLACK:
@@ -28,5 +32,9 @@ public class Rook extends Piece {
     moves.add(new LinearMove(0, -1));
 
     return moves;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Rook(this);
   }
 }

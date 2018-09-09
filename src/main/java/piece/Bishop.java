@@ -8,6 +8,10 @@ public class Bishop extends Piece {
     super(color);
   }
 
+  public Bishop(Bishop bishop) {
+    super(bishop.color);
+  }
+
   @Override public char toChar() {
     switch (super.color) {
       case BLACK:
@@ -28,5 +32,9 @@ public class Bishop extends Piece {
     moves.add(new LinearMove(-1, -1));
 
     return moves;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Bishop(this);
   }
 }

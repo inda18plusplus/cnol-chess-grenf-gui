@@ -23,7 +23,7 @@ public class LinearMoveTest {
   private void expandToCaptureFriendly() {
     LinearMove move = new LinearMove(1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else if (position.equals(new Position(6, 4))) {
@@ -44,7 +44,7 @@ public class LinearMoveTest {
   private void expandToCaptureHostile() {
     LinearMove move = new LinearMove(1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else if (position.equals(new Position(6, 4))) {
@@ -66,7 +66,7 @@ public class LinearMoveTest {
   private void expandToLowerRow() {
     LinearMove move = new LinearMove(0, -1);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -88,7 +88,7 @@ public class LinearMoveTest {
   private void expandToUpperRow() {
     LinearMove move = new LinearMove(0, 1);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -109,7 +109,7 @@ public class LinearMoveTest {
   private void expandToLowerColumn() {
     LinearMove move = new LinearMove(-1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else {
@@ -131,7 +131,7 @@ public class LinearMoveTest {
   private void expandToUpperColumn() {
     LinearMove move = new LinearMove(1, 0);
 
-    Set<Position> positions = move.expandPositions(new Position(4, 4), 8, 8, position -> {
+    Set<Position> positions = move.getDestinations(new Position(4, 4), 8, 8, position -> {
       if (position.equals(new Position(4, 4))) {
         return new Pawn(Piece.Color.BLACK);
       } else {

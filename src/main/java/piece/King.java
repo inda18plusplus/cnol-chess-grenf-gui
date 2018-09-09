@@ -8,6 +8,10 @@ public class King extends Piece {
     super(color);
   }
 
+  King(King king) {
+    super(king.color);
+  }
+
   @Override public char toChar() {
     switch (super.color) {
       case BLACK:
@@ -38,5 +42,9 @@ public class King extends Piece {
 
   @Override public boolean isExpendable() {
     return false;
+  }
+
+  @Override public Piece makeCopy() {
+    return new King(this);
   }
 }

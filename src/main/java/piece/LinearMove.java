@@ -26,8 +26,17 @@ public class LinearMove extends Move {
     this.maxSteps = maxSteps;
   }
 
-  @Override public Set<Position> expandPositions(Position origin, int boundWidth, int boundHeight,
-                                                  Function<Position, Piece> getPiece) {
+  @Override public Set<Position> getDestinations(Position origin, int boundWidth, int boundHeight,
+      Function<Position, Piece> getPiece) {
+    Piece sourcePiece = getPiece.apply(origin);
+
+    return this.seekLineUntil(origin, boundWidth, boundHeight, getPiece,
+        piece -> sourcePiece.canCapture(piece, this.captureRule));
+  }
+
+  private Set<Position> seekLineUntil(Position origin, int boundWidth, int boundHeight,
+      Function<Position, Piece> getPiece,
+      Function<Piece, Boolean> predicate) {
     Set<Position> positions = new HashSet<>();
 
     Position delta = new Position(deltaColumn, deltaRow);
@@ -36,11 +45,11 @@ public class LinearMove extends Move {
 
     int steps = 0;
 
-    while (resultingPos.inBound(0, 0, boundWidth, boundHeight)) {
-      Piece targetPiece = getPiece.apply(resultingPos);
+    if (sourcePiece != null) {
+      while (resultingPos.inBound(0, 0, boundWidth, boundHeight)) {
+        Piece targetPiece = getPiece.apply(resultingPos);
 
-      if (sourcePiece != null) {
-        if (sourcePiece.canCapture(targetPiece, captureRule)) {
+        if (predicate.apply(targetPiece)) {
           positions.add(resultingPos);
 
           if (targetPiece != null) {
@@ -49,13 +58,13 @@ public class LinearMove extends Move {
         } else {
           break;
         }
-      }
 
-      resultingPos = resultingPos.add(delta);
+        resultingPos = resultingPos.add(delta);
 
-      steps++;
-      if (steps == this.maxSteps) {
-        break;
+        steps++;
+        if (steps == this.maxSteps) {
+          break;
+        }
       }
     }
 
