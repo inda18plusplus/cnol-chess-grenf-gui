@@ -1,6 +1,7 @@
 package piece;
 
 import java.util.Set;
+import java.util.function.Function;
 
 public abstract class Piece {
 
@@ -62,7 +63,11 @@ public abstract class Piece {
   }
 
   // Called when a piece is moved
-  public void onMove() {}
+  public void onMove(Position oldPosition, Position newPosition,
+      Function<Position, Piece> getPiece) {}
+
+  // Called when the piece's color's turn ends
+  public void onTurnEnd() {}
 
   // Create a deep copy of this piece
   public abstract Piece makeCopy();

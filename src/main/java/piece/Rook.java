@@ -2,6 +2,7 @@ package piece;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Rook extends Piece {
   private boolean hasMoved = false;
@@ -37,8 +38,9 @@ public class Rook extends Piece {
     return moves;
   }
 
-  @Override public void onMove() {
-    this.hasMoved = true;
+  @Override public void onMove(Position oldPosition, Position newPosition,
+      Function<Position, Piece> getPiece) {
+    hasMoved = true;
   }
 
   @Override public Piece makeCopy() {

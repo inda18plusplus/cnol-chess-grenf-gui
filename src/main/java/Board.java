@@ -50,7 +50,7 @@ public class Board {
   private Board(Board board) {
     this.pieces = new Piece[8][8];
 
-    for (Position position: board.promotingPieces) {
+    for (Position position : board.promotingPieces) {
       this.promotingPieces.add(new Position(position));
     }
 
@@ -370,7 +370,7 @@ public class Board {
   }
 
   private void updateThreatenedTiles() {
-    Piece.Color[] colors = { Piece.Color.BLACK, Piece.Color.WHITE };
+    Piece.Color[] colors = {Piece.Color.BLACK, Piece.Color.WHITE};
 
     for (Piece.Color color : colors) {
       Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
@@ -391,6 +391,13 @@ public class Board {
   }
 
   private void nextColor() {
+    Set<Position> endedTiles =
+        this.getTilesWherePiece(piece -> piece.isOfColor(this.currentPlayingColor));
+
+    for (Position tile : endedTiles) {
+      this.getPiece(tile).onTurnEnd();
+    }
+
     this.currentPlayingColor = this.currentPlayingColor.opposite();
   }
 

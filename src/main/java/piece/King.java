@@ -2,6 +2,7 @@ package piece;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 public class King extends Piece {
   private boolean hasMoved = false;
@@ -58,7 +59,8 @@ public class King extends Piece {
     return false;
   }
 
-  @Override public void onMove() {
+  @Override public void onMove(Position oldPosition, Position newPosition,
+      Function<Position, Piece> getPiece) {
     this.hasMoved = true;
   }
 

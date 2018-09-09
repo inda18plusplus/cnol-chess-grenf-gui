@@ -135,6 +135,24 @@ public class BoardTest {
     );
   }
 
+  @Test public void legalDestinationPawnEnPassant() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(5, 2));
+
+    assert board.move(new Position(4, 6), new Position(4, 4));
+    assert board.move(new Position(5, 2), new Position(5, 4));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(4, 3),
+            new Position(5, 3)
+        )),
+        board.legalDestinations(new Position(4, 4))
+    );
+  }
+
   @Test public void legalDestinationsPawnSecondMove() {
     Board board = new Board();
 

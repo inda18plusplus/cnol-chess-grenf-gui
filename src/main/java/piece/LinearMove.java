@@ -9,8 +9,8 @@ import java.util.function.Function;
  * A move which seeks in a direction and stops at hostiles.
  */
 public class LinearMove extends Move {
-  private final int deltaColumn;
-  private final int deltaRow;
+  protected final int deltaColumn;
+  protected final int deltaRow;
 
   // The maximum number of steps this move can move a piece.
   // If <= 0: no limit
@@ -80,6 +80,6 @@ public class LinearMove extends Move {
     setPiece.accept(sourcePiece, newPosition);
     setPiece.accept(null, oldPosition);
 
-    sourcePiece.onMove();
+    sourcePiece.onMove(oldPosition, newPosition, getPiece);
   }
 }
