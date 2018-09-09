@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class CastlingMove extends Move {
-  Function<Piece, Boolean> pieceIsTarget;
+  private final Function<Piece, Boolean> pieceIsTarget;
 
   CastlingMove(Function<Piece, Boolean> predicate) {
     this.pieceIsTarget = predicate;

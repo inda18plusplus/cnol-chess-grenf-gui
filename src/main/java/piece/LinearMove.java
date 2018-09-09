@@ -3,15 +3,14 @@ package piece;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
  * A move which seeks in a direction and stops at hostiles.
  */
 public class LinearMove extends Move {
-  private int deltaColumn;
-  private int deltaRow;
+  private final int deltaColumn;
+  private final int deltaRow;
 
   // The maximum number of steps this move can move a piece.
   // If <= 0: no limit
@@ -36,7 +35,7 @@ public class LinearMove extends Move {
         piece -> sourcePiece.canCapture(piece, this.captureRule));
   }
 
-  protected Set<Position> seekLineUntil(Position origin, int boundWidth, int boundHeight,
+  private Set<Position> seekLineUntil(Position origin, int boundWidth, int boundHeight,
       Function<Position, Piece> getPiece,
       Function<Piece, Boolean> predicate) {
     Set<Position> positions = new HashSet<>();

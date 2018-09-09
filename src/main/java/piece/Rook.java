@@ -10,8 +10,9 @@ public class Rook extends Piece {
     super(color);
   }
 
-  Rook(Rook rook) {
+  private Rook(Rook rook) {
     super(rook.color);
+    this.hasMoved = rook.hasMoved;
   }
 
   @Override public char toChar() {

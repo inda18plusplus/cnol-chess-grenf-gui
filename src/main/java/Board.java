@@ -47,8 +47,12 @@ public class Board {
    *
    * @param board The board to copy.
    */
-  Board(Board board) {
+  private Board(Board board) {
     this.pieces = new Piece[8][8];
+
+    for (Position position: board.promotingPieces) {
+      this.promotingPieces.add(new Position(position));
+    }
 
     this.currentPlayingColor = board.currentPlayingColor;
 
@@ -115,7 +119,7 @@ public class Board {
   }
 
   /**
-   * Does a piece need a promotion?
+   * Determines if a piece needs promotion.
    *
    * @return True if a piece needs promotion
    */
@@ -214,7 +218,7 @@ public class Board {
    * @param color The color of the pieces
    * @return The moves of the pieces
    */
-  public Map<Position, Set<Position>> getAllPossibleMoves(Piece.Color color) {
+  private Map<Position, Set<Position>> getAllPossibleMoves(Piece.Color color) {
     Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
 
     Map<Position, Set<Position>> possibleMoves = new HashMap<>();
@@ -468,7 +472,7 @@ public class Board {
      * @param color The color of the new piece.
      * @return The new piece
      */
-    public Piece toPiece(Piece.Color color) {
+    Piece toPiece(Piece.Color color) {
       switch (this) {
         case QUEEN:
           return new Queen(color);

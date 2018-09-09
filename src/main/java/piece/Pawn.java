@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     super(color);
   }
 
-  Pawn(Pawn pawn) {
+  private Pawn(Pawn pawn) {
     super(pawn.color);
     this.hasMoved = pawn.hasMoved;
   }

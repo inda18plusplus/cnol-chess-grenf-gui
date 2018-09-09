@@ -14,7 +14,7 @@ import piece.Rook;
 /**
  * Commandline interface for the chess library.
  */
-public class Chess {
+class Chess {
 
   private Board board = new Board();
 
@@ -160,17 +160,18 @@ public class Chess {
   }
 
   private String formattedBoard() {
-    StringBuffer buffer = new StringBuffer(board.toString());
+    StringBuilder builder = new StringBuilder(board.toString());
 
     for (int row = 7; row >= 0; row--) {
-      buffer.insert(row * 9, Integer.toString(row));
+      builder.insert(row * 9, Integer.toString(row));
     }
 
-    buffer.insert(0, " 01234567\n");
+    builder.insert(0, " 01234567\n");
 
-    buffer.append("Current turn: " + board.getCurrentColor().toString());
+    builder.append("Current turn: ");
+    builder.append(board.getCurrentColor().toString());
 
-    return buffer.toString();
+    return builder.toString();
   }
 
   private Position parsePosition(String word) {

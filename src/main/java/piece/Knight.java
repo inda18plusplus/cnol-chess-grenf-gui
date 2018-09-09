@@ -8,7 +8,7 @@ public class Knight extends Piece {
     super(color);
   }
 
-  public Knight(Knight knight) {
+  private Knight(Knight knight) {
     super(knight.color);
   }
 

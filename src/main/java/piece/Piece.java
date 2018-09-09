@@ -4,7 +4,7 @@ import java.util.Set;
 
 public abstract class Piece {
 
-  protected Color color;
+  final Color color;
 
   Piece(Color color) {
     this.color = color;
@@ -28,13 +28,12 @@ public abstract class Piece {
   public boolean canCapture(Piece other, Move.CaptureRule captureRule) {
     if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
       return true;
-    } else if (other != null && !this.isOfColor(other.color)
-        && (captureRule == Move.CaptureRule.CAN_CAPTURE
-        || captureRule == Move.CaptureRule.MUST_CAPTURE)) {
-      return true;
+    } else {
+      return other != null && !this.isOfColor(other.color)
+          && (captureRule == Move.CaptureRule.CAN_CAPTURE
+          || captureRule == Move.CaptureRule.MUST_CAPTURE);
     }
 
-    return false;
   }
 
   public boolean isOfColor(Color color) {

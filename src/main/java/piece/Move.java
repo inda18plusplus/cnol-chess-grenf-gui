@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public abstract class Move {
-  protected CaptureRule captureRule = CaptureRule.CAN_CAPTURE;
+  CaptureRule captureRule = CaptureRule.CAN_CAPTURE;
 
   /**
    * Perform this move.

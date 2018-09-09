@@ -10,7 +10,7 @@ public class King extends Piece {
     super(color);
   }
 
-  King(King king) {
+  private King(King king) {
     super(king.color);
     this.hasMoved = king.hasMoved;
   }

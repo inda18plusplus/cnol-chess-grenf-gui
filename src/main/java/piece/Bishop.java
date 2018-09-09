@@ -8,7 +8,7 @@ public class Bishop extends Piece {
     super(color);
   }
 
-  public Bishop(Bishop bishop) {
+  private Bishop(Bishop bishop) {
     super(bishop.color);
   }
 

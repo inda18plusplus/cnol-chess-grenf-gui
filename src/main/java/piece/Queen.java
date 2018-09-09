@@ -8,7 +8,7 @@ public class Queen extends Piece {
     super(color);
   }
 
-  public Queen(Queen queen) {
+  private Queen(Queen queen) {
     super(queen.color);
   }
 
