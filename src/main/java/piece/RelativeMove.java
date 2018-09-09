@@ -7,46 +7,12 @@ import java.util.function.Function;
 /**
  * A move, relative to a position.
  */
-public class RelativeMove extends Move {
-  private int deltaColumn;
-  private int deltaRow;
-
+public class RelativeMove extends LinearMove {
   RelativeMove(int deltaColumn, int deltaRow, CaptureRule captureRule) {
-    super.captureRule = captureRule;
-
-    this.deltaColumn = deltaColumn;
-    this.deltaRow = deltaRow;
+    super(deltaColumn, deltaRow, 1, captureRule);
   }
 
   RelativeMove(int deltaColumn, int deltaRow) {
-    super.captureRule = CaptureRule.CAN_CAPTURE;
-
-    this.deltaColumn = deltaColumn;
-    this.deltaRow = deltaRow;
-  }
-
-
-
-  @Override
-  public Set<Position> expandPositions(Position origin, int boundWidth, int boundHeight,
-                                       Function<Position, Piece> getPiece) {
-    Set<Position> positions = new HashSet<>();
-
-    Position resultingPos = origin.add(new Position(deltaColumn, deltaRow));
-
-
-    if (resultingPos.inBound(0, 0, boundWidth, boundHeight)
-        && origin.inBound(0, 0, boundWidth, boundHeight)) {
-      Piece sourcePiece = getPiece.apply(origin);
-      Piece targetPiece = getPiece.apply(resultingPos);
-
-      if (sourcePiece != null) {
-        if (sourcePiece.canCapture(targetPiece, captureRule)) {
-          positions.add(resultingPos);
-        }
-      }
-    }
-
-    return positions;
+    this(deltaColumn, deltaRow, CaptureRule.CAN_CAPTURE);
   }
 }
