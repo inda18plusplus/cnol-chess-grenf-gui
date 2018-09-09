@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Rook extends Piece {
+  private boolean hasMoved = false;
+
   public Rook(Color color) {
     super(color);
   }
@@ -34,7 +36,15 @@ public class Rook extends Piece {
     return moves;
   }
 
+  @Override public void onMove() {
+    this.hasMoved = true;
+  }
+
   @Override public Piece makeCopy() {
     return new Rook(this);
+  }
+
+  public boolean hasMoved() {
+    return this.hasMoved;
   }
 }

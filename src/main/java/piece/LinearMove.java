@@ -2,6 +2,8 @@ package piece;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -34,7 +36,7 @@ public class LinearMove extends Move {
         piece -> sourcePiece.canCapture(piece, this.captureRule));
   }
 
-  private Set<Position> seekLineUntil(Position origin, int boundWidth, int boundHeight,
+  protected Set<Position> seekLineUntil(Position origin, int boundWidth, int boundHeight,
       Function<Position, Piece> getPiece,
       Function<Piece, Boolean> predicate) {
     Set<Position> positions = new HashSet<>();
@@ -69,5 +71,16 @@ public class LinearMove extends Move {
     }
 
     return positions;
+  }
+
+  @Override public void perform(Position oldPosition, Position newPosition,
+      Function<Position, Piece> getPiece,
+      BiConsumer<Piece, Position> setPiece) {
+    Piece sourcePiece = getPiece.apply(oldPosition);
+
+    setPiece.accept(sourcePiece, newPosition);
+    setPiece.accept(null, oldPosition);
+
+    sourcePiece.onMove();
   }
 }

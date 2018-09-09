@@ -44,6 +44,10 @@ public class Pawn extends Piece {
     this.hasMoved = true;
   }
 
+  @Override public boolean canPromote() {
+    return true;
+  }
+
   @Override public Piece makeCopy() {
     return new Pawn(this);
   }

@@ -52,6 +52,15 @@ public abstract class Piece {
     return true;
   }
 
+  /**
+   * Determines if a piece can promote when it reaches
+   * the home row of the opposite color.
+   * @return True if it can promote, false otherwise
+   */
+  public boolean canPromote() {
+    return false;
+  }
+
   // Called when a piece is moved
   public void onMove() {}
 

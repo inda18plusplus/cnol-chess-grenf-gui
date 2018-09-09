@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -17,6 +19,8 @@ import piece.Rook;
 public class Board {
   private Piece[][] pieces;
   private Piece.Color currentPlayingColor;
+
+  private List<Position> promotingPieces = new ArrayList<>();
 
   /**
    * Creates an empty board.
@@ -40,6 +44,7 @@ public class Board {
 
   /**
    * Creates a copy of a board.
+   *
    * @param board The board to copy.
    */
   Board(Board board) {
@@ -85,22 +90,37 @@ public class Board {
    * @return true if the move is valid, false otherwise.
    */
   public boolean move(Position piecePosition, Position newPosition) {
-    if (isValidMove(piecePosition, newPosition)) {
+    if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
       if (sourcePiece.isOfColor(this.currentPlayingColor)) {
-        this.setPiece(sourcePiece, newPosition);
-        this.setPiece(null, piecePosition);
+        Move move = this.availableDestinations(piecePosition).get(newPosition);
 
-        sourcePiece.onMove();
+        move.perform(piecePosition, newPosition, this::getPiece, this::setPiece);
+
+        if (sourcePiece.canPromote()) {
+          int promoteRow = sourcePiece.getColor() == Piece.Color.BLACK ? 7 : 0;
+
+          if (newPosition.getRow() == promoteRow) {
+            this.promote(newPosition);
+          }
+        }
 
         this.nextColor();
-
         return true;
       }
     }
 
     return false;
+  }
+
+  /**
+   * Does a piece need a promotion?
+   *
+   * @return True if a piece needs promotion
+   */
+  public boolean needsPromotion() {
+    return !this.promotingPieces.isEmpty();
   }
 
   /**
@@ -110,7 +130,7 @@ public class Board {
    * @return The destinations
    */
   public Set<Position> legalDestinations(Position piecePosition) {
-    Set<Position> availablePositions = this.availableDestinations(piecePosition);
+    Set<Position> availablePositions = this.availableDestinations(piecePosition).keySet();
 
     Piece piece = this.getPiece(piecePosition);
 
@@ -165,12 +185,12 @@ public class Board {
   }
 
   /**
-   * Determines the severity of a check.
+   * Determines if there is, and the severity of, a check.
    *
-   * @param  color The color of the player to
+   * @param color The color of the player to
    * @return The type of check
    */
-  public CheckType getColorCheckType(Piece.Color color) {
+  public CheckType getCheckType(Piece.Color color) {
     Map<Position, Set<Position>> possibleMoves = this.getAllPossibleMoves(color);
 
     if (this.isColorInCheck(color)) {
@@ -190,6 +210,7 @@ public class Board {
 
   /**
    * For each of a color's pieces return a set of legal moves.
+   *
    * @param color The color of the pieces
    * @return The moves of the pieces
    */
@@ -209,26 +230,61 @@ public class Board {
     return possibleMoves;
   }
 
+  /**
+   * Promotes the next piece in the queue.
+   *
+   * @param newPieceType The type of the new piece
+   * @return If the promotion was successful or not
+   */
+  public boolean promoteTo(PromotionOption newPieceType) {
+    if (this.needsPromotion()) {
+      Position position = this.promotingPieces.get(0);
+      this.promotingPieces.remove(0);
+
+      Piece piece = this.getPiece(position);
+      if (piece != null) {
+        Piece newPiece = newPieceType.toPiece(piece.getColor());
+        this.setPiece(newPiece, position);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private void promote(Position piecePosition) {
+    this.promotingPieces.add(piecePosition);
+  }
+
   private boolean isColorInCheck(Piece.Color color) {
     return !this.getCheckedTiles(color).isEmpty();
   }
 
-  private Set<Position> availableDestinations(Position piecePosition) {
-    Set<Position> destinations = new HashSet<>();
+
+  private Map<Position, Move> availableDestinations(Position piecePosition) {
+    Map<Position, Move> destinations = new HashMap<>();
 
     if (onBoard(piecePosition)) {
       Piece piece = this.getPiece(piecePosition);
 
       if (piece != null) {
         Set<Move> moves = piece.getMoveSet();
+        Piece.Color color = piece.getColor();
 
         for (Move move : moves) {
-          Set<Position> availablePositions = move.getDestinations(piecePosition, 8, 8,
-                                                                  this::getPiece);
-          destinations.addAll(availablePositions);
-        }
+          if (move.blockedByCheck()) {
+            if (this.isColorInCheck(color)) {
+              continue;
+            }
+          }
 
-        return destinations;
+          Set<Position> availablePositions =
+              move.getDestinations(piecePosition, 8, 8, this::getPiece);
+
+          for (Position position : availablePositions) {
+            destinations.put(position, move);
+          }
+        }
       }
     }
 
@@ -324,7 +380,7 @@ public class Board {
   }
 
   private boolean isValidMove(Position piecePosition, Position newPosition) {
-    Set<Position> availablePositions = availableDestinations(piecePosition);
+    Set<Position> availablePositions = availableDestinations(piecePosition).keySet();
 
     return availablePositions.contains(newPosition);
   }
@@ -359,6 +415,7 @@ public class Board {
     return this.getTilesWherePiece(piece -> piece.isOfColor(color))
         .stream()
         .map(this::availableDestinations)
+        .map(Map::keySet)
         .flatMap(Set::stream)
         .collect(Collectors.toSet());
   }
@@ -372,7 +429,7 @@ public class Board {
     CLASSIC
   }
 
-  enum CheckType {
+  public enum CheckType {
     NONE,
     CHECK,
     CHECKMATE,
@@ -391,10 +448,39 @@ public class Board {
         case NONE:
         case STALEMATE:
           return false;
-      }
 
-      // Stop java from complaining, even though every case is handled...
-      return false;
+        // Stop java from complaining, even though every case is handled...
+        default:
+          return false;
+      }
+    }
+  }
+
+  public enum PromotionOption {
+    QUEEN,
+    BISHOP,
+    ROOK,
+    KNIGHT;
+
+    /**
+     * Creates the corresponding piece.
+     *
+     * @param color The color of the new piece.
+     * @return The new piece
+     */
+    public Piece toPiece(Piece.Color color) {
+      switch (this) {
+        case QUEEN:
+          return new Queen(color);
+        case BISHOP:
+          return new Bishop(color);
+        case ROOK:
+          return new Rook(color);
+        case KNIGHT:
+          return new Knight(color);
+        default:
+          return null;
+      }
     }
   }
 }

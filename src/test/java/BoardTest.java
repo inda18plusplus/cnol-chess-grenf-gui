@@ -13,59 +13,55 @@ import piece.Rook;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
-
   @Test
-  public void place() {
-    placeBlackPawn();
-    placeWhitePawn();
+  public void promotePawnToQueen() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 1));
+
+    assert board.move(new Position(4, 1), new Position(4, 0));
+
+    assert board.needsPromotion();
+    assert board.promoteTo(Board.PromotionOption.QUEEN);
+
+    assertEquals(
+        "....Q...\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
   }
 
   @Test
-  public void move() {
-    movePawn();
-    movePawnInvalidOrder();
+  public void promotePawnToKnight() {
+    Board board = new Board();
 
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 1));
 
-    movePawnAttackingHostileToRightSide();
-    movePawnAttackingFriendlyToRightSide();
+    assert board.move(new Position(4, 1), new Position(4, 0));
 
-    movePawnAttackingHostileToLeftSide();
-    movePawnAttackingFriendlyToLeftSide();
+    assert board.needsPromotion();
+    assert board.promoteTo(Board.PromotionOption.KNIGHT);
 
-
-    moveWhitePawnInvalidDirectionSide();
-    moveWhitePawnInvalidDirectionBack();
-
-    moveBlackPawnInvalidDirectionSide();
-    moveBlackPawnInvalidDirectionBack();
+    assertEquals(
+        "....N...\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n" +
+            "........\n",
+        board.toString()
+    );
   }
 
-  @Test
-  public void legalDestinations() {
-    legalDestinationsPawnFirstMove();
-    legalDestinationsPawnSecondMove();
-
-    legalDestinationsKnight();
-    legalDestinationsKnightOutOfBounds();
-
-    legalDestinationsRook();
-    legalDestinationsBishop();
-    legalDestinationsQueen();
-
-    legalDestinationsKing();
-  }
-
-  @Test
-  public void getColorCheckType() {
-    pawnCheckKing();
-
-    kingInStalemate();
-    kingInCheckmate();
-
-    kingInCheckAvertByCapture();
-  }
-
-  private void kingInCheckAvertByCapture() {
+  @Test public void kingInCheckAvertByCapture() {
     Board board = new Board();
 
     assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
@@ -76,11 +72,11 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECK,
-        board.getColorCheckType(Piece.Color.WHITE)
+        board.getCheckType(Piece.Color.WHITE)
     );
   }
 
-  private void kingInCheckmate() {
+  @Test public void kingInCheckmate() {
     Board board = new Board();
 
     assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
@@ -90,11 +86,11 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECKMATE,
-        board.getColorCheckType(Piece.Color.WHITE)
+        board.getCheckType(Piece.Color.WHITE)
     );
   }
 
-  private void kingInStalemate() {
+  @Test public void kingInStalemate() {
     Board board = new Board();
 
     assert board.place(new King(Piece.Color.WHITE), new Position(0, 0));
@@ -104,11 +100,11 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.STALEMATE,
-        board.getColorCheckType(Piece.Color.WHITE)
+        board.getCheckType(Piece.Color.WHITE)
     );
   }
 
-  private void pawnCheckKing() {
+  @Test public void pawnCheckKing() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(2, 3));
@@ -116,16 +112,16 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECK,
-        board.getColorCheckType(Piece.Color.WHITE)
+        board.getCheckType(Piece.Color.WHITE)
     );
 
     assertEquals(
         Board.CheckType.NONE,
-      board.getColorCheckType(Piece.Color.BLACK)
+        board.getCheckType(Piece.Color.BLACK)
     );
   }
 
-  private void legalDestinationsPawnSecondMove() {
+  @Test public void legalDestinationsPawnSecondMove() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
@@ -139,7 +135,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsPawnFirstMove() {
+  @Test public void legalDestinationsPawnFirstMove() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
@@ -153,7 +149,53 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsKing() {
+  @Test public void legalDestinationsKingCastlingWhileCheck() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(4, 7));
+
+    assert board.place(new Rook(Piece.Color.WHITE), new Position(0, 7));
+    assert board.place(new Rook(Piece.Color.WHITE), new Position(7, 7));
+
+    assert board.place(new Rook(Piece.Color.BLACK), new Position(4, 0));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(3, 6),
+            new Position(5, 6),
+
+            new Position(3, 7),
+            new Position(5, 7)
+        )),
+        board.legalDestinations(new Position(4, 7))
+    );
+  }
+  @Test public void legalDestinationsKingCastling() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(4, 7));
+
+    assert board.place(new Rook(Piece.Color.WHITE), new Position(0, 7));
+    assert board.place(new Rook(Piece.Color.WHITE), new Position(7, 7));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(3, 6),
+            new Position(4, 6),
+            new Position(5, 6),
+
+            new Position(3, 7),
+            new Position(5, 7),
+
+            new Position(1, 7),
+            new Position(6, 7)
+        )),
+        board.legalDestinations(new Position(4, 7))
+    );
+  }
+
+
+  @Test public void legalDestinationsKing() {
     Board board = new Board();
 
     assert board.place(new King(Piece.Color.WHITE), new Position(4, 4));
@@ -170,7 +212,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsQueen() {
+  @Test public void legalDestinationsQueen() {
     Board board = new Board();
 
     assert board.place(new Queen(Piece.Color.WHITE), new Position(4, 4));
@@ -221,7 +263,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsBishop() {
+  @Test public void legalDestinationsBishop() {
     Board board = new Board();
 
     assert board.place(new Bishop(Piece.Color.WHITE), new Position(4, 4));
@@ -250,7 +292,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsRook() {
+  @Test public void legalDestinationsRook() {
     Board board = new Board();
 
     assert board.place(new Rook(Piece.Color.WHITE), new Position(4, 4));
@@ -280,7 +322,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsKnightOutOfBounds() {
+  @Test public void legalDestinationsKnightOutOfBounds() {
     Board board = new Board();
 
     assert board.place(new Knight(Piece.Color.WHITE), new Position(7, 6));
@@ -295,7 +337,7 @@ public class BoardTest {
     );
   }
 
-  private void legalDestinationsKnight() {
+  @Test public void legalDestinationsKnight() {
     Board board = new Board();
 
     assert board.place(new Knight(Piece.Color.WHITE), new Position(4, 4));
@@ -315,7 +357,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawnAttackingFriendlyToLeftSide() {
+  @Test public void movePawnAttackingFriendlyToLeftSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
@@ -335,7 +377,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawnAttackingHostileToLeftSide() {
+  @Test public void movePawnAttackingHostileToLeftSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
@@ -355,7 +397,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawnAttackingFriendlyToRightSide() {
+  @Test public void movePawnAttackingFriendlyToRightSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
@@ -375,7 +417,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawnAttackingHostileToRightSide() {
+  @Test public void movePawnAttackingHostileToRightSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
@@ -395,7 +437,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawnInvalidOrder() {
+  @Test public void movePawnInvalidOrder() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
@@ -416,7 +458,7 @@ public class BoardTest {
     );
   }
 
-  private void moveBlackPawnInvalidDirectionBack() {
+  @Test public void moveBlackPawnInvalidDirectionBack() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
@@ -435,7 +477,7 @@ public class BoardTest {
     );
   }
 
-  private void moveBlackPawnInvalidDirectionSide() {
+  @Test public void moveBlackPawnInvalidDirectionSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
@@ -454,7 +496,7 @@ public class BoardTest {
     );
   }
 
-  private void moveWhitePawnInvalidDirectionBack() {
+  @Test public void moveWhitePawnInvalidDirectionBack() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
@@ -473,7 +515,7 @@ public class BoardTest {
     );
   }
 
-  private void moveWhitePawnInvalidDirectionSide() {
+  @Test public void moveWhitePawnInvalidDirectionSide() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
@@ -492,7 +534,7 @@ public class BoardTest {
     );
   }
 
-  private void movePawn() {
+  @Test public void movePawn() {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
@@ -513,7 +555,7 @@ public class BoardTest {
     );
   }
 
-  private void placeBlackPawn() {
+  @Test public void placeBlackPawn() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
@@ -531,7 +573,7 @@ public class BoardTest {
     );
   }
 
-  private void placeWhitePawn() {
+  @Test public void placeWhitePawn() {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(5, 6));

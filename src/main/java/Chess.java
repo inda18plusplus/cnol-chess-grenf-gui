@@ -16,7 +16,7 @@ import piece.Rook;
  */
 public class Chess {
 
-  private Board board = new Board(Board.Layout.CLASSIC);
+  private Board board = new Board();
 
   /**
    * Starts a game of chess.
@@ -61,6 +61,10 @@ public class Chess {
       case "m":
         if (words.length == 3) {
           board.move(parsePosition(words[1]), parsePosition(words[2]));
+
+          if (board.needsPromotion()) {
+            System.out.println("Promotion required!");
+          }
         } else {
           System.out.println("Invalid number of arguments!");
         }
@@ -97,8 +101,33 @@ public class Chess {
 
         // Determine if check
       case "c":
-        System.out.println("White in check: " + board.getColorCheckType(Color.WHITE));
-        System.out.println("Black in check: " + board.getColorCheckType(Color.BLACK));
+        System.out.println("White in check: " + board.getCheckType(Color.WHITE));
+        System.out.println("Black in check: " + board.getCheckType(Color.BLACK));
+        break;
+
+        // Promote a piece
+      case "pr":
+        if (words.length == 2) {
+          Board.PromotionOption promotionOption;
+          switch (words[1].toLowerCase()) {
+            case "q":
+              promotionOption = Board.PromotionOption.QUEEN;
+              break;
+            case "n":
+              promotionOption = Board.PromotionOption.KNIGHT;
+              break;
+            case "b":
+              promotionOption = Board.PromotionOption.BISHOP;
+              break;
+            case "r":
+              promotionOption = Board.PromotionOption.ROOK;
+              break;
+            default:
+              promotionOption = Board.PromotionOption.QUEEN;
+          }
+
+          board.promoteTo(promotionOption);
+        }
         break;
 
       default:
@@ -145,9 +174,11 @@ public class Chess {
   }
 
   private Position parsePosition(String word) {
-    int x = Integer.parseInt(word.substring(0, 1));
-    int y = Integer.parseInt(word.substring(1, 2));
-
-    return new Position(x, y);
+    if (word.length() == 2) {
+      int x = Integer.parseInt(word.substring(0, 1));
+      int y = Integer.parseInt(word.substring(1, 2));
+      return new Position(x, y);
+    }
+    return null;
   }
 }
