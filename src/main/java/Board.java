@@ -213,28 +213,6 @@ public class Board {
   }
 
   /**
-   * For each of a color's pieces return a set of legal moves.
-   *
-   * @param color The color of the pieces
-   * @return The moves of the pieces
-   */
-  private Map<Position, Set<Position>> getAllPossibleMoves(Piece.Color color) {
-    Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
-
-    Map<Position, Set<Position>> possibleMoves = new HashMap<>();
-
-    for (Position tile : friendlyTiles) {
-      Set<Position> legalMoves = this.legalDestinations(tile);
-
-      if (!legalMoves.isEmpty()) {
-        possibleMoves.put(tile, legalMoves);
-      }
-    }
-
-    return possibleMoves;
-  }
-
-  /**
    * Promotes the next piece in the queue.
    *
    * @param newPieceType The type of the new piece
@@ -254,6 +232,28 @@ public class Board {
     }
 
     return false;
+  }
+
+  /**
+   * For each of a color's pieces return a set of legal moves.
+   *
+   * @param color The color of the pieces
+   * @return The moves of the pieces
+   */
+  private Map<Position, Set<Position>> getAllPossibleMoves(Piece.Color color) {
+    Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
+
+    Map<Position, Set<Position>> possibleMoves = new HashMap<>();
+
+    for (Position tile : friendlyTiles) {
+      Set<Position> legalMoves = this.legalDestinations(tile);
+
+      if (!legalMoves.isEmpty()) {
+        possibleMoves.put(tile, legalMoves);
+      }
+    }
+
+    return possibleMoves;
   }
 
   private void promote(Position piecePosition) {
@@ -276,12 +276,6 @@ public class Board {
         Piece.Color color = piece.getColor();
 
         for (Move move : moves) {
-          if (move.blockedByCheck()) {
-            if (this.isColorInCheck(color)) {
-              continue;
-            }
-          }
-
           Set<Position> availablePositions =
               move.getDestinations(piecePosition, 8, 8, this::getPiece);
 
@@ -371,6 +365,23 @@ public class Board {
     assert (onBoard(position));
 
     this.pieces[position.getRow()][position.getColumn()] = piece;
+
+    this.updateThreatenedTiles();
+  }
+
+  private void updateThreatenedTiles() {
+    Piece.Color[] colors = { Piece.Color.BLACK, Piece.Color.WHITE };
+
+    for (Piece.Color color : colors) {
+      Set<Position> friendlyTiles = this.getTilesWherePiece(piece -> piece.isOfColor(color));
+      Set<Position> threatenedTiles = this.getControlledTiles(color.opposite());
+
+      for (Position tile : friendlyTiles) {
+        boolean threatened = threatenedTiles.contains(tile);
+
+        this.getPiece(tile).setThreatened(threatened);
+      }
+    }
   }
 
   private Piece getPiece(Position position) {

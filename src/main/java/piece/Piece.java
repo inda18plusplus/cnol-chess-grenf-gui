@@ -5,6 +5,7 @@ import java.util.Set;
 public abstract class Piece {
 
   final Color color;
+  private boolean threatened;
 
   Piece(Color color) {
     this.color = color;
@@ -65,6 +66,14 @@ public abstract class Piece {
 
   // Create a deep copy of this piece
   public abstract Piece makeCopy();
+
+  public boolean getThreatened() {
+    return this.threatened;
+  }
+
+  public void setThreatened(boolean threatened) {
+    this.threatened = threatened;
+  }
 
   public enum Color {
     BLACK, WHITE;

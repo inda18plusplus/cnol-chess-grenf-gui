@@ -61,6 +61,20 @@ public class BoardTest {
     );
   }
 
+
+  @Test public void kingCheckKing() {
+    Board board = new Board();
+
+    assert board.place(new King(Piece.Color.WHITE), new Position(3, 3));
+
+    assert board.place(new King(Piece.Color.BLACK), new Position(4, 4));
+
+    assertEquals(
+        Board.CheckType.CHECKMATE,
+        board.getCheckType(Piece.Color.BLACK)
+    );
+  }
+
   @Test public void kingInCheckAvertByCapture() {
     Board board = new Board();
 

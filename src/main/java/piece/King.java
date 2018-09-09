@@ -40,7 +40,7 @@ public class King extends Piece {
     moves.add(new RelativeMove(0, 1));
     moves.add(new RelativeMove(1, 1));
 
-    if (!this.hasMoved) {
+    if (!this.hasMoved && !this.getThreatened()) {
       moves.add(new CastlingMove(piece -> {
         if (piece instanceof Rook) {
           Rook rook = (Rook) piece;
