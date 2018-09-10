@@ -157,6 +157,20 @@ public class BoardTest {
     );
   }
 
+  @Test public void legalDestinationPawnNearEdge() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(0, 6));
+
+    assertEquals(
+        new HashSet<>(Arrays.asList(
+            new Position(0, 5),
+            new Position(0, 4)
+        )),
+        board.legalDestinations(new Position(0, 6))
+    );
+  }
+
   @Test public void legalDestinationPawnEnPassant() {
     Board board = new Board();
 

@@ -1,5 +1,6 @@
 package piece;
 
+import exceptions.OutOfBoundsException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -65,6 +66,14 @@ public class Pawn extends Piece {
     this.enPassantColumnDirection = null;
   }
 
+  @Override public boolean canPromote() {
+    return true;
+  }
+
+  @Override public Piece makeCopy() {
+    return new Pawn(this);
+  }
+
   private void updateAdjacentPawns(Position newPosition, Function<Position, Piece> getPiece) {
     for (int i = 0; i < 2; i++) {
       int columnDirection = 1 - 2 * i;
@@ -72,7 +81,13 @@ public class Pawn extends Piece {
       Position adjacentTile = new Position(newPosition.getColumn() + columnDirection,
           newPosition.getRow());
 
-      Piece adjacentPiece = getPiece.apply(adjacentTile);
+      Piece adjacentPiece;
+      try {
+        adjacentPiece = getPiece.apply(adjacentTile);
+      } catch (OutOfBoundsException ignored) {
+        continue;
+      }
+
       if (adjacentPiece instanceof Pawn) {
         Pawn adjacentPawn = (Pawn) adjacentPiece;
 
@@ -83,13 +98,5 @@ public class Pawn extends Piece {
 
   private void addEnPassant(int direction) {
     this.enPassantColumnDirection = direction;
-  }
-
-  @Override public boolean canPromote() {
-    return true;
-  }
-
-  @Override public Piece makeCopy() {
-    return new Pawn(this);
   }
 }

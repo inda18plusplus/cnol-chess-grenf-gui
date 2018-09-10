@@ -35,7 +35,11 @@ class Chess {
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
 
-      chess.interpretCommand(line);
+      try {
+        chess.interpretCommand(line);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
       System.out.print("> ");
     }

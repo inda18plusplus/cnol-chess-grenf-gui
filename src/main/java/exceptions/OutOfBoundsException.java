@@ -1,5 +1,9 @@
 package exceptions;
 
-public class ChessException extends Exception {
+import piece.Position;
 
+public class OutOfBoundsException extends RuntimeException {
+  public OutOfBoundsException(Position position) {
+    super("Position out of bounds: " + position.toString());
+  }
 }

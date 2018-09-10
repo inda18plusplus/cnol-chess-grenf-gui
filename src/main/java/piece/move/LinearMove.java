@@ -23,6 +23,14 @@ public class LinearMove extends Move {
     this.deltaRow = deltaRow;
   }
 
+  /**
+   * Create a new Move seeking in a direction until it hits another piece/edge.
+   *
+   * @param deltaColumn The length and direction of a step along the columns
+   * @param deltaRow The length and direction of a step along the rows
+   * @param maxSteps The maximum number of steps to travel
+   * @param captureRule Determines what pieces this move can capture
+   */
   public LinearMove(int deltaColumn, int deltaRow, int maxSteps, CaptureRule captureRule) {
     this(deltaColumn, deltaRow);
     super.captureRule = captureRule;

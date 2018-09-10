@@ -1,3 +1,4 @@
+import exceptions.OutOfBoundsException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,12 +10,12 @@ import java.util.stream.Collectors;
 import piece.Bishop;
 import piece.King;
 import piece.Knight;
-import piece.move.Move;
 import piece.Pawn;
 import piece.Piece;
 import piece.Position;
 import piece.Queen;
 import piece.Rook;
+import piece.move.Move;
 
 public class Board {
   private Piece[][] pieces;
@@ -386,8 +387,10 @@ public class Board {
     }
   }
 
-  private Piece getPiece(Position position) {
-    assert (onBoard(position));
+  private Piece getPiece(Position position) throws OutOfBoundsException {
+    if (!onBoard(position)) {
+      throw new OutOfBoundsException(position);
+    }
 
     return this.pieces[position.getRow()][position.getColumn()];
   }
