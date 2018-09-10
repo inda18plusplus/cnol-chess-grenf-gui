@@ -2,6 +2,7 @@ package piece;
 
 import java.util.Set;
 import java.util.function.Function;
+import piece.move.Move;
 
 public abstract class Piece {
 
@@ -59,9 +60,9 @@ public abstract class Piece {
    *
    * @param other       Another piece
    * @param captureRule How this piece can capture the other piece
-   * @return true if this piece can move onto the other piece
+   * @return true if this piece can piece.move onto the other piece
    */
-  boolean canCapture(Piece other, Move.CaptureRule captureRule) {
+  public boolean canCapture(Piece other, Move.CaptureRule captureRule) {
     if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
       return true;
     } else {

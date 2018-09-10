@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import piece.Bishop;
 import piece.King;
 import piece.Knight;
-import piece.Move;
+import piece.move.Move;
 import piece.Pawn;
 import piece.Piece;
 import piece.Position;
@@ -92,9 +92,9 @@ public class Board {
   /**
    * Moves a piece on the board.
    *
-   * @param piecePosition The position of the piece to move.
-   * @param newPosition   The position to move the piece to.
-   * @return true if the move is valid, false otherwise.
+   * @param piecePosition The position of the piece to piece.move.
+   * @param newPosition   The position to piece.move the piece to.
+   * @return true if the piece.move is valid, false otherwise.
    */
   public boolean move(Position piecePosition, Position newPosition) {
     if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {

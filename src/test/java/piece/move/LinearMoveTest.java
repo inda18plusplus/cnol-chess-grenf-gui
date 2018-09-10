@@ -1,10 +1,13 @@
-package piece;
+package piece.move;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
+import piece.Pawn;
+import piece.Piece;
+import piece.Position;
 import static org.junit.Assert.*;
 
 public class LinearMoveTest {

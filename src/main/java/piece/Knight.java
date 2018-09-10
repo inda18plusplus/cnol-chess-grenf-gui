@@ -2,6 +2,8 @@ package piece;
 
 import java.util.HashSet;
 import java.util.Set;
+import piece.move.Move;
+import piece.move.RelativeMove;
 
 public class Knight extends Piece {
   public Knight(Color color) {

@@ -1,6 +1,9 @@
-package piece;
+package piece.move;
 
 import org.junit.Test;
+import piece.Pawn;
+import piece.Piece;
+import piece.Position;
 
 import java.util.Collections;
 import java.util.HashSet;

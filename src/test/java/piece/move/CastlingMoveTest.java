@@ -1,9 +1,13 @@
-package piece;
+package piece.move;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
+import piece.King;
+import piece.Piece;
+import piece.Position;
+import piece.Rook;
 import static org.junit.Assert.*;
 
 public class CastlingMoveTest {

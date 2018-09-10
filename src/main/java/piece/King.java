@@ -3,6 +3,9 @@ package piece;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
+import piece.move.CastlingMove;
+import piece.move.Move;
+import piece.move.RelativeMove;
 
 public class King extends Piece {
   private boolean hasMoved = false;
