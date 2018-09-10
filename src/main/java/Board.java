@@ -79,7 +79,10 @@ public class Board {
     Piece targetPiece = this.getPiece(position);
 
     if (piece != null && targetPiece == null) {
-      this.setPiece(piece, position);
+      // Make sure that the user cannot interfere with the game logic.
+      Piece newPiece = piece.makeCopy();
+      this.setPiece(newPiece, position);
+
       return true;
     }
 

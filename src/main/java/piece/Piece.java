@@ -20,24 +20,6 @@ public abstract class Piece {
     return this.color;
   }
 
-  /**
-   * Determines if this piece can capture another.
-   *
-   * @param other       Another piece
-   * @param captureRule How this piece can capture the other piece
-   * @return true if this piece can move onto the other piece
-   */
-  public boolean canCapture(Piece other, Move.CaptureRule captureRule) {
-    if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
-      return true;
-    } else {
-      return other != null && !this.isOfColor(other.color)
-          && (captureRule == Move.CaptureRule.CAN_CAPTURE
-          || captureRule == Move.CaptureRule.MUST_CAPTURE);
-    }
-
-  }
-
   public boolean isOfColor(Color color) {
     return this.color == color;
   }
@@ -72,7 +54,25 @@ public abstract class Piece {
   // Create a deep copy of this piece
   public abstract Piece makeCopy();
 
-  public boolean isThreatened() {
+  /**
+   * Determines if this piece can capture another.
+   *
+   * @param other       Another piece
+   * @param captureRule How this piece can capture the other piece
+   * @return true if this piece can move onto the other piece
+   */
+  boolean canCapture(Piece other, Move.CaptureRule captureRule) {
+    if (other == null && captureRule != Move.CaptureRule.MUST_CAPTURE) {
+      return true;
+    } else {
+      return other != null && !this.isOfColor(other.color)
+          && (captureRule == Move.CaptureRule.CAN_CAPTURE
+          || captureRule == Move.CaptureRule.MUST_CAPTURE);
+    }
+
+  }
+
+  boolean isThreatened() {
     return this.threatened;
   }
 
