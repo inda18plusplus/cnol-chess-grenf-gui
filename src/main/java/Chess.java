@@ -20,6 +20,7 @@ class Chess {
 
   /**
    * Starts a game of chess.
+   *
    * @param args Commandline arguments
    */
   public static void main(String[] args) {
@@ -34,6 +35,7 @@ class Chess {
     System.out.print("> ");
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
+      System.out.println();
 
       try {
         chess.interpretCommand(line);
@@ -41,7 +43,7 @@ class Chess {
         e.printStackTrace();
       }
 
-      System.out.print("> ");
+      System.out.print("\n> ");
     }
   }
 
@@ -61,20 +63,24 @@ class Chess {
         System.out.println(this.formattedBoard());
         break;
 
-        // Move a piece
+      // Move a piece
       case "m":
         if (words.length == 3) {
-          board.move(parsePosition(words[1]), parsePosition(words[2]));
-
-          if (board.needsPromotion()) {
-            System.out.println("Promotion required!");
+          if (!board.move(parsePosition(words[1]), parsePosition(words[2]))) {
+            System.out.println("Invalid move!");
+          } else {
+            if (board.needsPromotion()) {
+              System.out.println("Promotion required!");
+            } else {
+              this.interpretCommand("c");
+            }
           }
         } else {
           System.out.println("Invalid number of arguments!");
         }
         break;
 
-        // Add a piece
+      // Add a piece
       case "a":
         if (words.length == 3) {
           Piece piece = parsePiece(words[1]);
@@ -84,7 +90,7 @@ class Chess {
         }
         break;
 
-        // Show possible moves
+      // Show possible moves
       case "p":
         if (words.length == 2) {
           Position position = parsePosition(words[1]);
@@ -94,7 +100,7 @@ class Chess {
           StringBuffer buffer = new StringBuffer(this.formattedBoard());
 
           for (Position pos : possible) {
-            int index = (pos.getRow() + 1) * 10 + pos.getColumn() + 1;
+            int index = (pos.getRow() + 1) * 13 + pos.getColumn();
 
             buffer.setCharAt(index, 'X');
           }
@@ -103,13 +109,13 @@ class Chess {
         }
         break;
 
-        // Determine if check
+      // Determine if check
       case "c":
         System.out.println("White in check: " + board.getCheck(Color.WHITE));
         System.out.println("Black in check: " + board.getCheck(Color.BLACK));
         break;
 
-        // Promote a piece
+      // Promote a piece
       case "pr":
         if (words.length == 2) {
           Board.PromotionOption promotionOption;
@@ -131,35 +137,71 @@ class Chess {
           }
 
           board.promoteTo(promotionOption);
+
+          this.interpretCommand("c");
         }
         break;
 
+      // Help
+      case "h":
+      case "help":
+        System.out.println("===help===");
+        System.out.println("Coordinates are given in the format '[column][row]' ie. 47 denotes "
+            + "the 4th column from the left and the 7th row from the top (counting starts from 0,"
+            + " as is expected");
+
+        System.out.println("===commands===");
+        System.out.println("d - displays the board as it is right currently");
+        System.out.println("m [from] [to] - move a piece at [from] to [to]");
+        System.out.println("p [where] - prints all possible destinations for a piece located at "
+            + "[where]");
+        System.out.println("c - display any checks");
+        System.out.println("pr [piece] - Promotes a piece to a new [piece]. [piece] can be any of"
+            + " 'q' for queen, 'b' for bishop, 'r' for rook, 'n' for a knight");
+        System.out.println("a [what] [where] - adds a new piece to the board, capital letters are"
+            + " interpreted as white pieces and lowercase as black.");
+        break;
+
       default:
+        System.err.println("Invalid command: '" + command + "'");
         break;
     }
   }
 
   private Piece parsePiece(String word) {
     switch (word) {
-      case "p": return new Pawn(Color.BLACK);
-      case "P": return new Pawn(Color.WHITE);
+      case "p":
+        return new Pawn(Color.BLACK);
+      case "P":
+        return new Pawn(Color.WHITE);
 
-      case "n": return new Knight(Color.BLACK);
-      case "N": return new Knight(Color.WHITE);
+      case "n":
+        return new Knight(Color.BLACK);
+      case "N":
+        return new Knight(Color.WHITE);
 
-      case "r": return new Rook(Color.BLACK);
-      case "R": return new Rook(Color.WHITE);
+      case "r":
+        return new Rook(Color.BLACK);
+      case "R":
+        return new Rook(Color.WHITE);
 
-      case "b": return new Bishop(Color.BLACK);
-      case "B": return new Bishop(Color.WHITE);
+      case "b":
+        return new Bishop(Color.BLACK);
+      case "B":
+        return new Bishop(Color.WHITE);
 
-      case "q": return new Queen(Color.BLACK);
-      case "Q": return new Queen(Color.WHITE);
+      case "q":
+        return new Queen(Color.BLACK);
+      case "Q":
+        return new Queen(Color.WHITE);
 
-      case "k": return new King(Color.BLACK);
-      case "K": return new King(Color.WHITE);
+      case "k":
+        return new King(Color.BLACK);
+      case "K":
+        return new King(Color.WHITE);
 
-      default: return null;
+      default:
+        return null;
     }
   }
 
@@ -167,10 +209,12 @@ class Chess {
     StringBuilder builder = new StringBuilder(board.toString());
 
     for (int row = 7; row >= 0; row--) {
-      builder.insert(row * 9, Integer.toString(row));
+      builder.insert((row) * 9 + 8, " " + Integer.toString(row));
+      builder.insert(row * 9, Integer.toString(row) + " ");
     }
 
-    builder.insert(0, " 01234567\n");
+    builder.insert(0, "  01234567\n");
+    builder.insert(builder.length() - 1, "\n  01234567\n");
 
     builder.append("Current turn: ");
     builder.append(board.getCurrentColor().toString());
