@@ -71,7 +71,7 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECKMATE,
-        board.getCheckType(Piece.Color.BLACK)
+        board.getCheck(Piece.Color.BLACK)
     );
   }
 
@@ -86,7 +86,7 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECK,
-        board.getCheckType(Piece.Color.WHITE)
+        board.getCheck(Piece.Color.WHITE)
     );
   }
 
@@ -100,7 +100,7 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECKMATE,
-        board.getCheckType(Piece.Color.WHITE)
+        board.getCheck(Piece.Color.WHITE)
     );
   }
 
@@ -114,7 +114,7 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.STALEMATE,
-        board.getCheckType(Piece.Color.WHITE)
+        board.getCheck(Piece.Color.WHITE)
     );
   }
 
@@ -126,12 +126,34 @@ public class BoardTest {
 
     assertEquals(
         Board.CheckType.CHECK,
-        board.getCheckType(Piece.Color.WHITE)
+        board.getCheck(Piece.Color.WHITE)
     );
 
     assertEquals(
         Board.CheckType.NONE,
-        board.getCheckType(Piece.Color.BLACK)
+        board.getCheck(Piece.Color.BLACK)
+    );
+  }
+
+  @Test public void pawnCaptureEnPassant() {
+    Board board = new Board();
+
+    assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
+    assert board.place(new Pawn(Piece.Color.BLACK), new Position(5, 4));
+
+    assert board.move(new Position(4, 6), new Position(4, 4));
+    assert board.move(new Position(5, 4), new Position(4, 5));
+
+    assertEquals(
+        "........\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "....p...\n"
+            + "........\n"
+            + "........\n",
+        board.toString()
     );
   }
 

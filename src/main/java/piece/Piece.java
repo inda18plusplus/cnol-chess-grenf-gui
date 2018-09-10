@@ -72,7 +72,7 @@ public abstract class Piece {
   // Create a deep copy of this piece
   public abstract Piece makeCopy();
 
-  public boolean getThreatened() {
+  public boolean isThreatened() {
     return this.threatened;
   }
 

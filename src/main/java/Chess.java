@@ -101,8 +101,8 @@ class Chess {
 
         // Determine if check
       case "c":
-        System.out.println("White in check: " + board.getCheckType(Color.WHITE));
-        System.out.println("Black in check: " + board.getCheckType(Color.BLACK));
+        System.out.println("White in check: " + board.getCheck(Color.WHITE));
+        System.out.println("Black in check: " + board.getCheck(Color.BLACK));
         break;
 
         // Promote a piece

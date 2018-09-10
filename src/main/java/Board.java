@@ -194,7 +194,7 @@ public class Board {
    * @param color The color of the player to
    * @return The type of check
    */
-  public CheckType getCheckType(Piece.Color color) {
+  public CheckType getCheck(Piece.Color color) {
     Map<Position, Set<Position>> possibleMoves = this.getAllPossibleMoves(color);
 
     if (this.isColorInCheck(color)) {
