@@ -1,6 +1,5 @@
 package piece;
 
-import exceptions.OutOfBoundsException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -81,12 +80,7 @@ public class Pawn extends Piece {
       Position adjacentTile = new Position(newPosition.getColumn() + columnDirection,
           newPosition.getRow());
 
-      Piece adjacentPiece;
-      try {
-        adjacentPiece = getPiece.apply(adjacentTile);
-      } catch (OutOfBoundsException ignored) {
-        continue;
-      }
+      Piece adjacentPiece = getPiece.apply(adjacentTile);
 
       if (adjacentPiece instanceof Pawn) {
         Pawn adjacentPawn = (Pawn) adjacentPiece;

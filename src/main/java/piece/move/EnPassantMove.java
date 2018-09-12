@@ -14,6 +14,6 @@ public class EnPassantMove extends RelativeMove {
       Function<Position, Piece> getPiece, BiConsumer<Piece, Position> setPiece) {
     super.perform(oldPosition, newPosition, getPiece, setPiece);
 
-    setPiece.accept(null, oldPosition.add(new Position(super.deltaColumn, 0)));
+    setPiece.accept(null, oldPosition.add(new Position(super.getDeltaColumn(), 0)));
   }
 }

@@ -1,4 +1,3 @@
-import exceptions.OutOfBoundsException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -387,9 +386,9 @@ public class Board {
     }
   }
 
-  private Piece getPiece(Position position) throws OutOfBoundsException {
+  private Piece getPiece(Position position) {
     if (!onBoard(position)) {
-      throw new OutOfBoundsException(position);
+      return null;
     }
 
     return this.pieces[position.getRow()][position.getColumn()];
