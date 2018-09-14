@@ -18,10 +18,10 @@ import piece.Rook;
 import piece.move.Move;
 
 public class Board {
-  private Piece[][] pieces;
+  private final Piece[][] pieces;
   private Piece.Color currentPlayingColor;
 
-  private List<Position> promotingPieces = new ArrayList<>();
+  private final List<Position> promotingPieces = new ArrayList<>();
 
   /**
    * Creates an empty board.
@@ -103,7 +103,7 @@ public class Board {
     if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
-      if (sourcePiece.isOfColor(this.currentPlayingColor)) {
+      if (sourcePiece != null && sourcePiece.isOfColor(this.currentPlayingColor)) {
         Move move = this.availableDestinations(piecePosition).get(newPosition);
 
         move.perform(piecePosition, newPosition, this::getPiece, this::setPiece);
@@ -147,19 +147,22 @@ public class Board {
 
     Piece piece = this.getPiece(piecePosition);
 
-    Set<Position> positionsResultingInCheck = new HashSet<>();
 
-    for (Position position : availablePositions) {
-      Board temporaryBoard = new Board(this);
+    if (piece != null) {
+      Set<Position> positionsResultingInCheck = new HashSet<>();
 
-      temporaryBoard.move(piecePosition, position);
+      for (Position position : availablePositions) {
+        Board temporaryBoard = new Board(this);
 
-      if (temporaryBoard.isColorInCheck(piece.getColor())) {
-        positionsResultingInCheck.add(position);
+        temporaryBoard.move(piecePosition, position);
+
+        if (temporaryBoard.isColorInCheck(piece.getColor())) {
+          positionsResultingInCheck.add(position);
+        }
       }
-    }
 
-    availablePositions.removeAll(positionsResultingInCheck);
+      availablePositions.removeAll(positionsResultingInCheck);
+    }
 
     return availablePositions;
   }
@@ -474,7 +477,10 @@ public class Board {
       for (Position tile : friendlyTiles) {
         boolean threatened = threatenedTiles.contains(tile);
 
-        this.getPiece(tile).setThreatened(threatened);
+        Piece piece = this.getPiece(tile);
+        if (piece != null) {
+          piece.setThreatened(threatened);
+        }
       }
     }
   }
@@ -492,7 +498,11 @@ public class Board {
         this.getTilesWherePiece(piece -> piece.isOfColor(this.currentPlayingColor));
 
     for (Position tile : endedTiles) {
-      this.getPiece(tile).onTurnEnd();
+      Piece piece = this.getPiece(tile);
+
+      if (piece != null) {
+        piece.onTurnEnd();
+      }
     }
 
     this.currentPlayingColor = this.currentPlayingColor.opposite();

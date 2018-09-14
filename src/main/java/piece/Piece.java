@@ -21,6 +21,11 @@ public abstract class Piece {
     return this.color;
   }
 
+  /**
+   * Determines if this piece is of a certain color.
+   * @param color The color to compare with.
+   * @return True if match.
+   */
   public boolean isOfColor(Color color) {
     return this.color == color;
   }
@@ -45,7 +50,9 @@ public abstract class Piece {
     return false;
   }
 
-  // Called when a piece is moved
+  /**
+   * Called when a piece is moved.
+   */
   public void onMove(Position oldPosition, Position newPosition,
       Function<Position, Piece> getPiece) {}
 
