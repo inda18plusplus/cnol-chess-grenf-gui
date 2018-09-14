@@ -16,7 +16,7 @@ import piece.Rook;
  */
 class Chess {
 
-  private Board board = new Board(Board.Layout.CLASSIC);
+  private Board board = new Board(Board.Layout.UPSIDE_DOWN);
 
   /**
    * Starts a game of chess.

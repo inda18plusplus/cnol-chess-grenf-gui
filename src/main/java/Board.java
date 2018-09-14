@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import piece.Bishop;
 import piece.King;
@@ -292,9 +293,18 @@ public class Board {
   }
 
   private void applyLayout(Layout layout) {
+    Map<Character, Function<Piece.Color, Piece>> pieceMap = new HashMap<>();
+    pieceMap.put('k', King::new);
+    pieceMap.put('r', Rook::new);
+    pieceMap.put('b', Bishop::new);
+    pieceMap.put('n', Knight::new);
+    pieceMap.put('q', Queen::new);
+    pieceMap.put('p', Pawn::new);
+
     switch (layout) {
       case CLASSIC:
         this.layoutFromText(
+            pieceMap,
             "rnbqkbnr\n"
                 + "pppppppp\n"
                 + "        \n"
@@ -306,12 +316,98 @@ public class Board {
         );
         break;
 
+      case UPSIDE_DOWN:
+        this.layoutFromText(
+            pieceMap,
+            "RNBQKBNR\n"
+                + "PPPPPPPP\n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "pppppppp\n"
+                + "rnbqkbnr\n"
+        );
+        break;
+
+      case CHARGE_OF_THE_LIGHT_BRIGADE:
+        this.layoutFromText(
+            pieceMap,
+            "nnnnknnn\n"
+                + "pppppppp\n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "PPPPPPPP\n"
+                + " Q QK Q \n"
+        );
+        break;
+
+      case PEASANTS_REVOLT:
+        this.layoutFromText(
+            pieceMap,
+            " nn knn  \n"
+                + "    p   \n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "        \n"
+                + "PPPPPPPP\n"
+                + "    K   \n"
+        );
+        break;
+
+      case REALLY_BAD_CHESS:
+        StringBuilder builder = new StringBuilder();
+
+
+        Supplier<Character> randomPiece = () -> {
+          double random = Math.random();
+
+          if (random < 0.35) {
+            return 'p';
+          }
+          if (random < 0.65) {
+            return 'n';
+          }
+          if (random < 0.8) {
+            return 'b';
+          }
+          if (random < 0.95) {
+            return 'r';
+          }
+          return 'q';
+        };
+
+        for (int row = 0; row < 8; row++) {
+          for (int col = 0; col < 8; col++) {
+            char piece = randomPiece.get();
+
+            if (row < 2) {
+              builder.append(piece);
+            } else if (row > 5) {
+              builder.append(Character.toUpperCase(piece));
+            } else {
+              builder.append(' ');
+            }
+          }
+
+          builder.append('\n');
+        }
+
+        builder.setCharAt(4, 'k');
+        builder.setCharAt(4 + 7 * 9, 'K');
+
+        this.layoutFromText(pieceMap, builder.toString());
+        break;
+
       default:
         break;
     }
   }
 
-  private void layoutFromText(String text) {
+  private void layoutFromText(Map<Character, Function<Piece.Color, Piece>> pieceMap, String text) {
     int column = 0;
     int row = 0;
 
@@ -324,7 +420,7 @@ public class Board {
           column = 0;
           break;
         default:
-          Piece piece = this.pieceFromCharacter(character);
+          Piece piece = this.pieceFromCharacter(character, pieceMap);
           this.place(piece, new Position(column, row));
 
           column++;
@@ -333,29 +429,21 @@ public class Board {
     }
   }
 
-  private Piece pieceFromCharacter(char character) {
-    Piece.Color color;
-    if (Character.isUpperCase(character)) {
-      color = Piece.Color.WHITE;
-    } else {
-      color = Piece.Color.BLACK;
-    }
+  private Piece pieceFromCharacter(char character,
+      Map<Character, Function<Piece.Color, Piece>> pieceMap) {
+    char lowercase = Character.toLowerCase(character);
 
-    switch (Character.toLowerCase(character)) {
-      case 'p':
-        return new Pawn(color);
-      case 'n':
-        return new Knight(color);
-      case 'r':
-        return new Rook(color);
-      case 'b':
-        return new Bishop(color);
-      case 'q':
-        return new Queen(color);
-      case 'k':
-        return new King(color);
-      default:
-        return null;
+    if (pieceMap.containsKey(lowercase)) {
+      Piece.Color color;
+      if (Character.isUpperCase(character)) {
+        color = Piece.Color.WHITE;
+      } else {
+        color = Piece.Color.BLACK;
+      }
+
+      return pieceMap.get(lowercase).apply(color);
+    } else {
+      return null;
     }
   }
 
@@ -452,7 +540,11 @@ public class Board {
 
 
   enum Layout {
-    CLASSIC
+    CLASSIC,
+    UPSIDE_DOWN,
+    REALLY_BAD_CHESS,
+    PEASANTS_REVOLT,
+    CHARGE_OF_THE_LIGHT_BRIGADE
   }
 
   public enum CheckType {
