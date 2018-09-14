@@ -95,9 +95,11 @@ public class Board {
    *
    * @param piecePosition The position of the piece to piece.move.
    * @param newPosition   The position to piece.move the piece to.
-   * @return true if the piece.move is valid, false otherwise.
+   * @return OK if move was successful.
+   *         INVALID_MOVE if the move was illegal.
+   *         PROMOTION_REQUIRED if a piece needs promotion after the move.
    */
-  public boolean move(Position piecePosition, Position newPosition) {
+  public MoveResult move(Position piecePosition, Position newPosition) {
     if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
@@ -111,15 +113,18 @@ public class Board {
 
           if (newPosition.getRow() == promoteRow) {
             this.promote(newPosition);
+
+            return MoveResult.PROMOTION_REQUIRED;
           }
         }
 
         this.nextColor();
-        return true;
+
+        return MoveResult.OK;
       }
     }
 
-    return false;
+    return MoveResult.INVALID_MOVE;
   }
 
   /**
@@ -552,6 +557,12 @@ public class Board {
     CHECK,
     CHECKMATE,
     STALEMATE
+  }
+
+  public enum MoveResult {
+    INVALID_MOVE,
+    PROMOTION_REQUIRED,
+    OK
   }
 
   public enum PromotionOption {

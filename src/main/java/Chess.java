@@ -16,7 +16,7 @@ import piece.Rook;
  */
 class Chess {
 
-  private Board board = new Board(Board.Layout.UPSIDE_DOWN);
+  private Board board = new Board(Board.Layout.CLASSIC);
 
   /**
    * Starts a game of chess.
@@ -66,18 +66,18 @@ class Chess {
       // Move a piece
       case "m":
         if (words.length == 3) {
-          if (!board.move(parsePosition(words[1]), parsePosition(words[2]))) {
+          Board.MoveResult result = board.move(parsePosition(words[1]), parsePosition(words[2]));
+          if (result == Board.MoveResult.INVALID_MOVE) {
             System.out.println("Invalid move!");
+            return;
+          } else if (result == Board.MoveResult.PROMOTION_REQUIRED) {
+            System.out.println("Promotion required!");
           } else {
-            if (board.needsPromotion()) {
-              System.out.println("Promotion required!");
-            } else {
-              this.interpretCommand("c");
-            }
+            this.interpretCommand("c");
           }
-        } else {
-          System.out.println("Invalid number of arguments!");
         }
+
+        System.out.println("Invalid number of arguments!");
         break;
 
       // Add a piece
@@ -133,7 +133,8 @@ class Chess {
               promotionOption = Board.PromotionOption.ROOK;
               break;
             default:
-              promotionOption = Board.PromotionOption.QUEEN;
+              System.out.println("Invalid piece");
+              return;
           }
 
           board.promoteTo(promotionOption);

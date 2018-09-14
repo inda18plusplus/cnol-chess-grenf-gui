@@ -19,7 +19,7 @@ public class BoardTest {
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 1));
 
-    assert board.move(new Position(4, 1), new Position(4, 0));
+    assert board.move(new Position(4, 1), new Position(4, 0)) == Board.MoveResult.PROMOTION_REQUIRED;
 
     assert board.needsPromotion();
     assert board.promoteTo(Board.PromotionOption.QUEEN);
@@ -43,7 +43,7 @@ public class BoardTest {
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 1));
 
-    assert board.move(new Position(4, 1), new Position(4, 0));
+    assert board.move(new Position(4, 1), new Position(4, 0)) == Board.MoveResult.PROMOTION_REQUIRED;
 
     assert board.needsPromotion();
     assert board.promoteTo(Board.PromotionOption.KNIGHT);
@@ -141,8 +141,8 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(5, 4));
 
-    assert board.move(new Position(4, 6), new Position(4, 4));
-    assert board.move(new Position(5, 4), new Position(4, 5));
+    assert board.move(new Position(4, 6), new Position(4, 4)) == Board.MoveResult.OK;
+    assert board.move(new Position(5, 4), new Position(4, 5)) == Board.MoveResult.OK;
 
     assertEquals(
         "........\n"
@@ -177,8 +177,8 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(5, 2));
 
-    assert board.move(new Position(4, 6), new Position(4, 4));
-    assert board.move(new Position(5, 2), new Position(5, 4));
+    assert board.move(new Position(4, 6), new Position(4, 4)) == Board.MoveResult.OK;
+    assert board.move(new Position(5, 2), new Position(5, 4)) == Board.MoveResult.OK;
 
     assertEquals(
         new HashSet<>(Arrays.asList(
@@ -193,7 +193,7 @@ public class BoardTest {
     Board board = new Board();
 
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 6));
-    assert board.move(new Position(4, 6), new Position(4, 5));
+    assert board.move(new Position(4, 6), new Position(4, 5)) == Board.MoveResult.OK;
 
     assertEquals(
         new HashSet<>(Collections.singletonList(
@@ -430,7 +430,7 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
 
-    assert !board.move(new Position(4, 3), new Position(3, 2));
+    assert board.move(new Position(4, 3), new Position(3, 2)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -450,7 +450,7 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(4, 3));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    assert board.move(new Position(4, 3), new Position(3, 2));
+    assert board.move(new Position(4, 3), new Position(3, 2)) == Board.MoveResult.OK;
 
     assertEquals(
         "........\n" +
@@ -470,7 +470,7 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(3, 2));
 
-    assert !board.move(new Position(2, 3), new Position(3, 2));
+    assert board.move(new Position(2, 3), new Position(3, 2)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -490,7 +490,7 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(2, 3));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    assert board.move(new Position(2, 3), new Position(3, 2));
+    assert board.move(new Position(2, 3), new Position(3, 2)) == Board.MoveResult.OK;
 
     assertEquals(
         "........\n" +
@@ -510,8 +510,8 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
 
-    assert !board.move(new Position(3, 1), new Position(6, 2));
-    assert board.move(new Position(6, 6), new Position(6, 5));
+    assert board.move(new Position(3, 1), new Position(6, 2)) == Board.MoveResult.INVALID_MOVE;
+    assert board.move(new Position(6, 6), new Position(6, 5)) == Board.MoveResult.OK;
 
     assertEquals(
         "........\n" +
@@ -530,7 +530,7 @@ public class BoardTest {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    assert !board.move(new Position(3, 2), new Position(3, 1));
+    assert board.move(new Position(3, 2), new Position(3, 1)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -549,7 +549,7 @@ public class BoardTest {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 2));
 
-    assert !board.move(new Position(3, 2), new Position(4, 2));
+    assert board.move(new Position(3, 2), new Position(4, 2)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -568,7 +568,7 @@ public class BoardTest {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
-    assert !board.move(new Position(6, 6), new Position(6, 7));
+    assert board.move(new Position(6, 6), new Position(6, 7)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -587,7 +587,7 @@ public class BoardTest {
     Board board = new Board();
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
 
-    assert !board.move(new Position(6, 6), new Position(5, 6));
+    assert board.move(new Position(6, 6), new Position(5, 6)) == Board.MoveResult.INVALID_MOVE;
 
     assertEquals(
         "........\n" +
@@ -607,8 +607,8 @@ public class BoardTest {
     assert board.place(new Pawn(Piece.Color.WHITE), new Position(6, 6));
     assert board.place(new Pawn(Piece.Color.BLACK), new Position(3, 1));
 
-    assert board.move(new Position(6, 6), new Position(6, 5));
-    assert board.move(new Position(3, 1), new Position(3, 2));
+    assert board.move(new Position(6, 6), new Position(6, 5)) == Board.MoveResult.OK;
+    assert board.move(new Position(3, 1), new Position(3, 2)) == Board.MoveResult.OK;
 
     assertEquals(
         "........\n" +
