@@ -29,8 +29,10 @@ public class CastlingMove extends Move {
       Piece piece = getPiece.apply(position);
 
       if (piece != null) {
-        if (pieceIsTarget.apply(piece)) {
-          destinations.add(new Position(i - 1, position.getRow()));
+        if (position.getColumn() - origin.getColumn() >= 2) {
+          if (pieceIsTarget.apply(piece)) {
+            destinations.add(new Position(i - 1, position.getRow()));
+          }
         }
         break;
       }
@@ -43,8 +45,10 @@ public class CastlingMove extends Move {
       Piece piece = getPiece.apply(position);
 
       if (piece != null) {
-        if (pieceIsTarget.apply(piece)) {
-          destinations.add(new Position(i + 1, position.getRow()));
+        if (origin.getColumn() - position.getColumn() >= 2) {
+          if (pieceIsTarget.apply(piece)) {
+            destinations.add(new Position(i + 1, position.getRow()));
+          }
         }
         break;
       }

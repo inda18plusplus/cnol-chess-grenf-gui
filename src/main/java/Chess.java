@@ -75,9 +75,10 @@ class Chess {
           } else {
             this.interpretCommand("c");
           }
+        } else {
+          System.out.println("Invalid number of arguments!");
         }
 
-        System.out.println("Invalid number of arguments!");
         break;
 
       // Add a piece
