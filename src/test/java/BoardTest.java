@@ -255,7 +255,7 @@ public class BoardTest {
             new Position(3, 7),
             new Position(5, 7),
 
-            new Position(1, 7),
+            new Position(2, 7),
             new Position(6, 7)
         )),
         board.legalDestinations(new Position(4, 7))

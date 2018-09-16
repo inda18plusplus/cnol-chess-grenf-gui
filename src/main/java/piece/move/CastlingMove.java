@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import javafx.geometry.Pos;
 import piece.Piece;
 import piece.Position;
 
@@ -31,7 +32,7 @@ public class CastlingMove extends Move {
       if (piece != null) {
         if (position.getColumn() - origin.getColumn() >= 2) {
           if (pieceIsTarget.apply(piece)) {
-            destinations.add(new Position(i - 1, position.getRow()));
+            destinations.add(new Position(origin.getColumn() + 2, position.getRow()));
           }
         }
         break;
@@ -47,7 +48,7 @@ public class CastlingMove extends Move {
       if (piece != null) {
         if (origin.getColumn() - position.getColumn() >= 2) {
           if (pieceIsTarget.apply(piece)) {
-            destinations.add(new Position(i + 1, position.getRow()));
+            destinations.add(new Position(origin.getColumn() - 2, position.getRow()));
           }
         }
         break;
@@ -65,8 +66,13 @@ public class CastlingMove extends Move {
 
     int direction = deltaColumn < 0 ? -1 : 1;
 
-    Position oldTargetPosition = newPosition.add(new Position(direction, 0));
     Position newTargetPosition = newPosition.add(new Position(-direction, 0));
+
+    Position oldTargetPosition = new Position(newPosition);
+    while (getPiece.apply(oldTargetPosition) == null) {
+      oldTargetPosition = oldTargetPosition.add(new Position(direction, 0));
+    }
+
 
     Piece sourcePiece = getPiece.apply(oldPosition);
     Piece targetPiece = getPiece.apply(oldTargetPosition);

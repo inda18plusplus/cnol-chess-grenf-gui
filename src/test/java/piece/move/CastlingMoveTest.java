@@ -35,7 +35,7 @@ public class CastlingMoveTest {
     );
 
     assertEquals(
-        new HashSet<>(Collections.singletonList(new Position(1, 0))),
+        new HashSet<>(Collections.singletonList(new Position(2, 0))),
         destinations
     );
   }
