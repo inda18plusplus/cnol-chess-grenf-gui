@@ -99,7 +99,7 @@ public class Board {
    *         INVALID_MOVE if the move was illegal.
    *         PROMOTION_REQUIRED if a piece needs promotion after the move.
    */
-  public MoveResult move(Position piecePosition, Position newPosition) {
+  public MoveResult tryMove(Position piecePosition, Position newPosition) {
     if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {
       Piece sourcePiece = this.getPiece(piecePosition);
 
@@ -154,7 +154,7 @@ public class Board {
       for (Position position : availablePositions) {
         Board temporaryBoard = new Board(this);
 
-        temporaryBoard.move(piecePosition, position);
+        temporaryBoard.tryMove(piecePosition, position);
 
         if (temporaryBoard.isColorInCheck(piece.getColor())) {
           positionsResultingInCheck.add(position);

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import javafx.geometry.Pos;
 import piece.Piece;
 import piece.Position;
 

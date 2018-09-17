@@ -21,5 +21,4 @@ public class KingTest {
 
     assertEquals('K', king.toChar());
   }
-
 }

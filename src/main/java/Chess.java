@@ -66,7 +66,7 @@ class Chess {
       // Move a piece
       case "m":
         if (words.length == 3) {
-          Board.MoveResult result = board.move(parsePosition(words[1]), parsePosition(words[2]));
+          Board.MoveResult result = board.tryMove(parsePosition(words[1]), parsePosition(words[2]));
           if (result == Board.MoveResult.INVALID_MOVE) {
             System.out.println("Invalid move!");
             return;
