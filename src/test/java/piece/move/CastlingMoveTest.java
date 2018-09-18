@@ -1,5 +1,7 @@
 package piece.move;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +10,6 @@ import piece.King;
 import piece.Piece;
 import piece.Position;
 import piece.Rook;
-import static org.junit.Assert.*;
 
 public class CastlingMoveTest {
 
@@ -63,17 +64,18 @@ public class CastlingMoveTest {
       }
       return null;
     }, (piece, position) -> {
-      if (position.equals(new Position(4, 0))) {
-        assert piece == null;
-      } else if (position.equals(new Position(7, 0))) {
-        assert piece == null;
-      } else if (position.equals(new Position(6, 0))) {
-        assert piece == king;
-      } else if (position.equals(new Position(5, 0))) {
-        assert piece == rook;
-      } else {
-        assert false;
+        if (position.equals(new Position(4, 0))) {
+          assert piece == null;
+        } else if (position.equals(new Position(7, 0))) {
+          assert piece == null;
+        } else if (position.equals(new Position(6, 0))) {
+          assert piece == king;
+        } else if (position.equals(new Position(5, 0))) {
+          assert piece == rook;
+        } else {
+          assert false;
+          }
       }
-    });
+    );
   }
 }

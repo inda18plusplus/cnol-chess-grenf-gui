@@ -1,15 +1,14 @@
 package piece.move;
 
-import org.junit.Test;
-import piece.Pawn;
-import piece.Piece;
-import piece.Position;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
+import piece.Pawn;
+import piece.Piece;
+import piece.Position;
 
 public class RelativeMoveTest {
 
@@ -81,7 +80,7 @@ public class RelativeMoveTest {
   }
 
   private void outOfBoundsLowerRow() {
-     Move move = new RelativeMove(0, -1);
+    Move move = new RelativeMove(0, -1);
 
     Set<Position> positions = move.getDestinations(new Position(4, 0), 8, 8, position -> {
       if (position.equals(new Position(4, 0))) {
@@ -128,7 +127,8 @@ public class RelativeMoveTest {
     assertEquals(
         new HashSet<>(),
         positions
-    );  }
+    );
+  }
 
   private void outOfBoundsUpperColumn() {
     Move move = new RelativeMove(1, 0);
