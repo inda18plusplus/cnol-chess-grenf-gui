@@ -1,5 +1,6 @@
-package chess;
+package cli;
 
+import chess.Board;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;

@@ -556,7 +556,7 @@ public class Board {
   }
 
 
-  enum Layout {
+  public enum Layout {
     CLASSIC,
     UPSIDE_DOWN,
     REALLY_BAD_CHESS,
