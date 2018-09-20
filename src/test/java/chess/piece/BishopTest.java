@@ -1,11 +1,10 @@
-package piece;
+package chess.piece;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class KnightTest {
-
+public class BishopTest {
   @Test
   public void toChar() {
     whiteCharacterRepresentation();
@@ -13,14 +12,14 @@ public class KnightTest {
   }
 
   private void blackCharacterRepresentation() {
-    Knight knight = new Knight(Piece.Color.BLACK);
+    Bishop bishop = new Bishop(Piece.Color.BLACK);
 
-    assertEquals('n', knight.toChar());
+    assertEquals('b', bishop.toChar());
   }
 
   private void whiteCharacterRepresentation() {
-    Knight knight = new Knight(Piece.Color.WHITE);
+    Bishop bishop = new Bishop(Piece.Color.WHITE);
 
-    assertEquals('N', knight.toChar());
+    assertEquals('B', bishop.toChar());
   }
 }

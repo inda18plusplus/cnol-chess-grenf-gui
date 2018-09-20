@@ -1,20 +1,20 @@
-package piece.move;
+package chess.piece.move;
 
+import chess.piece.Piece;
+import chess.piece.Position;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import piece.Piece;
-import piece.Position;
 
 /**
- * A piece.move which seeks in a direction and stops at hostiles.
+ * A chess.piece.move which seeks in a direction and stops at hostiles.
  */
 public class LinearMove extends Move {
   private final int deltaColumn;
   private final int deltaRow;
 
-  // The maximum number of steps this piece.move can piece.move a piece.
+  // The maximum number of steps this chess.piece.move can chess.piece.move a chess.piece.
   // If <= 0: no limit
   private int maxSteps = 0;
 
@@ -24,7 +24,7 @@ public class LinearMove extends Move {
   }
 
   /**
-   * Create a new Move seeking in a direction until it hits another piece/edge.
+   * Create a new Move seeking in a direction until it hits another chess.piece/edge.
    *
    * @param deltaColumn The length and direction of a step along the columns
    * @param deltaRow The length and direction of a step along the rows

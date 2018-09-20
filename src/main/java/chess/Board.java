@@ -1,3 +1,14 @@
+package chess;
+
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Position;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.piece.move.Move;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,15 +18,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import piece.Bishop;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Position;
-import piece.Queen;
-import piece.Rook;
-import piece.move.Move;
 
 public class Board {
   private final Piece[][] pieces;
@@ -70,9 +72,9 @@ public class Board {
 
 
   /**
-   * Places an additional piece on the board.
+   * Places an additional chess.piece on the board.
    *
-   * @param piece    The piece
+   * @param piece    The chess.piece
    * @param position Where to place
    * @return true if the placement was successful
    */
@@ -91,13 +93,13 @@ public class Board {
   }
 
   /**
-   * Moves a piece on the board.
+   * Moves a chess.piece on the board.
    *
-   * @param piecePosition The position of the piece to piece.move.
-   * @param newPosition   The position to piece.move the piece to.
+   * @param piecePosition The position of the chess.piece to chess.piece.move.
+   * @param newPosition   The position to chess.piece.move the chess.piece to.
    * @return OK if move was successful.
    *         INVALID_MOVE if the move was illegal.
-   *         PROMOTION_REQUIRED if a piece needs promotion after the move.
+   *         PROMOTION_REQUIRED if a chess.piece needs promotion after the move.
    */
   public MoveResult tryMove(Position piecePosition, Position newPosition) {
     if (!this.needsPromotion() && isValidMove(piecePosition, newPosition)) {
@@ -128,18 +130,18 @@ public class Board {
   }
 
   /**
-   * Determines if a piece needs promotion.
+   * Determines if a chess.piece needs promotion.
    *
-   * @return True if a piece needs promotion
+   * @return True if a chess.piece needs promotion
    */
   public boolean needsPromotion() {
     return !this.promotingPieces.isEmpty();
   }
 
   /**
-   * Compute the available legal destinations of a piece.
+   * Compute the available legal destinations of a chess.piece.
    *
-   * @param piecePosition The position of the piece
+   * @param piecePosition The position of the chess.piece
    * @return The destinations
    */
   public Set<Position> legalDestinations(Position piecePosition) {
@@ -225,9 +227,9 @@ public class Board {
   }
 
   /**
-   * Promotes the next piece in the queue.
+   * Promotes the next chess.piece in the queue.
    *
-   * @param newPieceType The type of the new piece
+   * @param newPieceType The type of the new chess.piece
    * @return If the promotion was successful or not
    */
   public boolean promoteTo(PromotionOption newPieceType) {
@@ -582,10 +584,10 @@ public class Board {
     KNIGHT;
 
     /**
-     * Creates the corresponding piece.
+     * Creates the corresponding chess.piece.
      *
-     * @param color The color of the new piece.
-     * @return The new piece
+     * @param color The color of the new chess.piece.
+     * @return The new chess.piece
      */
     Piece toPiece(Piece.Color color) {
       switch (this) {

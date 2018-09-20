@@ -1,9 +1,9 @@
-package piece.move;
+package chess.piece.move;
 
+import chess.piece.Piece;
+import chess.piece.Position;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import piece.Piece;
-import piece.Position;
 
 public class EnPassantMove extends RelativeMove {
   public EnPassantMove(int passantDirection, int forwardDirection) {

@@ -1,7 +1,7 @@
-package piece.move;
+package chess.piece.move;
 
 /**
- * A piece.move, relative to a position.
+ * A chess.piece.move, relative to a position.
  */
 public class RelativeMove extends LinearMove {
   public RelativeMove(int deltaColumn, int deltaRow, CaptureRule captureRule) {

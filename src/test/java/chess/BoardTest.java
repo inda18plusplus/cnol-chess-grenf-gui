@@ -1,17 +1,19 @@
+package chess;
+
 import static org.junit.Assert.assertEquals;
 
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Position;
+import chess.piece.Queen;
+import chess.piece.Rook;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import org.junit.Test;
-import piece.Bishop;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Position;
-import piece.Queen;
-import piece.Rook;
 
 public class BoardTest {
   @Test

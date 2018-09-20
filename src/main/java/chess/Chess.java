@@ -1,14 +1,16 @@
+package chess;
+
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Piece.Color;
+import chess.piece.Position;
+import chess.piece.Queen;
+import chess.piece.Rook;
 import java.util.Scanner;
 import java.util.Set;
-import piece.Bishop;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Piece.Color;
-import piece.Position;
-import piece.Queen;
-import piece.Rook;
 
 
 /**
@@ -63,7 +65,7 @@ class Chess {
         System.out.println(this.formattedBoard());
         break;
 
-      // Move a piece
+      // Move a chess.piece
       case "m":
         if (words.length == 3) {
           Board.MoveResult result = board.tryMove(parsePosition(words[1]), parsePosition(words[2]));
@@ -81,7 +83,7 @@ class Chess {
 
         break;
 
-      // Add a piece
+      // Add a chess.piece
       case "a":
         if (words.length == 3) {
           Piece piece = parsePiece(words[1]);
@@ -116,7 +118,7 @@ class Chess {
         System.out.println("Black in check: " + board.getCheck(Color.BLACK));
         break;
 
-      // Promote a piece
+      // Promote a chess.piece
       case "pr":
         if (words.length == 2) {
           Board.PromotionOption promotionOption;
@@ -134,7 +136,7 @@ class Chess {
               promotionOption = Board.PromotionOption.ROOK;
               break;
             default:
-              System.out.println("Invalid piece");
+              System.out.println("Invalid chess.piece");
               return;
           }
 
@@ -154,13 +156,15 @@ class Chess {
 
         System.out.println("===commands===");
         System.out.println("d - displays the board as it is right currently");
-        System.out.println("m [from] [to] - move a piece at [from] to [to]");
-        System.out.println("p [where] - prints all possible destinations for a piece located at "
-            + "[where]");
+        System.out.println("m [from] [to] - move a chess.piece at [from] to [to]");
+        System.out.println("p [where] - prints all possible destinations for a chess.piece located"
+            + " at [where]");
         System.out.println("c - display any checks");
-        System.out.println("pr [piece] - Promotes a piece to a new [piece]. [piece] can be any of"
-            + " 'q' for queen, 'b' for bishop, 'r' for rook, 'n' for a knight");
-        System.out.println("a [what] [where] - adds a new piece to the board, capital letters are"
+        System.out.println("pr [chess.piece] - Promotes a chess.piece to a new [chess.piece]. "
+            + "[chess.piece] can be any of "
+            + "'q' for queen, 'b' for bishop, 'r' for rook, 'n' for a knight");
+        System.out.println("a [what] [where] - adds a new chess.piece to the board,"
+            + " capital letters are"
             + " interpreted as white pieces and lowercase as black.");
         break;
 

@@ -1,4 +1,4 @@
-package piece;
+package chess.piece;
 
 import static org.junit.Assert.assertEquals;
 

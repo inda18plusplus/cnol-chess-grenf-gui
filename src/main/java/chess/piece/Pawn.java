@@ -1,12 +1,12 @@
-package piece;
+package chess.piece;
 
+import chess.piece.move.EnPassantMove;
+import chess.piece.move.LinearMove;
+import chess.piece.move.Move;
+import chess.piece.move.RelativeMove;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
-import piece.move.EnPassantMove;
-import piece.move.LinearMove;
-import piece.move.Move;
-import piece.move.RelativeMove;
 
 public class Pawn extends Piece {
   private boolean hasMoved = false;

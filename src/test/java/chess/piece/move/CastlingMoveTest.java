@@ -1,15 +1,15 @@
-package piece.move;
+package chess.piece.move;
 
 import static org.junit.Assert.assertEquals;
 
+import chess.piece.King;
+import chess.piece.Piece;
+import chess.piece.Position;
+import chess.piece.Rook;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
-import piece.King;
-import piece.Piece;
-import piece.Position;
-import piece.Rook;
 
 public class CastlingMoveTest {
 

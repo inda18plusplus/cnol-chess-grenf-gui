@@ -1,9 +1,9 @@
-package piece;
+package chess.piece;
 
+import chess.piece.move.LinearMove;
+import chess.piece.move.Move;
 import java.util.HashSet;
 import java.util.Set;
-import piece.move.LinearMove;
-import piece.move.Move;
 
 public class Bishop extends Piece {
   public Bishop(Color color) {
