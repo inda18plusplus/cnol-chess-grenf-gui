@@ -1,15 +1,16 @@
 package chess.piece.move;
 
-import static org.junit.Assert.assertEquals;
-
 import chess.piece.King;
 import chess.piece.Piece;
 import chess.piece.Position;
 import chess.piece.Rook;
+import org.junit.jupiter.api.Test;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CastlingMoveTest {
 

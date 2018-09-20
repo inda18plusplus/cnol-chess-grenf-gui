@@ -1,15 +1,16 @@
 package chess.piece.move;
 
-import static org.junit.Assert.assertEquals;
-
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Position;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LinearMoveTest {
 
