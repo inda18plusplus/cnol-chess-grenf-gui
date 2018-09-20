@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cli.Chess</mainClass>
+                            <mainClass>grenf.gui.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
