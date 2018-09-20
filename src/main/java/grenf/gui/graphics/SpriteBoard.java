@@ -7,8 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class SpriteBoard {
 
-  private static final int BOARD_START_OFFSET_X = 39;
-  private static final int BOARD_START_OFFSET_Y = 13;
+  private static final int BOARD_START_OFFSET_X = 56;
+  private static final int BOARD_START_OFFSET_Y = 21;
   private static final int PIECE_SPRITE_DIMENSION = 67;
 
   private Sprite board;

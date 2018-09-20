@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
   public static Game game;
-  public static final int WIDTH = 600;
-  public static final int HEIGHT = 630;
+  public static final int WIDTH = 850;
+  public static final int HEIGHT = 650;
   public static final String TITLE = "cnol-chess grenf-gui";
 
   public static void main(String[] args) {

@@ -1,6 +1,7 @@
 package grenf.gui;
 
 import chess.Board;
+import chess.piece.Piece;
 import chess.piece.Position;
 import grenf.gui.graphics.ImageLoader;
 import grenf.gui.graphics.Sprite;
@@ -42,12 +43,12 @@ public class Game extends AnimationTimer {
   public void handle(long now) {
     spriteBoard.render(gc);
     if (selectedSprite != null) {
-      selectedSprite.render(gc);
       if (!potentialMoveSprites.isEmpty()) {
         for (int i = 0; i < potentialMoveSprites.size(); i++) {
           potentialMoveSprites.get(i).render(gc);
         }
       }
+      selectedSprite.render(gc);
     }
   }
 
@@ -92,7 +93,40 @@ public class Game extends AnimationTimer {
   }
 
   private void makeMove(Position moveTarget) {
-    //Board.MoveResult result = board.tryMove(moveStart, moveTarget);
+    Board.MoveResult result = board.tryMove(moveStart, moveTarget);
+    if (result == Board.MoveResult.OK) {
+      Board.CheckType checkType = board.getCheck(board.getCurrentColor());
+      if (checkType == Board.CheckType.CHECKMATE || checkType == Board.CheckType.STALEMATE) {
+        endGame(checkType);
+      } else if (checkType == Board.CheckType.CHECK) {
+        warnForCheck();
+      }
 
+      refreshSpriteBoard();
+    } else if (result == Board.MoveResult.PROMOTION_REQUIRED) {
+      promptPromotion();
+    }
+  }
+
+  private void warnForCheck() {
+    if (board.getCurrentColor() == Piece.Color.WHITE) {
+      System.out.println("White is checked");
+    } else {
+      System.out.println("Black is checked");
+    }
+  }
+
+  private void endGame(Board.CheckType checkType) {
+    if (board.getCurrentColor() == Piece.Color.WHITE) {
+      System.out.println("Black won");
+    } else {
+      System.out.println("White won");
+    }
+    System.exit(0);
+  }
+
+  private void promptPromotion() {
+    System.out.println("PANIC! PROMOTION REQUIERD!");
+    System.exit(0);
   }
 }
