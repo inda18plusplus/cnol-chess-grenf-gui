@@ -1,7 +1,8 @@
 package grenf.gui;
 
+import chess.Board;
 import grenf.gui.eventhandlers.MouseClicked;
-import grenf.gui.eventhandlers.MouseMoved;
+import grenf.gui.graphics.ImageLoader;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,8 +13,8 @@ public class Main extends Application {
 
   public static Game game;
   public static final int WIDTH = 600;
-  public static final int HEIGHT = 600;
-  public static final String TITLE = "Chess";
+  public static final int HEIGHT = 630;
+  public static final String TITLE = "cnol-chess grenf-gui";
 
   public static void main(String[] args) {
     System.out.println("tjenare");
@@ -30,14 +31,13 @@ public class Main extends Application {
 
     Group root = new Group();
     Scene scene = new Scene(root);
-    scene.setOnMouseMoved(new MouseMoved());
     scene.setOnMouseClicked(new MouseClicked());
     primaryStage.setScene(scene);
 
     Canvas canvas = new Canvas(WIDTH, HEIGHT);
     root.getChildren().add(canvas);
 
-    game = new Game(canvas.getGraphicsContext2D());
+    game = new Game(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC);
     primaryStage.show();
     game.start();
   }

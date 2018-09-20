@@ -1,12 +1,12 @@
-package grenf.gui;
+package grenf.gui.graphics;
 
 import javafx.scene.image.Image;
 
 public class ImageLoader {
 
   private static Image[] images;
-  private static final String[] IMAGE_FILENAMES = new String[]{"board.png", "greenBorder.png", "whiteRook.png", "whiteKnight.png", "whiteBishop.png", "whiteKing.png", "whiteQueen.png", "whitePawn.png", "blackRook.png", "blackKnight.png", "blackBishop.png", "blackKing.png", "blackQueen.png", "blackPawn.png"};
-  private static final String imageChars = "XYrnbkqpRNBKQP";
+  private static final String[] IMAGE_FILENAMES = new String[]{"board.png", "greenBorder.png", "orangeBorder.png", "whiteRook.png", "whiteKnight.png", "whiteBishop.png", "whiteKing.png", "whiteQueen.png", "whitePawn.png", "blackRook.png", "blackKnight.png", "blackBishop.png", "blackKing.png", "blackQueen.png", "blackPawn.png"};
+  private static final String imageChars = "MGOrnbkqpRNBKQP";
 
   public static void loadImages() {
     images = new Image[IMAGE_FILENAMES.length];
