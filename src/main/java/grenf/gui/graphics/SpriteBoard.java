@@ -1,12 +1,12 @@
 package grenf.gui.graphics;
 
 import chess.piece.Position;
-import grenf.gui.Main;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public class SpriteBoard {
 
+  public static final int BOARD_WIDTH = 612;
   private static final int BOARD_START_OFFSET_X = 56;
   private static final int BOARD_START_OFFSET_Y = 21;
   private static final int PIECE_SPRITE_DIMENSION = 67;
@@ -52,14 +52,6 @@ public class SpriteBoard {
   public boolean indexInBounds(Position boardIndex) {
     return (boardIndex.getColumn() >= 0 && boardIndex.getColumn() < width)
         && (boardIndex.getRow() >= 0 && boardIndex.getRow() < height);
-  }
-
-  public void removeSprite(Position position) {
-    pieces[position.getRow()][position.getColumn()] = null;
-  }
-
-  public void addSprite(Sprite sprite, Position position) {
-    pieces[position.getRow()][position.getColumn()] = sprite;
   }
 
   public Sprite getSprite(Position position) {

@@ -9,6 +9,7 @@ import grenf.gui.graphics.SpriteBoard;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -17,6 +18,7 @@ public class Game extends AnimationTimer {
 
   public Board board;
   private SpriteBoard spriteBoard;
+  private MessageLog messageLog;
   private GraphicsContext gc;
 
   private ArrayList<Sprite> potentialMoveSprites;
@@ -29,6 +31,7 @@ public class Game extends AnimationTimer {
     board = new Board(layout);
     spriteBoard = new SpriteBoard();
     refreshSpriteBoard();
+    messageLog = new MessageLog(new Point2D(SpriteBoard.BOARD_WIDTH, 0), 38);
     potentialMoveSprites = new ArrayList<>();
     selectedSprite = null;
     legalMoves = null;
@@ -50,6 +53,7 @@ public class Game extends AnimationTimer {
       }
       selectedSprite.render(gc);
     }
+    messageLog.render(gc, board.getCurrentColor());
   }
 
   public void handleClick(Point2D clickPos) {
@@ -95,6 +99,7 @@ public class Game extends AnimationTimer {
   private void makeMove(Position moveTarget) {
     Board.MoveResult result = board.tryMove(moveStart, moveTarget);
     if (result == Board.MoveResult.OK) {
+      messageLog.addMessage(moveToString(moveStart, moveTarget), board.getCurrentColor() == Piece.Color.WHITE ? Color.BLACK : Color.WHITE);
       Board.CheckType checkType = board.getCheck(board.getCurrentColor());
       if (checkType == Board.CheckType.CHECKMATE || checkType == Board.CheckType.STALEMATE) {
         endGame(checkType);
@@ -110,23 +115,37 @@ public class Game extends AnimationTimer {
 
   private void warnForCheck() {
     if (board.getCurrentColor() == Piece.Color.WHITE) {
-      System.out.println("White is checked");
+      messageLog.addMessage("White is checked", Color.RED);
     } else {
-      System.out.println("Black is checked");
+      messageLog.addMessage("Black is checked", Color.RED);
     }
   }
 
   private void endGame(Board.CheckType checkType) {
-    if (board.getCurrentColor() == Piece.Color.WHITE) {
-      System.out.println("Black won");
+    if (checkType == Board.CheckType.STALEMATE) {
+      messageLog.addMessage("STALEMATE!", Color.RED);
+    } else if (board.getCurrentColor() == Piece.Color.WHITE) {
+      messageLog.addMessage("Black won!", Color.BLACK);
     } else {
-      System.out.println("White won");
+      messageLog.addMessage("White won!", Color.WHITE);
     }
-    System.exit(0);
+    stop();
+    handle(0);
   }
 
   private void promptPromotion() {
-    System.out.println("PANIC! PROMOTION REQUIERD!");
-    System.exit(0);
+    messageLog.addMessage("REQUIRED!", Color.RED);
+    messageLog.addMessage("PROMOTION", Color.RED);
+    messageLog.addMessage("PANIC!", Color.RED);
+    stop();
+    handle(0);
+  }
+
+  private String moveToString(Position start, Position target) {
+    return "" + intToLetter(start.getColumn()) + start.getRow() + " -> " + intToLetter(target.getColumn()) + target.getRow();
+  }
+
+  private char intToLetter(int n) {
+    return (char)(n + (int)('A'));
   }
 }
