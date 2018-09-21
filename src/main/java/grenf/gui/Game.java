@@ -177,15 +177,6 @@ public class Game extends AnimationTimer {
     } else {
       spriteBoard.setUpPieces(PROMOTION_PIECES_BLACK);
     }
-
-    /*
-    messageLog.clearMessages();
-    messageLog.addMessage("REQUIRED!", Color.RED);
-    messageLog.addMessage("PROMOTION", Color.RED);
-    messageLog.addMessage("PANIC!", Color.RED);
-    stop();
-    handle(0);
-    */
   }
 
   private String moveToString(Position start, Position target) {
