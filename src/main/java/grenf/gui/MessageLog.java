@@ -33,6 +33,10 @@ public class MessageLog {
     messages.add(message);
   }
 
+  public void clearMessages(){
+    messages.clear();
+  }
+
   public void render(GraphicsContext gc, Piece.Color currentTeam) {
     gc.setFill(Color.WHITE);
     gc.fillRect(position.getX(), position.getY(), Main.WIDTH - SpriteBoard.BOARD_WIDTH, Main.HEIGHT);
@@ -57,7 +61,7 @@ public class MessageLog {
   private void renderText(GraphicsContext gc, String text, Point2D textPosition, Color fillColor) {
     gc.setFill(fillColor);
     gc.setStroke(Color.BLACK);
-    gc.setLineWidth(2);
+    gc.setLineWidth(1);
     gc.setFont(font);
     gc.fillText(text, textPosition.getX(), textPosition.getY());
     gc.strokeText(text, textPosition.getX(), textPosition.getY());

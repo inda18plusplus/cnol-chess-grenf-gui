@@ -114,26 +114,29 @@ public class Game extends AnimationTimer {
   }
 
   private void warnForCheck() {
+    messageLog.addMessage("checked", Color.RED);
     if (board.getCurrentColor() == Piece.Color.WHITE) {
-      messageLog.addMessage("White is checked", Color.RED);
+      messageLog.addMessage("White is", Color.RED);
     } else {
-      messageLog.addMessage("Black is checked", Color.RED);
+      messageLog.addMessage("Black is", Color.RED);
     }
   }
 
   private void endGame(Board.CheckType checkType) {
+    messageLog.clearMessages();
     if (checkType == Board.CheckType.STALEMATE) {
       messageLog.addMessage("STALEMATE!", Color.RED);
     } else if (board.getCurrentColor() == Piece.Color.WHITE) {
-      messageLog.addMessage("Black won!", Color.BLACK);
+      messageLog.addMessage("Black won!", Color.RED);
     } else {
-      messageLog.addMessage("White won!", Color.WHITE);
+      messageLog.addMessage("White won!", Color.RED);
     }
     stop();
     handle(0);
   }
 
   private void promptPromotion() {
+    messageLog.clearMessages();
     messageLog.addMessage("REQUIRED!", Color.RED);
     messageLog.addMessage("PROMOTION", Color.RED);
     messageLog.addMessage("PANIC!", Color.RED);
