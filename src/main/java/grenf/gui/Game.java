@@ -26,8 +26,13 @@ public class Game extends AnimationTimer {
   private Position moveStart;
   private Set<Position> legalMoves;
 
+  boolean currentlyPromoting;
+  private static final String PROMOTION_PIECES_WHITE = "........\n........\n........\n..RNBQ..\n........\n........\n........\n........\n";
+  private static final String PROMOTION_PIECES_BLACK = "........\n........\n........\n..rnbq..\n........\n........\n........\n........\n";
+
   public Game(GraphicsContext gc, Board.Layout layout) {
     this.gc = gc;
+    currentlyPromoting = false;
     board = new Board(layout);
     spriteBoard = new SpriteBoard();
     refreshSpriteBoard();
@@ -60,12 +65,42 @@ public class Game extends AnimationTimer {
     Position position = spriteBoard.posToIndex(clickPos);
     if (spriteBoard.indexInBounds(position)) {
       System.out.println("Clicked: " + position.getColumn() + " " + position.getRow());
-      if (selectedSprite == null) {
+      if (currentlyPromoting) {
+        handlePromotionClick(position);
+      } else if (selectedSprite == null) {
         handleClickNotSelected(position);
       } else {
         handleClickSelected(position);
       }
     }
+  }
+
+  private void handlePromotionClick(Position position) {
+    Sprite target = spriteBoard.getSprite(position);
+    selectedSprite = null;
+    potentialMoveSprites.clear();
+    if (target != null) {
+      if (board.getCurrentColor() == Piece.Color.WHITE) {
+        board.promoteTo(charToPromotionOption(PROMOTION_PIECES_WHITE.charAt(position.getRow()*9+position.getColumn())));
+      } else {
+        board.promoteTo(charToPromotionOption(PROMOTION_PIECES_BLACK.charAt(position.getRow()*9+position.getColumn())));
+      }
+      currentlyPromoting = false;
+      refreshSpriteBoard();
+    }
+  }
+
+  private Board.PromotionOption charToPromotionOption(char c) {
+    if (c == 'q' || c == 'Q') {
+      return Board.PromotionOption.QUEEN;
+    } else if (c == 'r' || c == 'R') {
+      return Board.PromotionOption.ROOK;
+    } else if (c == 'n' || c == 'N') {
+      return Board.PromotionOption.KNIGHT;
+    } else if (c == 'b' || c == 'B') {
+      return Board.PromotionOption.BISHOP;
+    }
+    return null;
   }
 
   private void handleClickNotSelected(Position position) {
@@ -136,12 +171,21 @@ public class Game extends AnimationTimer {
   }
 
   private void promptPromotion() {
+    currentlyPromoting = true;
+    if (board.getCurrentColor() == Piece.Color.WHITE) {
+      spriteBoard.setUpPieces(PROMOTION_PIECES_WHITE);
+    } else {
+      spriteBoard.setUpPieces(PROMOTION_PIECES_BLACK);
+    }
+
+    /*
     messageLog.clearMessages();
     messageLog.addMessage("REQUIRED!", Color.RED);
     messageLog.addMessage("PROMOTION", Color.RED);
     messageLog.addMessage("PANIC!", Color.RED);
     stop();
     handle(0);
+    */
   }
 
   private String moveToString(Position start, Position target) {
@@ -149,6 +193,6 @@ public class Game extends AnimationTimer {
   }
 
   private char intToLetter(int n) {
-    return (char)(n + (int)('A'));
+    return (char) (n + (int) ('A'));
   }
 }
