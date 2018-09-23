@@ -37,7 +37,7 @@ public class Main extends Application {
     Canvas canvas = new Canvas(WIDTH, HEIGHT);
     root.getChildren().add(canvas);
 
-    game = new Game(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC);
+    game = new Game(canvas.getGraphicsContext2D(), Board.Layout.REALLY_BAD_CHESS);
     primaryStage.show();
     game.start();
   }
