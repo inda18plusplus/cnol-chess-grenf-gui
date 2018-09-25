@@ -4,13 +4,13 @@ import chess.piece.King;
 import chess.piece.Piece;
 import chess.piece.Position;
 import chess.piece.Rook;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class CastlingMoveTest {
 
