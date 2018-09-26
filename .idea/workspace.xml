@@ -2,55 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce4d7542-9ce5-4f60-b1fc-842e33d0b645" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cnol-chess-grenf-gui.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cnol-chess-grenf-gui.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board$CheckType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board$Layout.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board$MoveResult.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board$PromotionOption.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/Board.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Bishop$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Bishop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/King$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/King.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Knight$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Knight.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Pawn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Pawn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Piece$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Piece$Color.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Piece.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Position.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Queen$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Queen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Rook$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/Rook.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/CastlingMove.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/EnPassantMove.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/LinearMove.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/Move$CaptureRule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/Move.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/chess/piece/move/RelativeMove.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/cli/Chess.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/MessageLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/eventhandlers/MouseClicked.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/graphics/ImageLoader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/graphics/Sprite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/cnol-chess-grenf-gui/grenf/gui/graphics/SpriteBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/BoardTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/BishopTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/KingTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/KnightTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/QueenTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/RookTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/move/CastlingMoveTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/move/LinearMoveTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/cnol-chess-grenf-gui/chess/piece/move/RelativeMoveTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,22 +26,26 @@
     <session id="603453055">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="java" value="13" />
+          <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JAVA" value="13" />
           <entry key="PLAIN_TEXT" value="1" />
+          <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -104,12 +61,21 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
               <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="21" column="8" selection-start-line="17" selection-start-column="20" selection-end-line="21" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -178,8 +144,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,13 +160,15 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537945224687" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537945439441" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -298,7 +264,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25302014" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25973153" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -307,7 +273,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32907802" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -317,7 +283,6 @@
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32907802" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3295302" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -326,6 +291,7 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Maven Projects" order="7" visible="true" weight="0.3295302" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.3295302" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -413,6 +379,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="21" column="8" selection-start-line="17" selection-start-column="20" selection-end-line="21" selection-end-column="8" />
         </state>
       </provider>
     </entry>
