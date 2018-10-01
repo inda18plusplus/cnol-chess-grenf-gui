@@ -20,6 +20,11 @@
             <artifactId>javafx-graphics</artifactId>
             <version>11</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -29,7 +34,8 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>grenf.gui.Main</mainClass>
+                            <mainClass>grenf.gui.NetworkedMain</mainClass>
+                            <!--mainClass>grenf.gui.Main</mainClass-->
                         </manifest>
                     </archive>
                 </configuration>

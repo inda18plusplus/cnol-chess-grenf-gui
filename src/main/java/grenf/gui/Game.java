@@ -6,6 +6,7 @@ import chess.piece.Position;
 import grenf.gui.graphics.ImageLoader;
 import grenf.gui.graphics.Sprite;
 import grenf.gui.graphics.SpriteBoard;
+import grenf.network.PositionParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,13 +19,13 @@ public class Game extends AnimationTimer {
 
   public Board board;
   private SpriteBoard spriteBoard;
-  private MessageLog messageLog;
+  protected MessageLog messageLog;
   private GraphicsContext gc;
 
-  private ArrayList<Sprite> potentialMoveSprites;
-  private Sprite selectedSprite;
-  private Position moveStart;
-  private Set<Position> legalMoves;
+  protected ArrayList<Sprite> potentialMoveSprites;
+  protected Sprite selectedSprite;
+  protected Position moveStart;
+  protected Set<Position> legalMoves;
 
   boolean currentlyPromoting;
   private static final String PROMOTION_PIECES_WHITE = "........\n........\n........\n..RNBQ..\n........\n........\n........\n........\n";
@@ -43,7 +44,7 @@ public class Game extends AnimationTimer {
     moveStart = null;
   }
 
-  private void refreshSpriteBoard() {
+  protected void refreshSpriteBoard() {
     spriteBoard.setUpPieces(board.toString());
   }
 
@@ -103,7 +104,7 @@ public class Game extends AnimationTimer {
     return null;
   }
 
-  private void handleClickNotSelected(Position position) {
+  protected void handleClickNotSelected(Position position) {
     Sprite target = spriteBoard.getSprite(position);
     if (target != null) {
       moveStart = position;
@@ -116,7 +117,7 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private void handleClickSelected(Position position) {
+  protected void handleClickSelected(Position position) {
     potentialMoveSprites.clear();
     selectedSprite = null;
     if (moveStart.equals(position)) {
@@ -131,7 +132,7 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private void makeMove(Position moveTarget) {
+  protected void makeMove(Position moveTarget) {
     Board.MoveResult result = board.tryMove(moveStart, moveTarget);
     if (result == Board.MoveResult.OK) {
       messageLog.addMessage(moveToString(moveStart, moveTarget), board.getCurrentColor() == Piece.Color.WHITE ? Color.BLACK : Color.WHITE);
@@ -148,7 +149,7 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private void warnForCheck() {
+  protected void warnForCheck() {
     messageLog.addMessage("checked", Color.RED);
     if (board.getCurrentColor() == Piece.Color.WHITE) {
       messageLog.addMessage("White is", Color.RED);
@@ -157,7 +158,7 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private void endGame(Board.CheckType checkType) {
+  protected void endGame(Board.CheckType checkType) {
     messageLog.clearMessages();
     if (checkType == Board.CheckType.STALEMATE) {
       messageLog.addMessage("STALEMATE!", Color.RED);
@@ -170,7 +171,7 @@ public class Game extends AnimationTimer {
     handle(0);
   }
 
-  private void promptPromotion() {
+  protected void promptPromotion() {
     currentlyPromoting = true;
     if (board.getCurrentColor() == Piece.Color.WHITE) {
       spriteBoard.setUpPieces(PROMOTION_PIECES_WHITE);
@@ -179,11 +180,7 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private String moveToString(Position start, Position target) {
-    return "" + intToLetter(start.getColumn()) + start.getRow() + " -> " + intToLetter(target.getColumn()) + target.getRow();
-  }
-
-  private char intToLetter(int n) {
-    return (char) (n + (int) ('A'));
+  protected String moveToString(Position start, Position target) {
+    return "" + PositionParser.toString(start) + " -> " + PositionParser.toString(target);
   }
 }
