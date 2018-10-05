@@ -1,5 +1,6 @@
 package grenf.gui.graphics;
 
+import chess.piece.Piece;
 import chess.piece.Position;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +18,7 @@ public class SpriteBoard {
   private int height;
 
   public SpriteBoard() {
-    this.board = new Sprite(new Point2D(0, 0), ImageLoader.getImageId('M'));
+    this.board = new Sprite(new Point2D(0, 0), ImageLoader.getImageId('M'), Piece.Color.BLACK);
   }
 
   public void setUpPieces(String board) {
@@ -30,7 +31,8 @@ public class SpriteBoard {
       for (int x = 0; x < width; x++) {
         if (lines[y].charAt(x) != '.') {
           Position temp = new Position(x, y);
-          pieces[y][x] = new Sprite(indexToPos(temp), ImageLoader.getImageId(lines[y].charAt(x)));
+          Piece.Color color = Character.isUpperCase(lines[y].charAt(x)) ? Piece.Color.WHITE : Piece.Color.BLACK;
+          pieces[y][x] = new Sprite(indexToPos(temp), ImageLoader.getImageId(lines[y].charAt(x)), color);
         } else {
           pieces[y][x] = null;
         }

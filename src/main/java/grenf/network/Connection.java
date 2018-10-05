@@ -13,6 +13,9 @@ import java.nio.ByteOrder;
 
 public class Connection {
 
+  public static final JSONObject INVALID_MOVE_RESPONSE = new JSONObject("{\"type\":\"response\", \"response\":\"invalid\"}");
+  public static final JSONObject OK_MOVE_RESPONSE = new JSONObject("{\"type\":\"response\", \"response\":\"ok\"}");
+
   private String host;
   private int port;
   private Socket socket;
@@ -53,23 +56,21 @@ public class Connection {
   public void sendJSON(JSONObject json) {
     byte buffer[] = json.toString().getBytes();
 
-    ByteBuffer length = ByteBuffer.allocate(2);
-    length.order(ByteOrder.BIG_ENDIAN);
-    length.putShort((short)(buffer.length));
-
-    write(length.array());
+    byte length[] = shortToBytes((short)buffer.length);
+    write(length);
     write(buffer);
   }
 
-  public void sendMove(Position startPos, Position endPos) {
+  public void sendMove(Position startPos, Position endPos, char promotionChoice) {
     JSONObject json = new JSONObject();
     json.put("type", "move");
+    json.put("promotion", ""+promotionChoice); // FIX THIS
     json.put("from", PositionParser.toString(startPos));
     json.put("to", PositionParser.toString(endPos));
     sendJSON(json);
   }
 
-  private byte[] recv(int size){
+  private byte[] recv(int size) {
     byte buffer[] = new byte[size];
     try {
       input.read(buffer, 0, size);
@@ -79,13 +80,23 @@ public class Connection {
     return buffer;
   }
 
-  public JSONObject recvJSON(){
-    ByteBuffer length = ByteBuffer.allocate(2);
-    length.order(ByteOrder.BIG_ENDIAN);
-    length.put(recv(2));
-
-    short jsonLength = length.getShort(0);
+  public JSONObject recvJSON() {
+    short jsonLength = bytesToShort(recv(2));
     String jsonString = new String(recv(jsonLength));
     return new JSONObject(jsonString);
+  }
+
+  private short bytesToShort(byte bytes[]) {
+    ByteBuffer byteBuffer = ByteBuffer.allocate(2);
+    byteBuffer.order(ByteOrder.BIG_ENDIAN);
+    byteBuffer.put(bytes);
+    return byteBuffer.getShort(0);
+  }
+
+  private byte[] shortToBytes(short number) {
+    ByteBuffer byteBuffer = ByteBuffer.allocate(2);
+    byteBuffer.order(ByteOrder.BIG_ENDIAN);
+    byteBuffer.putShort(number);
+    return byteBuffer.array();
   }
 }

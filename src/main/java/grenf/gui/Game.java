@@ -18,7 +18,7 @@ import java.util.Set;
 public class Game extends AnimationTimer {
 
   public Board board;
-  private SpriteBoard spriteBoard;
+  protected SpriteBoard spriteBoard;
   protected MessageLog messageLog;
   private GraphicsContext gc;
 
@@ -28,8 +28,10 @@ public class Game extends AnimationTimer {
   protected Set<Position> legalMoves;
 
   boolean currentlyPromoting;
-  private static final String PROMOTION_PIECES_WHITE = "........\n........\n........\n..RNBQ..\n........\n........\n........\n........\n";
-  private static final String PROMOTION_PIECES_BLACK = "........\n........\n........\n..rnbq..\n........\n........\n........\n........\n";
+  protected static final String PROMOTION_PIECES_WHITE =
+      "........\n........\n........\n..RNBQ..\n........\n........\n........\n........\n";
+  protected static final String PROMOTION_PIECES_BLACK =
+      "........\n........\n........\n..rnbq..\n........\n........\n........\n........\n";
 
   public Game(GraphicsContext gc, Board.Layout layout) {
     this.gc = gc;
@@ -76,22 +78,26 @@ public class Game extends AnimationTimer {
     }
   }
 
-  private void handlePromotionClick(Position position) {
+  protected void handlePromotionClick(Position position) {
     Sprite target = spriteBoard.getSprite(position);
     selectedSprite = null;
     potentialMoveSprites.clear();
     if (target != null) {
       if (board.getCurrentColor() == Piece.Color.WHITE) {
-        board.promoteTo(charToPromotionOption(PROMOTION_PIECES_WHITE.charAt(position.getRow()*9+position.getColumn())));
+        board.promoteTo(
+            charToPromotionOption(
+                PROMOTION_PIECES_WHITE.charAt(position.getRow() * 9 + position.getColumn())));
       } else {
-        board.promoteTo(charToPromotionOption(PROMOTION_PIECES_BLACK.charAt(position.getRow()*9+position.getColumn())));
+        board.promoteTo(
+            charToPromotionOption(
+                PROMOTION_PIECES_BLACK.charAt(position.getRow() * 9 + position.getColumn())));
       }
       currentlyPromoting = false;
       refreshSpriteBoard();
     }
   }
 
-  private Board.PromotionOption charToPromotionOption(char c) {
+  public Board.PromotionOption charToPromotionOption(char c) {
     if (c == 'q' || c == 'Q') {
       return Board.PromotionOption.QUEEN;
     } else if (c == 'r' || c == 'R') {
@@ -108,11 +114,12 @@ public class Game extends AnimationTimer {
     Sprite target = spriteBoard.getSprite(position);
     if (target != null) {
       moveStart = position;
-      selectedSprite = new Sprite(target.getPosition(), ImageLoader.getImageId('O'));
+      selectedSprite = new Sprite(target.getPosition(), ImageLoader.getImageId('O'), null);
 
       legalMoves = board.legalDestinations(position);
       for (Position potentialPos : legalMoves) {
-        potentialMoveSprites.add(new Sprite(spriteBoard.indexToPos(potentialPos), ImageLoader.getImageId('G')));
+        potentialMoveSprites.add(
+            new Sprite(spriteBoard.indexToPos(potentialPos), ImageLoader.getImageId('G'), null));
       }
     }
   }
@@ -135,17 +142,22 @@ public class Game extends AnimationTimer {
   protected void makeMove(Position moveTarget) {
     Board.MoveResult result = board.tryMove(moveStart, moveTarget);
     if (result == Board.MoveResult.OK) {
-      messageLog.addMessage(moveToString(moveStart, moveTarget), board.getCurrentColor() == Piece.Color.WHITE ? Color.BLACK : Color.WHITE);
-      Board.CheckType checkType = board.getCheck(board.getCurrentColor());
-      if (checkType == Board.CheckType.CHECKMATE || checkType == Board.CheckType.STALEMATE) {
-        endGame(checkType);
-      } else if (checkType == Board.CheckType.CHECK) {
-        warnForCheck();
-      }
-
+      messageLog.addMessage(
+          moveToString(moveStart, moveTarget),
+          board.getCurrentColor() == Piece.Color.WHITE ? Color.BLACK : Color.WHITE);
       refreshSpriteBoard();
+      checkGameState();
     } else if (result == Board.MoveResult.PROMOTION_REQUIRED) {
       promptPromotion();
+    }
+  }
+
+  protected void checkGameState() {
+    Board.CheckType checkType = board.getCheck(board.getCurrentColor());
+    if (checkType == Board.CheckType.CHECKMATE || checkType == Board.CheckType.STALEMATE) {
+      endGame(checkType);
+    } else if (checkType == Board.CheckType.CHECK) {
+      warnForCheck();
     }
   }
 
@@ -167,7 +179,7 @@ public class Game extends AnimationTimer {
     } else {
       messageLog.addMessage("White won!", Color.RED);
     }
-    stop();
+    this.stop();
     handle(0);
   }
 

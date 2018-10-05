@@ -32,7 +32,7 @@ public class Handshake {
     reveal.put("seed", seed);
     connection.sendJSON(reveal);
 
-    if(choice == response.getInt("choice")){
+    if (choice == response.getInt("choice")) {
       return Piece.Color.WHITE;
     } else {
       return Piece.Color.BLACK;
@@ -40,7 +40,39 @@ public class Handshake {
   }
 
   private static Piece.Color handshakeJoiner(Connection connection) {
-    return null;
+    JSONObject seedHash = connection.recvJSON();
+
+    int myChoice = generateChoice();
+    JSONObject choice = new JSONObject();
+    choice.put("type", "init");
+    choice.put("choice", myChoice);
+    connection.sendJSON(choice);
+
+    JSONObject seed = connection.recvJSON();
+    String opponentHash = hash(seed.getString("seed"));
+    System.out.println(seed.getString("seed"));
+    System.out.println(opponentHash);
+    System.out.println(seedHash.getString("hash"));
+    if (!opponentHash.equals(seedHash.getString("hash"))) {
+      System.out.println("ERROR IN HANDSHAKE, INVALID HASH");
+      System.exit(1);
+    }
+
+    if (seed.getString("seed").charAt(0) == ((char) seed.getInt("choice"))) {
+      System.out.println("ERROR IN HANDSHAKE, OPPONENT TRIED TO CHEAT");
+      System.exit(0);
+    }
+
+    if (myChoice == seed.getInt("choice")) {
+      return Piece.Color.BLACK;
+    } else {
+      return Piece.Color.WHITE;
+    }
+  }
+
+  private static int generateChoice() {
+    SecureRandom random = new SecureRandom();
+    return random.nextInt(2);
   }
 
   private static String generateSeed() {

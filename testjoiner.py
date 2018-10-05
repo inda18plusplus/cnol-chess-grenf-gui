@@ -12,12 +12,17 @@ print length
 text = s.recv(length)
 print text
 
-a = {"choice":1, "tjoho":"tjenare"}
-a = json.dumps(a)
-alen = struct.pack(">H", len(a))
-s.send(alen)
-s.send(a)
+def sendJSON(a):
+	a = json.dumps(a)
+	alen = struct.pack(">H", len(a))
+	print len(a)
+	s.send(alen)
+	print a
+	s.send(a)
 
+sendJSON({"type":"init","choice":1})
+sendJSON({"type":"response","response":"ok"})
+sendJSON({"type":"move","to":"B5","from":"B7","promotion":"Q"})
 
 t = telnetlib.Telnet()
 t.sock = s

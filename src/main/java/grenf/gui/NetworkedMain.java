@@ -49,27 +49,36 @@ public class NetworkedMain extends Application {
     Canvas canvas = new Canvas(WIDTH, HEIGHT);
     root.getChildren().add(canvas);
 
-    Connection connection = setUpConnection(args);
-    if (connection == null) {
+    if(args.length > 2){
       System.out.println("run as ./game host port");
       System.exit(0);
     }
 
     boolean isListener = args.length == 1;
+    Connection connection = setUpConnection(isListener);
+    if (connection == null) {
+      System.out.println("Error in establishing connection.");
+      System.exit(0);
+    }
+
     Piece.Color myColor = Handshake.handshakeStartingColor(connection, isListener);
 
     game =
         new NetworkedGame(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC, connection, myColor);
     primaryStage.show();
     game.start();
+    if(myColor == Piece.Color.BLACK){
+      System.out.println("STARTING AS BLACK");
+      ((NetworkedGame)game).receiveMove();
+    }
   }
 
-  private Connection setUpConnection(String[] args) {
+  private Connection setUpConnection(boolean isListener) {
     Connection connection = null;
-    if (args.length == 1) {
+    if (isListener) {
       int port = Integer.parseInt(args[0]);
       connection = setUpListenerConnection(port);
-    } else if (args.length == 2) {
+    } else {
       String host = args[0];
       int port = Integer.parseInt(args[1]);
       connection = setUpJoinerConnection(host, port);
