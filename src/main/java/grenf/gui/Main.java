@@ -30,16 +30,17 @@ public class Main extends Application {
     primaryStage.setHeight(HEIGHT);
     primaryStage.setResizable(false);
 
+    Canvas canvas = new Canvas(WIDTH, HEIGHT);
+    game = new Game(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC);
+
     Group root = new Group();
     Scene scene = new Scene(root);
-    scene.setOnMouseClicked(new MouseClicked());
+    scene.setOnMouseClicked(new MouseClicked(game));
     primaryStage.setScene(scene);
 
-    Canvas canvas = new Canvas(WIDTH, HEIGHT);
     root.getChildren().add(canvas);
 
-    game = new Game(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC);
     primaryStage.show();
-    game.start();
+    game.renderer.start();
   }
 }

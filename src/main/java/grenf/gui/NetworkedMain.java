@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.CookieHandler;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkedMain extends Application {
 
@@ -36,25 +37,20 @@ public class NetworkedMain extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    primaryStage.setTitle(TITLE);
+    boolean isListener = args.length == 1;
+
+    primaryStage.setTitle(isListener ? "Listener" : "Joiner");
     primaryStage.setWidth(WIDTH);
     primaryStage.setHeight(HEIGHT);
     primaryStage.setResizable(false);
 
-    Group root = new Group();
-    Scene scene = new Scene(root);
-    scene.setOnMouseClicked(new MouseClicked());
-    primaryStage.setScene(scene);
 
-    Canvas canvas = new Canvas(WIDTH, HEIGHT);
-    root.getChildren().add(canvas);
-
-    if(args.length > 2){
-      System.out.println("run as ./game host port");
+    if(args.length != 1 && args.length != 2){
+      System.out.println("run as \"./game <host> <port>\" for joining");
+      System.out.println("or     \"./game <port>\"        for listening");
       System.exit(0);
     }
 
-    boolean isListener = args.length == 1;
     Connection connection = setUpConnection(isListener);
     if (connection == null) {
       System.out.println("Error in establishing connection.");
@@ -63,14 +59,27 @@ public class NetworkedMain extends Application {
 
     Piece.Color myColor = Handshake.handshakeStartingColor(connection, isListener);
 
+    Canvas canvas = new Canvas(WIDTH, HEIGHT);
     game =
         new NetworkedGame(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC, connection, myColor);
+
+
+    Group root = new Group();
+    Scene scene = new Scene(root);
+    scene.setOnMouseClicked(new MouseClicked(game));
+    primaryStage.setScene(scene);
+
+    root.getChildren().add(canvas);
+
+
     primaryStage.show();
-    game.start();
+    game.renderer.handle(0);
+    TimeUnit.SECONDS.sleep(1);
     if(myColor == Piece.Color.BLACK){
       System.out.println("STARTING AS BLACK");
       ((NetworkedGame)game).receiveMove();
     }
+    game.renderer.start();
   }
 
   private Connection setUpConnection(boolean isListener) {

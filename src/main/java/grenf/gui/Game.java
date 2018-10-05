@@ -15,12 +15,12 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class Game extends AnimationTimer {
+public class Game {
 
   public Board board;
   protected SpriteBoard spriteBoard;
   protected MessageLog messageLog;
-  private GraphicsContext gc;
+  public Renderer renderer;
 
   protected ArrayList<Sprite> potentialMoveSprites;
   protected Sprite selectedSprite;
@@ -34,7 +34,7 @@ public class Game extends AnimationTimer {
       "........\n........\n........\n..rnbq..\n........\n........\n........\n........\n";
 
   public Game(GraphicsContext gc, Board.Layout layout) {
-    this.gc = gc;
+    renderer = new Renderer(this, gc);
     currentlyPromoting = false;
     board = new Board(layout);
     spriteBoard = new SpriteBoard();
@@ -48,20 +48,6 @@ public class Game extends AnimationTimer {
 
   protected void refreshSpriteBoard() {
     spriteBoard.setUpPieces(board.toString());
-  }
-
-  @Override
-  public void handle(long now) {
-    spriteBoard.render(gc);
-    if (selectedSprite != null) {
-      if (!potentialMoveSprites.isEmpty()) {
-        for (int i = 0; i < potentialMoveSprites.size(); i++) {
-          potentialMoveSprites.get(i).render(gc);
-        }
-      }
-      selectedSprite.render(gc);
-    }
-    messageLog.render(gc, board.getCurrentColor());
   }
 
   public void handleClick(Point2D clickPos) {
@@ -179,8 +165,8 @@ public class Game extends AnimationTimer {
     } else {
       messageLog.addMessage("White won!", Color.RED);
     }
-    this.stop();
-    handle(0);
+    renderer.handle(0);
+    renderer.stop();
   }
 
   protected void promptPromotion() {

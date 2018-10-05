@@ -77,6 +77,7 @@ public class NetworkedGame extends Game {
         moveTarget = position;
       } else {
         sendMove(position);
+        renderer.handle(0);
         receiveMove();
       }
     } else {
@@ -124,7 +125,7 @@ public class NetworkedGame extends Game {
       messageLog.addMessage("SYNC ERROR", Color.RED);
       messageLog.addMessage("Their move was invalid", Color.RED);
       connection.sendJSON(Connection.INVALID_MOVE_RESPONSE);
-      this.stop();
+      renderer.stop();
       return;
     }
 
@@ -148,7 +149,7 @@ public class NetworkedGame extends Game {
     if (response.getString("response").equals("invalid")) {
       messageLog.addMessage("SYNC ERROR", Color.RED);
       messageLog.addMessage("Your move is invalid", Color.RED);
-      this.stop();
+      renderer.stop();
       return;
     }
   }
