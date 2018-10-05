@@ -44,8 +44,7 @@ public class NetworkedMain extends Application {
     primaryStage.setHeight(HEIGHT);
     primaryStage.setResizable(false);
 
-
-    if(args.length != 1 && args.length != 2){
+    if (args.length != 1 && args.length != 2) {
       System.out.println("run as \"./game <host> <port>\" for joining");
       System.out.println("or     \"./game <port>\"        for listening");
       System.exit(0);
@@ -63,7 +62,6 @@ public class NetworkedMain extends Application {
     game =
         new NetworkedGame(canvas.getGraphicsContext2D(), Board.Layout.CLASSIC, connection, myColor);
 
-
     Group root = new Group();
     Scene scene = new Scene(root);
     scene.setOnMouseClicked(new MouseClicked(game));
@@ -71,15 +69,13 @@ public class NetworkedMain extends Application {
 
     root.getChildren().add(canvas);
 
-
     primaryStage.show();
-    game.renderer.handle(0);
+    game.renderer.render();
     TimeUnit.SECONDS.sleep(1);
-    if(myColor == Piece.Color.BLACK){
+    if (myColor == Piece.Color.BLACK) {
       System.out.println("STARTING AS BLACK");
-      ((NetworkedGame)game).receiveMove();
+      ((NetworkedGame) game).receiveMove();
     }
-    game.renderer.start();
   }
 
   private Connection setUpConnection(boolean isListener) {

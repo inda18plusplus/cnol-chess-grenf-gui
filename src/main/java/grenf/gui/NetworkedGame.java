@@ -12,6 +12,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 public class NetworkedGame extends Game {
 
   private Connection connection;
@@ -39,6 +41,7 @@ public class NetworkedGame extends Game {
         handleClickSelected(position);
       }
     }
+    renderer.render();
   }
 
   protected void handlePromotionClick(Position position) {
@@ -73,11 +76,12 @@ public class NetworkedGame extends Game {
 
     if (legalMoves != null && legalMoves.contains(position)) {
       makeMove(position);
+      renderer.render();
+      System.out.println("RENDERED AFTER MOVE");
       if (currentlyPromoting) {
         moveTarget = position;
       } else {
         sendMove(position);
-        renderer.handle(0);
         receiveMove();
       }
     } else {
@@ -125,7 +129,6 @@ public class NetworkedGame extends Game {
       messageLog.addMessage("SYNC ERROR", Color.RED);
       messageLog.addMessage("Their move was invalid", Color.RED);
       connection.sendJSON(Connection.INVALID_MOVE_RESPONSE);
-      renderer.stop();
       return;
     }
 
@@ -141,15 +144,17 @@ public class NetworkedGame extends Game {
     connection.sendJSON(Connection.OK_MOVE_RESPONSE);
     refreshSpriteBoard();
     checkGameState();
+    renderer.render();
   }
 
   private void sendMove(Position targetPosition) {
     connection.sendMove(moveStart, targetPosition, promotionChoice);
     JSONObject response = connection.recvJSON();
+    System.out.println(response.toString());
+    System.out.println(response.getString("response"));
     if (response.getString("response").equals("invalid")) {
       messageLog.addMessage("SYNC ERROR", Color.RED);
       messageLog.addMessage("Your move is invalid", Color.RED);
-      renderer.stop();
       return;
     }
   }

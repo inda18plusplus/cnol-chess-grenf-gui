@@ -62,6 +62,7 @@ public class Game {
         handleClickSelected(position);
       }
     }
+    renderer.render();
   }
 
   protected void handlePromotionClick(Position position) {
@@ -165,8 +166,7 @@ public class Game {
     } else {
       messageLog.addMessage("White won!", Color.RED);
     }
-    renderer.handle(0);
-    renderer.stop();
+    renderer.render();
   }
 
   protected void promptPromotion() {

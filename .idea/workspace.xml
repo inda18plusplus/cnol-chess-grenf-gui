@@ -7,7 +7,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/grenf/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/gui/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grenf/gui/eventhandlers/MouseClicked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/gui/eventhandlers/MouseClicked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grenf/network/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grenf/network/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testlistener.py" beforeDir="false" afterPath="$PROJECT_DIR$/testlistener.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,13 +48,13 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="java" value="64" />
+          <entry key="java" value="69" />
           <entry key="xml" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="64" />
+          <entry key="JAVA" value="69" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="XML" value="3" />
         </counts>
@@ -60,13 +62,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="3" />
-          <entry key="java" value="10573" />
+          <entry key="java" value="10876" />
           <entry key="xml" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="10573" />
+          <entry key="JAVA" value="10876" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="XML" value="30" />
         </counts>
@@ -76,10 +78,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/grenf/network/Connection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="138" column="5" lean-forward="true" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="5" />
+            <state relative-caret-position="168">
+              <caret line="80" column="3" lean-forward="true" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,10 +90,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="82" column="3" lean-forward="true" selection-start-line="82" selection-start-column="3" selection-end-line="82" selection-end-column="3" />
+            <state relative-caret-position="272">
+              <caret line="67" column="33" lean-forward="true" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -139,14 +153,14 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/grenf/gui/graphics/Sprite.java" />
         <option value="$PROJECT_DIR$/src/main/java/grenf/gui/graphics/SpriteBoard.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grenf/network/Connection.java" />
         <option value="$PROJECT_DIR$/src/main/java/grenf/network/Handshake.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Game.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/grenf/gui/eventhandlers/MouseClicked.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java" />
         <option value="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/Game.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grenf/network/Connection.java" />
       </list>
     </option>
   </component>
@@ -179,10 +193,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+    <option name="x" value="952" />
     <option name="width" value="977" />
-    <option name="height" value="523" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -331,8 +344,8 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/Main.java&#10;game&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/Game.java&#10;network&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;hand&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Handshake.java&#10;connec&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Connection.java&#10;networke&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;imagel&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/graphics/ImageLoader.java&#10;sprite&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/graphics/Sprite.java&#10;imagelo&#9;PSI&#9;JAVA://grenf.gui.graphics.ImageLoader&#10;conn&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Connection.java&#10;net&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;click&#9;PSI&#9;JAVA://grenf.gui.Game#handlePromotionClick&#10;makemove&#9;PSI&#9;JAVA://grenf.gui.Game#makeMove&#10;promptpro&#9;PSI&#9;JAVA://grenf.gui.Game#promptPromotion&#10;gaem&#9;null&#9;null&#10;checkgame&#9;PSI&#9;JAVA://grenf.gui.Game#checkGameState&#10;promo&#9;PSI&#9;JAVA://chess.Board#promoteTo&#10;warnfor&#9;PSI&#9;JAVA://grenf.gui.Game#warnForCheck&#10;networked&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;netwo&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;positi&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/chess/piece/Position.java&#10;Posi&#9;PSI&#9;JAVA://chess.piece.Position" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538726039033" />
+    <property name="SearchEverywhereHistoryKey" value="recvJSON&#9;PSI&#9;JAVA://grenf.network.Connection#recvJSON&#10;net&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedGame.java&#10;makemove&#9;PSI&#9;JAVA://grenf.gui.Game#makeMove&#10;sendmove&#9;PSI&#9;JAVA://grenf.gui.NetworkedGame#sendMove&#10;receivemove&#9;PSI&#9;JAVA://grenf.gui.NetworkedGame#receiveMove&#10;game&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/Game.java&#10;render&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/Renderer.java&#10;main&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/Main.java&#10;network&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;hand&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Handshake.java&#10;connec&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Connection.java&#10;networke&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;imagel&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/graphics/ImageLoader.java&#10;sprite&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/graphics/Sprite.java&#10;imagelo&#9;PSI&#9;JAVA://grenf.gui.graphics.ImageLoader&#10;conn&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/network/Connection.java&#10;click&#9;PSI&#9;JAVA://grenf.gui.Game#handlePromotionClick&#10;promptpro&#9;PSI&#9;JAVA://grenf.gui.Game#promptPromotion&#10;gaem&#9;null&#9;null&#10;checkgame&#9;PSI&#9;JAVA://grenf.gui.Game#checkGameState&#10;promo&#9;PSI&#9;JAVA://chess.Board#promoteTo&#10;warnfor&#9;PSI&#9;JAVA://grenf.gui.Game#warnForCheck&#10;networked&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;netwo&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/grenf/gui/NetworkedMain.java&#10;positi&#9;FILE&#9;file://C:/Users/mkg/Desktop/kth/indan/cnol-chess-grenf-gui/src/main/java/chess/piece/Position.java&#10;Posi&#9;PSI&#9;JAVA://chess.piece.Position" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538728902458" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -473,7 +486,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2536913" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.52427185" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -667,40 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/network/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="84" column="33" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/eventhandlers/MouseClicked.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -722,20 +701,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="138" column="5" lean-forward="true" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="5" />
+        <state relative-caret-position="255">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="43" column="25" lean-forward="true" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="130" column="40" lean-forward="true" selection-start-line="130" selection-start-column="40" selection-end-line="130" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="67" column="33" lean-forward="true" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/network/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="80" column="3" lean-forward="true" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedMain.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/grenf/gui/NetworkedGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="82" column="3" lean-forward="true" selection-start-line="82" selection-start-column="3" selection-end-line="82" selection-end-column="3" />
+        <state relative-caret-position="273">
+          <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -38,7 +38,9 @@ print "received", recvJSON()
 sendJSON({"type":"init","seed":mac,"choice":int(mac[0])})
 
 
-sendJSON({"type":"repsonse","repsonse":"ok"})
+raw_input()
+sendJSON({"type":"response","response":"ok"})
+raw_input()
 sendJSON({"type":"move","from":"G7", "to":"G5", "promotion":"Q"})
 
 

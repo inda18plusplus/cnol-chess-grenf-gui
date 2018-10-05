@@ -1,9 +1,8 @@
 package grenf.gui;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Renderer extends AnimationTimer {
+public class Renderer {
 
   private Game game;
   private GraphicsContext gc;
@@ -13,8 +12,8 @@ public class Renderer extends AnimationTimer {
     this.gc = gc;
   }
 
-  @Override
-  public void handle(long now) {
+
+  public void render() {
     game.spriteBoard.render(gc);
     if (game.selectedSprite != null) {
       if (!game.potentialMoveSprites.isEmpty()) {

@@ -82,7 +82,10 @@ public class Connection {
 
   public JSONObject recvJSON() {
     short jsonLength = bytesToShort(recv(2));
+    System.out.println(jsonLength);
     String jsonString = new String(recv(jsonLength));
+    System.out.println(jsonString.length());
+    System.out.println(jsonString);
     return new JSONObject(jsonString);
   }
 

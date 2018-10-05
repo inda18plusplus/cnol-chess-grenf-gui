@@ -41,6 +41,6 @@ public class Main extends Application {
     root.getChildren().add(canvas);
 
     primaryStage.show();
-    game.renderer.start();
+    game.renderer.render();
   }
 }
