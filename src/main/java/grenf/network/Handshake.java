@@ -32,7 +32,7 @@ public class Handshake {
     reveal.put("seed", seed);
     connection.sendJSON(reveal);
 
-    if (choice != 0 || choice != 1) {
+    if (choice != 0 && choice != 1) {
       System.out.println("ERROR IN HANDSHAKE, BAD CHOICE");
       System.exit(1);
     }

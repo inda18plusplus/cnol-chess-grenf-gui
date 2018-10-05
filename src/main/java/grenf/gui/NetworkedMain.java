@@ -71,11 +71,13 @@ public class NetworkedMain extends Application {
 
     primaryStage.show();
     game.renderer.render();
+
     TimeUnit.SECONDS.sleep(1);
     if (myColor == Piece.Color.BLACK) {
       System.out.println("STARTING AS BLACK");
       ((NetworkedGame) game).receiveMove();
     }
+
   }
 
   private Connection setUpConnection(boolean isListener) {

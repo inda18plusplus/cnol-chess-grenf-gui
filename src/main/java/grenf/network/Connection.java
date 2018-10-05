@@ -25,7 +25,7 @@ public class Connection {
   public Connection(String host, int port) throws IOException {
     this.host = host;
     this.port = port;
-
+    System.out.println(host);
     socket = new Socket(host, port);
     input = socket.getInputStream();
     output = socket.getOutputStream();
