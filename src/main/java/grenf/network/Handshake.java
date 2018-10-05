@@ -32,6 +32,11 @@ public class Handshake {
     reveal.put("seed", seed);
     connection.sendJSON(reveal);
 
+    if (choice != 0 || choice != 1) {
+      System.out.println("ERROR IN HANDSHAKE, BAD CHOICE");
+      System.exit(1);
+    }
+
     if (choice == response.getInt("choice")) {
       return Piece.Color.WHITE;
     } else {
@@ -61,6 +66,12 @@ public class Handshake {
     if (seed.getString("seed").charAt(0) == ((char) seed.getInt("choice"))) {
       System.out.println("ERROR IN HANDSHAKE, OPPONENT TRIED TO CHEAT");
       System.exit(0);
+    }
+
+    int opponentChoice = seed.getInt("choice");
+    if (opponentChoice != 0 && opponentChoice != 1) {
+      System.out.println("ERROR IN HANDSHAKE, bad choice");
+      System.exit(1);
     }
 
     if (myChoice == seed.getInt("choice")) {
